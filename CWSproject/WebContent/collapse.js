@@ -1,0 +1,8 @@
+function elementDisplay(objid){
+	var obj=document.getElementById(objid);
+	if(obj.style.display != "none"){
+		obj.style.display="none";
+	}else{
+		obj.style.display="block";
+	}
+}

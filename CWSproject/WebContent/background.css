@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+
+.picLUp{
+	 background:url("login_bgd3.jpg") no-repeat;
+  	  width:100%;
+ 	  height:100%;
+ 	  padding:0;
+ 	  margin:0;
+ 	  background-size:100%, 100%;
+ 	   
+}
+
+.picLUp2{
+	 background:url("bgd_folder.png") no-repeat;
+  	  width:100%;
+ 	  height:100%;
+ 	   padding:0;
+ 	   margin:0;
+ 	   background-size:100%, 100%;}
+.graybgd{
+	background-color:#9dee5eb;
+	width:100%;
+ 	height:100%;
+ 	padding:0;
+ 	margin:0;
+    background-size:100%, 100%;
+}
+
+.grayblue{
+	  background-color:#97b9b8;
+  	  width:100%;
+ 	  height:100%;
+ 	  padding:0;
+ 	  margin:0;
+ 	  background-size:100%, 100%;
+}
+
+<!-- 
+
+.larger{
+	      background:url("login_bgd2.jpg") no-repeat;
+		  width:100%;
+		  height::0;
+		  padding-bottom:100%;
+	 	  background-size: cover;
+}
+-->
