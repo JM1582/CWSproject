@@ -27,10 +27,18 @@
     width:40%;
     margin:2%;
     float:left;
-
-	
 }
-
+#Content-Left2{
+    height:100%;
+    width:100%;
+    margin:2%;
+    float:left;
+}
+#Content-Left3{
+    height:80%;
+    width:90%;
+    margin:2%;
+}
 
 #Content-Main{
 	background:url("bgd_black_opacity40.png") no-repeat;
@@ -40,6 +48,14 @@
     margin:0%;
     background-size:100%, 100%;
 }
+#Content-right{
+	height:80%;
+    width:5%;
+    padding:0;
+    margin:0%;
+    background-size:100%, 100%;
+}
+
 #Footer{
     height:40px;
     position: absolute;

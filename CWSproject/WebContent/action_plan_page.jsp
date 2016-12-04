@@ -15,7 +15,7 @@
 <script type="text/javascript">
 function add_domain(){
 	var action_plan_tables = document.getElementById('action_plan');
-	action_plan_tables.createElement("table")
+	action_plan_tables.createElement("table");
 }
 </script>
 
@@ -65,8 +65,8 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap"));
 <br>
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">SUMMARY VIEW</a></li>
-  <li><a onclick="elementDisplay('document_list')">PROVIDER INPUT</a>
-  	<ul id="document_list" class="sublist">
+  <li><a onclick="expand('document_list')">PROVIDER INPUT</a>
+  	<ul id="document_list" class="sublist_collapse">
 <%if(documentMap != null){
 	Iterator it = documentMap.keySet().iterator();
 	while(it.hasNext()){

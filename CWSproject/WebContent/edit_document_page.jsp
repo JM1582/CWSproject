@@ -81,7 +81,7 @@ if (document.getSign()){
 <div id="nav">
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">SUMMARY VIEW</a></li>
-  <li><a onclick="elementDisplay('document_list')">PROVIDER INPUT</a>
+  <li><a onclick="expand('document_list')" class="active">PROVIDER INPUT</a>
   	<ul id="document_list" class="sublist">
 <%if(documentMap != null){
 	Iterator it = documentMap.keySet().iterator();
@@ -127,7 +127,7 @@ if (partMap != null) {
 				additionColSpan = 0;
 			}
 %>
-<img id="collapse" align="left" onclick="elementDisplay('part_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" ><br>
+<img id="collapse_icon" align="left" onclick="collapse('part_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" ><br>
 <table id="part_<%=part.getPartId() %>" border="1" width="100%"><!-- change table format -->
 	<tr><!-- The first row to show the part name and scalarName -->
 		<td colspan="3" width="100%" ><strong><%=part.getPartName() %></strong><br><br><%=part.getPartDescription() %></td>
@@ -138,16 +138,9 @@ if (partMap != null) {
 	
 	<%for(int i=0;i<scalarValue.length;i++){ %>
 	<tr><!-- The row(s) to show the scalar -->
-		<td colspan="<%=2+additionColSpan %>"></td>
-		<%if(additionColSpan==0){
-			if(i==0){ %>
-		<td class="width_for_2" >Performance</td>
-<%			} else if(i==1){ %>
-		<td class="width_for_2" >Capacity</td>
-<%			}
-		}
-		for(int j=0;j<scalarValue[0].length;j++){ %>
-			<td><%=scalarValue[i][j] %></td>
+		<td colspan="3"></td>
+		<%for(int j=0;j<scalarValue[0].length;j++){ %>
+		<td><%=scalarValue[i][j] %></td>
 		<%} %>
 	</tr>
 	
@@ -161,7 +154,7 @@ if (partMap != null) {
 			if(subSet != null){%>
 	<!-- The row to show subset title -->
 	<tr><td colspan="<%=3+scalarName.length %>">
-		<a onclick="elementDisplay('subset_<%=subSet.getSubSetId() %>')">
+		<a onclick="collapse'subset_<%=subSet.getSubSetId() %>')">
 		<%=subSet.getSubSetId() %>. <%=subSet.getSubSetName() %>
 		</a>
 	</td></tr>

@@ -57,6 +57,8 @@
 	height:100%;
     padding:0;
     margin:0%;
+    background-size:100%, 100%;
+    
 }
 
 .main_banner{
@@ -64,6 +66,8 @@
 	height:100%;
     padding:0;
     margin:0%;
+    background-size:100%, 100%;
+    
 }
 
 .main_body{
@@ -74,3 +78,32 @@
 	background:url("bgd_body.png")no-repeat;
 	background-size:100%, 100%;
 }
+
+.body_general{
+	width:100%;
+	height:100%;
+    padding:0;
+    margin:0%;
+    background-size:100%, 100%;
+}
+.hidden_above{
+	height:300px;
+}
+.hidden_above2{
+	height:150px;
+}
+.hidden_above3{
+	height:50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

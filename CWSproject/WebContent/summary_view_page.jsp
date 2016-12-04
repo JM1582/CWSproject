@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="background.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="div_left_right.css" charset="utf-8" >
 <script type="text/javascript" src="collapse.js" ></script>
+
 </head>
 
 <body class="grayblue">
@@ -38,6 +39,7 @@ PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 if (patientInfo == null) {
 }
 Map documentMap = patientInfo.getDocumentMap();
+Map actionPlanMap = patientInfo.getActionPlanMap();
 Map summaryMap = (Map)session.getAttribute("summaryMap");
 FormTemplate formTemplate = patientInfo.getFormTemplate();
  %>
@@ -54,8 +56,8 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 <br>
 <ul>
   <li><a class="active" href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">SUMMARY VIEW</a></li>
-  <li><a onclick="elementDisplay('document_list')">PROVIDER INPUT</a>
-  	<ul id="document_list" class="sublist">
+  <li><a id="provider_input" onclick="expand('document_list')">PROVIDER INPUT</a>
+  	<ul id="document_list" class="sublist_collapse">
 <%if(documentMap != null){
 	Iterator it = documentMap.keySet().iterator();
 	while(it.hasNext()){
@@ -70,7 +72,22 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
   	<li><a href="create_document_servlet" ><small>New Document</small></a></li>
   	</ul>
   </li>
-  <li><a href="view_action_plan_servlet">ACTION PLAN</a></li>
+  <li><a id="action_plan" onclick="expand('action_plan_list')">ACTION PLAN</a></li>
+  	<ul id="action_plan_list" class="sublist_collapse">
+<%if(actionPlanMap != null){
+	Iterator it = actionPlanMap.keySet().iterator();
+	while(it.hasNext()){
+		int actionPlanId = (Integer) it.next();
+		ActionPlan actionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
+		int jsfklwef;
+		if (actionPlan != null) { %>
+	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(actionPlan.getActionPlanId()) %>">
+	<small>Action Plan ID: <%=actionPlan.getActionPlanId() %></small></a></li>
+<%		}
+	}
+} %>
+  	<li><a ><small>New Action Plan</small></a></li>
+  	</ul>
 </ul>
 </div>
 </td>

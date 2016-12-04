@@ -8,19 +8,14 @@
 <link rel="stylesheet" type="text/css" href="background.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="div_left_right.css" charset="utf-8" >
 </head>
-<body class="picLUp" >
+<body class="picLUp2" >
 
-<div class = "backgroundwhite">
-<div class = "green1">
-<h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
+
+<div class="hidden_above"></div>
+
+<div id=Content-Left2>
+<p style="font:Arial; font-size:40px;">Please log in first.</p>
+<a style="font:Arial; font-size:30px;" href="/CWSproject/login_page.jsp">Goto login page</a>
 </div>
-<br>
-</div>
-
-
-<p>Please log in first.</p>
-
-<a href="/CWSproject/login_page.jsp">Goto login page</a>
-
 </body>
 </html>

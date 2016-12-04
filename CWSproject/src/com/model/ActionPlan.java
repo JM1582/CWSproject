@@ -5,6 +5,8 @@ import java.util.*;
 public class ActionPlan {
 	private int actionPlanId;
 	private String CWSNumber;
+	private CareProvider author;
+	private Date date;
 	private Map actionEntryMap;
 	
 	public ActionPlan(int actionPlanId, String CWSNumber){

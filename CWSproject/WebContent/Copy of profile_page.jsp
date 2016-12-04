@@ -9,19 +9,19 @@
 <link rel="stylesheet" type="text/css" href="nav_bar.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="div_formats.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="background.css" charset="utf-8" >
-<link rel="stylesheet" type="text/css" href="buttons.css" charset="utf-8" >
-<link rel="stylesheet" type="text/css" href="font_styles.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="div_left_right.css" charset="utf-8" >
 <script type="text/javascript" src="collapse.js" ></script>
 </head>
-<body class="picLUp2">
-<div class="hidden_above3"></div>
-<div class="hidden_above2">
-<div id=Content-Left3 align="right" >
-<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button></div>
-
-
+<body class="grayblue">
+<!-- banner -->
+<div class = "backgroundwhite">
+<div class = "green1">
+<h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
 </div>
+<br>
+</div>
+
+<div align="right"><button type="button"  onclick="location.href='logout_servlet'">Logout</button></div>
 	<%
 	CareProvider careProvider = (CareProvider)session.getAttribute("user");
 	if(careProvider == null){ %>
@@ -31,16 +31,46 @@
 	<%return;
 	} %>
 	
-<p class="engrave30"><strong>&nbsp;&nbsp;<%=careProvider.getFirstName() %> <%=careProvider.getLastName() %></strong></p>
-<p class="engrave23"><strong>&emsp;&emsp;<%=careProvider.getTitle() %></strong></p>
-<p class="engrave23"><strong>&emsp;&emsp;Location: <%=careProvider.getFacility() %></strong></p>
-<p class="engrave23"><strong>&emsp;&emsp;Email: <%=careProvider.getEmail() %></strong></p>
+<p style=font-size:32px><strong>&nbsp;&nbsp;<%=careProvider.getFirstName() %> <%=careProvider.getLastName() %></strong></p>
+<p style=font-size:22px;><strong>&emsp;&emsp;<%=careProvider.getTitle() %></strong></p>
+<p style=font-size:22px;><strong>&emsp;&emsp;Location: <%=careProvider.getFacility() %></strong></p>
+<p style= font-size:22px;><strong>&emsp;&emsp;Email: <%=careProvider.getEmail() %></strong></p>
+
+<!-- 
+<p align="center">Select Your Patients:<br></p>
+
+<table align="center">
+	<tr>
+		<td align="center">Patient CSW Number</td>
+		<td align="center">Image</td>
+		<td align="center">Action</td>
+	</tr>
+	<%
+	Map patientInfoMap = careProvider.getMyPatientInfoMap();//iterator, point to next value
+	if (patientInfoMap != null) {
+		Iterator it = patientInfoMap.keySet().iterator();
+		while(it.hasNext()){
+			String cwsNumber = (String)it.next();
+			PatientInfo patientInfo = (PatientInfo)patientInfoMap.get(cwsNumber);
+			if(patientInfo != null){
+	%>
+	<tr>
+		<td align="center"><%=patientInfo.getCWSNumber() %></td>
+		<td align="center">Left for image</td>
+		<td align="center"><a href="view_patient_info_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">View</a></td>
+	</tr>
+	<% 		}
+		}
+	} %>
+</table>
+ -->
  
 <form align="center" action="search_patient_servlet">
 <p style= font-size:22px>Search for your patient:</p>
 &emsp;&emsp;&emsp;&emsp;<input type="text" name="CWSNumber" style="width:232px; height:35px;">
 <input type="submit" value="Search" 
-class="button1">
+style="width:120px;  font:Brandon; font-size:18px; height:35px; color:#314a51; 
+						background:#eb7571 ">
 <br><br><br><br>
 </form>
 <!-- a form which show the search result (omitted)
