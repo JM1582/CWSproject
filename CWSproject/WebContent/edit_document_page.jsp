@@ -42,23 +42,25 @@ th span {
 <div class = "green1">
 <h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
 </div>
+
+<!-- the div to hold 2 buttons: close file and logout -->
 <div align="right">
 	<button type="button"  onclick="location.href='profile_page.jsp'">Close File</button>
 	<button type="button"  onclick="location.href='logout_servlet'">Logout</button>
 </div></div>
+
 <!-- banner end -->
 
-	<%
-	CareProvider careProvider = (CareProvider)session.getAttribute("user");
-	if(careProvider == null){ %>
-		<script language="javascript" type="text/javascript">
-			window.location.href='logout_servlet';
-		</script>
+<!-- login verification -->
+<%CareProvider careProvider = (CareProvider)session.getAttribute("user");
+if(careProvider == null){ %>
+	<script language="javascript" type="text/javascript">
+		window.location.href='logout_servlet';
+	</script>
 	<%return;
-	} %>
-	
-<%
-PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
+} %>
+
+<%PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 FormTemplate formTemplate = patientInfo.getFormTemplate();
 Map documentMap = patientInfo.getDocumentMap();
 Map actionPlanMap = patientInfo.getActionPlanMap();
@@ -69,15 +71,17 @@ if (document.getSign()){
 	editDisabled = true;
 } else if (!careProvider.getUserName().equals(document.getAuthor().getUserName())){
 	editDisabled = true;
-}
- %>
+} %>
 
+<!-- the div to hold the patient basic information -->
 <div id="header">
 	<h3>CWS No.: <%=patientInfo.getCWSNumber() %>     <img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="50" height="50"></h3>
 </div>
 
+<!-- the table to hold nav bar in left and document in right -->
 <table><tr>
 
+<!-- the table cell to hold nav bar -->
 <td valign="top" width="15%" >
 
 <!-- navigation bar -->
@@ -121,6 +125,7 @@ if (document.getSign()){
 
 </td>
 
+<!-- the table cell to hold the document -->
 <td valign="top" width="85%" >
 <form name="documentForm" action="save_document_servlet">
 
@@ -141,85 +146,111 @@ if (partMap != null) {
 		if(part != null){
 			String scalarName[] = part.getScalarName();
 			String scalarValue[][] = part.getScalarValue();
-			int additionColSpan = 1;
-			if(scalarValue.length!=1){
-				additionColSpan = 0;
-			}
+			int scalarValueAmount = scalarValue.length;
 %>
-<img id="collapse_icon" align="left" onclick="collapse('part_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" ><br>
+
+<!-- the table to hold 1 part -->
 <table id="part_<%=part.getPartId() %>" border="1" width="100%"><!-- change table format -->
-	<tr><!-- The first row to show the part name and scalarName -->
-		<td colspan="3" width="100%" ><strong><%=part.getPartName() %></strong><br><br><%=part.getPartDescription() %></td>
-		<%for(int i=0;i<scalarName.length;i++){ %>
-			 <th width="10" height="130"><span><small><%=scalarName[i] %></small></span></th>
-		<%} %>
-	</tr>
 	
-	<%for(int i=0;i<scalarValue.length;i++){ %>
-	<tr><!-- The row(s) to show the scalar -->
-		<td colspan="3"></td>
-		<%for(int j=0;j<scalarValue[0].length;j++){ %>
-		<td><%=scalarValue[i][j] %></td>
+	<!-- the table to hold 1 part title -->
+	<tr><td><table id=partTitle_<%=part.getPartId() %>" width="100%">
+		<tr><!-- The first row to show the part name and scalarName -->
+			<td width="100%" >
+				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" >
+				<strong><%=part.getPartName() %></strong><br><br><%=part.getPartDescription() %>
+			</td>
+			<%for(int i=0;i<scalarName.length;i++){ %>
+			<th width="10" height="130"><span><small><%=scalarName[i] %></small></span></th>
+			<%} %>
+		</tr>
+		<%for(int i=0;i<scalarValue.length;i++){ %>
+		<tr><!-- The second or third row to show the scalar -->
+			<td></td>
+			<%for(int j=0;j<scalarValue[0].length;j++){ %>
+			<td><%=scalarValue[i][j] %></td>
+			<%} %>
+		</tr>
 		<%} %>
-	</tr>
+	</table></td></tr>
 	
-	<%} 
-	TreeMap subSetMap = new TreeMap(part.getSubSetMap());
+	<!-- the table to hold 1 part content -->
+	<tr><td><table id=partContent_<%=part.getPartId() %>" width="100%">
+	<%TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 	if(subSetMap != null){
 		Iterator subSetIt = subSetMap.keySet().iterator();
 		while(subSetIt.hasNext()){
 			String subSetId = (String)subSetIt.next();
 			SubSet subSet = (SubSet)subSetMap.get(subSetId);
 			if(subSet != null){%>
-	<!-- The row to show subset title -->
-	<tr><td colspan="<%=3+scalarName.length %>">
-		<a onclick="collapse'subset_<%=subSet.getSubSetId() %>')">
-		<%=subSet.getSubSetId() %>. <%=subSet.getSubSetName() %>
-		</a>
-	</td></tr>
-	
-	
-	<%TreeMap domainMap = new TreeMap(subSet.getDomainMap());
-	if(domainMap != null){
-		Iterator domainIt = domainMap.keySet().iterator();
-		while(domainIt.hasNext()){
-			String domainId = (String)domainIt.next();
-			Domain domain = (Domain)domainMap.get(domainId);
-			if(domain != null){
-				String domainValue[] = null;
-				if(domainValueMap.containsKey(domain.getDomainId())){
-					domainValue = (String[])domainValueMap.get(domain.getDomainId());
+		
+		<!-- the table to hold 1 subset -->
+		<tr><td><table id=subSet_<%=subSet.getSubSetId() %>" width="100%">
+			
+			<!-- the table to hold subset title -->
+			<tr><td><table id=subSetTitle_<%=subSet.getSubSetId() %>">
+				<!-- The row to show subset title -->
+				<tr><td with="100%">
+					<img id="collapse_icon" align="left" onclick="collapse('subSetContent_<%=subSet.getSubSetId() %>')" src="collapse.png" width="15" height="15" >
+					<%=subSet.getSubSetName() %>
+				</td></tr>
+			</table></td></tr>
+			
+			<!-- the table to hold subset content -->
+			<tr><td><table id=subSetContent_<%=subSet.getSubSetId() %>" width="100%">
+			<%TreeMap domainMap = new TreeMap(subSet.getDomainMap());
+			if(domainMap != null){
+				Iterator domainIt = domainMap.keySet().iterator();
+				while(domainIt.hasNext()){
+					String domainId = (String)domainIt.next();
+					Domain domain = (Domain)domainMap.get(domainId); 
+					if(domain != null){ %>
+				
+				<!-- the table to hold domain -->
+				<tr><td><table id=domain_<%=domain.getDomainId() %>" width="100%">
+
+<%					String domainValue[] = null;
+					if(domainValueMap.containsKey(domain.getDomainId())){
+						domainValue = (String[])domainValueMap.get(domain.getDomainId());
+					}
+					for(int i=0;i<scalarValue.length;i++){ %>
+					<tr>
+						<%if(i==0){ %>
+							<!-- <td rowspan="<%=scalarValue.length %>" width="5%"><%=domain.getDomainId() %></td> -->
+							<td rowspan="<%=scalarValue.length %>" width="100%" ><%=domain.getDomainName() %></td>
+						<%} %>
+					
+					<!-- label for scalar if scalar has 2 values -->
+						<%if(scalarValueAmount==2){
+							if(i==0){ %>
+							<td class="width_for_2" >Performance</td>
+						<%	} else if(i==1){ %>
+							<td class="width_for_2" >Capacity</td>
+						<%	}
+						} %>
+					
+						<%for(int j=0;j<scalarValue[i].length;j++){  %>
+					<td>
+					<input type="radio" name="<%=domain.getDomainId()+'_'+Integer.toString(i) %>" value="<%=scalarValue[i][j] %>"/ 
+						<%if(domainValue!=null){ if(domainValue[i].equals(scalarValue[i][j])){  %>checked<%} } %> <%if(editDisabled){ %>disabled=disabled<%} %>>
+					</td>
+					<%	}
+					}%>
+					</tr>
+				</table></td></tr>
+				
+					<%}
 				}
-				for(int i=0;i<scalarValue.length;i++){ %>
-	<tr id="subset_<%=subSet.getSubSetId() %>" ><!-- domain row -->
-	<%if(i==0){ %>
-		<td rowspan="<%=scalarValue.length %>" width="5%"><%=domain.getDomainId() %></td>
-		<td rowspan="<%=scalarValue.length %>" colspan="<%=additionColSpan+1 %>" ><%=domain.getDomainName() %></td>
-	<%}
-	if(additionColSpan==0){
-		if(i==0){ %>
-		<td class="width_for_2" >Performance</td>
-<%			} else if(i==1){ %>
-		<td class="width_for_2" >Capacity</td>
-<%			}
-	}
-		for(int j=0;j<scalarValue[0].length;j++){  %>
-		<td>
-		<input type="radio" name="<%=domain.getDomainId()+'_'+Integer.toString(i) %>" value="<%=scalarValue[i][j] %>"/ 
-		<%if(domainValue!=null){ if(domainValue[i].equals(scalarValue[i][j])){  %>checked<%} } %> <%if(editDisabled){ %>disabled=disabled<%} %>>
-		</td>
-		<%} %>
-	</tr>
-	<%} %>
-	<!-- 
-	<tr>
-		<td style="width: 92px; ">Comment</td>
-		<td colspan="<%=3+scalarName.length %>"></td>
-	</tr>
-	 -->
-	<%} } } } } } %>
+			} %>
+			</table></td></tr>
+		</table></td></tr>
+			<%}
+		}
+	} %>
+	</table></td></tr>
 </table>
-<%} } } %>
+<%		}
+	}
+} %>
 </div>
 </form>
 </td>
