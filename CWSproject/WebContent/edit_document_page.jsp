@@ -33,7 +33,13 @@ th span {
 	width: 50px;
 	width: 10%;
 }
+
+.scalar_colume{
+	width: 3%;
+}
+
 </style>
+
 </head>
 
 <body class="grayblue" >
@@ -150,31 +156,31 @@ if (partMap != null) {
 %>
 
 <!-- the table to hold 1 part -->
-<table id="part_<%=part.getPartId() %>" border="1" width="100%"><!-- change table format -->
+<table id="part_<%=part.getPartId() %>" width="100%" cellspacing="0" cellpadding="0"><!-- change table format -->
 	
 	<!-- the table to hold 1 part title -->
-	<tr><td><table id=partTitle_<%=part.getPartId() %>" width="100%">
+	<tr><td><table id="partTitle_<%=part.getPartId() %>" width="100%" border="1">
 		<tr><!-- The first row to show the part name and scalarName -->
-			<td width="100%" >
+			<td>
 				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" >
 				<strong><%=part.getPartName() %></strong><br><br><%=part.getPartDescription() %>
 			</td>
 			<%for(int i=0;i<scalarName.length;i++){ %>
-			<th width="10" height="130"><span><small><%=scalarName[i] %></small></span></th>
+			<th class="scalar_colume" height="150"><span><small><%=scalarName[i] %></small></span></th>
 			<%} %>
 		</tr>
 		<%for(int i=0;i<scalarValue.length;i++){ %>
 		<tr><!-- The second or third row to show the scalar -->
 			<td></td>
 			<%for(int j=0;j<scalarValue[0].length;j++){ %>
-			<td><%=scalarValue[i][j] %></td>
+			<td class="scalar_colume" align="center"><%=scalarValue[i][j] %></td>
 			<%} %>
 		</tr>
 		<%} %>
 	</table></td></tr>
 	
 	<!-- the table to hold 1 part content -->
-	<tr><td><table id=partContent_<%=part.getPartId() %>" width="100%">
+	<tr><td><table id="partContent_<%=part.getPartId() %>" width="100%" cellspacing="0" cellpadding="0" >
 	<%TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 	if(subSetMap != null){
 		Iterator subSetIt = subSetMap.keySet().iterator();
@@ -184,10 +190,10 @@ if (partMap != null) {
 			if(subSet != null){%>
 		
 		<!-- the table to hold 1 subset -->
-		<tr><td><table id=subSet_<%=subSet.getSubSetId() %>" width="100%">
+		<tr><td><table id="subSet_<%=subSet.getSubSetId() %>" width="100%" cellspacing="0" cellpadding="0" >
 			
 			<!-- the table to hold subset title -->
-			<tr><td><table id=subSetTitle_<%=subSet.getSubSetId() %>">
+			<tr><td><table id="subSetTitle_<%=subSet.getSubSetId() %>" width="100%" border="1">
 				<!-- The row to show subset title -->
 				<tr><td with="100%">
 					<img id="collapse_icon" align="left" onclick="collapse('subSetContent_<%=subSet.getSubSetId() %>')" src="collapse.png" width="15" height="15" >
@@ -196,7 +202,7 @@ if (partMap != null) {
 			</table></td></tr>
 			
 			<!-- the table to hold subset content -->
-			<tr><td><table id=subSetContent_<%=subSet.getSubSetId() %>" width="100%">
+			<tr><td><table id="subSetContent_<%=subSet.getSubSetId() %>" width="100%" cellspacing="0" cellpadding="0">
 			<%TreeMap domainMap = new TreeMap(subSet.getDomainMap());
 			if(domainMap != null){
 				Iterator domainIt = domainMap.keySet().iterator();
@@ -206,7 +212,7 @@ if (partMap != null) {
 					if(domain != null){ %>
 				
 				<!-- the table to hold domain -->
-				<tr><td><table id=domain_<%=domain.getDomainId() %>" width="100%">
+				<tr><td><table id="domain_<%=domain.getDomainId() %>" width="100%" border="1">
 
 <%					String domainValue[] = null;
 					if(domainValueMap.containsKey(domain.getDomainId())){
@@ -216,23 +222,23 @@ if (partMap != null) {
 					<tr>
 						<%if(i==0){ %>
 							<!-- <td rowspan="<%=scalarValue.length %>" width="5%"><%=domain.getDomainId() %></td> -->
-							<td rowspan="<%=scalarValue.length %>" width="100%" ><%=domain.getDomainName() %></td>
+							<td rowspan="<%=scalarValue.length %>" ><%=domain.getDomainName() %></td>
 						<%} %>
 					
 					<!-- label for scalar if scalar has 2 values -->
 						<%if(scalarValueAmount==2){
 							if(i==0){ %>
-							<td class="width_for_2" >Performance</td>
+						<td class="width_for_2" >Performance</td>
 						<%	} else if(i==1){ %>
-							<td class="width_for_2" >Capacity</td>
+						<td class="width_for_2" >Capacity</td>
 						<%	}
 						} %>
 					
 						<%for(int j=0;j<scalarValue[i].length;j++){  %>
-					<td>
-					<input type="radio" name="<%=domain.getDomainId()+'_'+Integer.toString(i) %>" value="<%=scalarValue[i][j] %>"/ 
-						<%if(domainValue!=null){ if(domainValue[i].equals(scalarValue[i][j])){  %>checked<%} } %> <%if(editDisabled){ %>disabled=disabled<%} %>>
-					</td>
+						<td class="scalar_colume">
+							<input type="radio" name="<%=domain.getDomainId()+'_'+Integer.toString(i) %>" value="<%=scalarValue[i][j] %>"/
+							<%if(domainValue!=null){ if(domainValue[i].equals(scalarValue[i][j])){  %>checked<%} } %> <%if(editDisabled){ %>disabled=disabled<%} %>>
+						</td>
 					<%	}
 					}%>
 					</tr>
@@ -248,6 +254,7 @@ if (partMap != null) {
 	} %>
 	</table></td></tr>
 </table>
+<br>
 <%		}
 	}
 } %>
