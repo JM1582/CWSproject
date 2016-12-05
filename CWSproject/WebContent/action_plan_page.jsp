@@ -34,6 +34,8 @@ function add_domain(){
 	<button type="button"  onclick="location.href='logout_servlet'">Logout</button>
 </div></div>
 <!-- banner end -->
+
+<!-- login verification -->
 	<%
 	CareProvider careProvider = (CareProvider)session.getAttribute("user");
 	if(careProvider == null){ %>
@@ -42,16 +44,14 @@ function add_domain(){
 		</script>
 	<%return;
 	} %>
-	
-<%
-PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
+
+<%PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 if (patientInfo == null) {
 }
 Map documentMap = patientInfo.getDocumentMap();
 Map actionPlanMap = patientInfo.getActionPlanMap();
-TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap"));
-
- %>
+ActionPlan actionPlan = (ActionPlan) session.getAttribute("actionPlan");
+TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); %>
 
 <div id="header">
 	<h3>CWS No.: <%=patientInfo.getCWSNumber() %>        <img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="50" height="50"></h3>
@@ -61,11 +61,13 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap"));
 <table><tr>
 
 <td valign="top" width="15%" >
+
+<!-- navigation bar -->
 <div id="nav">
 <br>
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">SUMMARY VIEW</a></li>
-  <li><a onclick="expand('document_list')">PROVIDER INPUT</a>
+  <li><a id="provider_input" onclick="expand('document_list')">PROVIDER INPUT</a>
   	<ul id="document_list" class="sublist_collapse">
 <%if(documentMap != null){
 	Iterator it = documentMap.keySet().iterator();
@@ -81,9 +83,24 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap"));
   	<li><a href="create_document_servlet" ><small>New Document</small></a></li>
   	</ul>
   </li>
-  <li><a class="active"  href="view_action_plan_servlet">ACTION PLAN</a></li>
+  <li><a class="active" id="action_plan" onclick="expand('action_plan_list')">ACTION PLAN</a></li>
+  	<ul id="action_plan_list" class="sublist_collapse">
+<%if(actionPlanMap != null){
+	Iterator it = actionPlanMap.keySet().iterator();
+	while(it.hasNext()){
+		int actionPlanId = (Integer) it.next();
+		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
+		if (tmpActionPlan != null) { %>
+	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>">
+	<small>Action Plan ID: <%=tmpActionPlan.getActionPlanId() %></small></a></li>
+<%		}
+	}
+} %>
+  	<li><a ><small>New Action Plan</small></a></li>
+  	</ul>
 </ul>
 </div>
+
 </td>
 
 <td valign="top" width="85%" >
@@ -105,23 +122,19 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap"));
 		<td><strong>Responsibility</strong></td>
 		<td><strong>Title</strong></td>
 	</tr>
-<%if(actionPlanMap != null){
-	Iterator actionPlanIt = actionPlanMap.keySet().iterator();
-	if(actionPlanIt.hasNext()){
-		String actionPlanId = (String) actionPlanIt.next();
-		ActionPlan actionPlan = (ActionPlan) actionPlanMap.get(actionPlanId);
-		Map actionEntryMap = actionPlan.getActionEntryMap();
-		if(actionEntryMap!=null){
-			Iterator actionEntryIt = actionEntryMap.keySet().iterator();
-			while(actionEntryIt.hasNext()){
-				int actionEntryId = (Integer) actionEntryIt.next();
-				ActionEntry actionEntry = (ActionEntry) actionEntryMap.get(actionEntryId);
-				Map actionMap = actionEntry.getActionMap();
-				Iterator actionIt = actionMap.keySet().iterator();
-				boolean firstLine = true;
-				while(actionIt.hasNext()){
-					String actionId = (String) actionIt.next();
-					Action action = (Action) actionMap.get(actionId); %>
+<%if(actionPlan != null){
+	Map actionEntryMap = actionPlan.getActionEntryMap();
+	if(actionEntryMap!=null){
+		Iterator actionEntryIt = actionEntryMap.keySet().iterator();
+		while(actionEntryIt.hasNext()){
+			int actionEntryId = (Integer) actionEntryIt.next();
+			ActionEntry actionEntry = (ActionEntry) actionEntryMap.get(actionEntryId);
+			Map actionMap = actionEntry.getActionMap();
+			Iterator actionIt = actionMap.keySet().iterator();
+			boolean firstLine = true;
+			while(actionIt.hasNext()){
+				String actionId = (String) actionIt.next();
+				Action action = (Action) actionMap.get(actionId); %>
 
 	<tr>
 	<!--  -->
@@ -162,8 +175,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap"));
 		<td><%=action.getCareProvider().getTitle() %></td>
 	</tr>
 		
-<%				}
-			}
+<%			}
 		}
 	}
 }

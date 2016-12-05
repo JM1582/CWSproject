@@ -10,6 +10,8 @@
 <link rel="stylesheet" type="text/css" href="div_formats.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="background.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="div_left_right.css" charset="utf-8" >
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script type="text/javascript" src="collapse.js" ></script>
 
 </head>
@@ -52,6 +54,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 <table><tr>
 
 <td valign="top" width="15%" >
+<!-- navigation bar -->
 <div id="nav">
 <br>
 <ul>
@@ -90,6 +93,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
   	</ul>
 </ul>
 </div>
+
 </td>
 <!-- summary form -->
 <td valign="top" width="85%" >

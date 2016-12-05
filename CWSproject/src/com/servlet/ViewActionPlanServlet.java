@@ -27,8 +27,8 @@ public class ViewActionPlanServlet extends HttpServlet {
 			return;
 		}
 		
-		String actionPlanIdStr = (String) session.getAttribute("actionPlanId");
-		int actionPlanId = Integer.valueOf((String) session.getAttribute("actionPlanId"));
+		String actionPlanIdStr = (String) request.getParameter("actionPlanId");
+		int actionPlanId = Integer.valueOf(actionPlanIdStr);
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 		Map actionPlanMap = patientInfo.getActionPlanMap();
 		ActionPlan actionPlan = (ActionPlan) actionPlanMap.get(actionPlanId);
@@ -55,7 +55,7 @@ public class ViewActionPlanServlet extends HttpServlet {
 			}
 		}
 		
-		session.setAttribute(Integer.toString(actionPlanId), actionPlan);
+		session.setAttribute("actionPlan", actionPlan);
 		session.setAttribute("allDomainMap", allDomainMap);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("action_plan_page.jsp");

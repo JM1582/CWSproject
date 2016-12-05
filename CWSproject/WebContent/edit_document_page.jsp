@@ -61,6 +61,7 @@ th span {
 PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 FormTemplate formTemplate = patientInfo.getFormTemplate();
 Map documentMap = patientInfo.getDocumentMap();
+Map actionPlanMap = patientInfo.getActionPlanMap();
 Document document = (Document)session.getAttribute("document");
 Map domainValueMap = document.getDomainValueMap();
 boolean editDisabled = false;
@@ -78,28 +79,46 @@ if (document.getSign()){
 <table><tr>
 
 <td valign="top" width="15%" >
+
+<!-- navigation bar -->
 <div id="nav">
+<br>
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">SUMMARY VIEW</a></li>
-  <li><a onclick="expand('document_list')" class="active">PROVIDER INPUT</a>
-  	<ul id="document_list" class="sublist">
+  <li><a class="active" id="provider_input" onclick="expand('document_list')">PROVIDER INPUT</a>
+  	<ul id="document_list" class="sublist_collapse">
 <%if(documentMap != null){
 	Iterator it = documentMap.keySet().iterator();
 	while(it.hasNext()){
 		int documentId = (Integer)it.next();
-		Document tmp_document = (Document)documentMap.get(documentId);
-		if (tmp_document != null) { %>
-	<li><a <%if(documentId==document.getDocumentId()){ %>class="active"<%} %> href="edit_document_servlet?documentId=<%=String.valueOf(tmp_document.getDocumentId()) %>"><small>
-	<%=tmp_document.getDate() %>:<br><%=tmp_document.getAuthor().getFirstName() %> <%=tmp_document.getAuthor().getLastName() %></small></a></li>
+		Document tmpDocument = (Document)documentMap.get(documentId);
+		if (document != null) { %>
+	<li><a <%if(documentId==document.getDocumentId()){ %>class="active"<%} %> href="edit_document_servlet?documentId=<%=String.valueOf(tmpDocument.getDocumentId()) %>"><small>
+	<%=tmpDocument.getDate() %>:<br><%=tmpDocument.getAuthor().getFirstName() %> <%=tmpDocument.getAuthor().getLastName() %></small></a></li>
 <%		}
 	}
 } %>
   	<li><a href="create_document_servlet" ><small>New Document</small></a></li>
   	</ul>
   </li>
-  <li><a href="view_action_plan_servlet">ACTION PLAN</a></li>
+  <li><a id="action_plan" onclick="expand('action_plan_list')">ACTION PLAN</a></li>
+  	<ul id="action_plan_list" class="sublist_collapse">
+<%if(actionPlanMap != null){
+	Iterator it = actionPlanMap.keySet().iterator();
+	while(it.hasNext()){
+		int actionPlanId = (Integer) it.next();
+		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
+		if (tmpActionPlan != null) { %>
+	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>">
+	<small>Action Plan ID: <%=tmpActionPlan.getActionPlanId() %></small></a></li>
+<%		}
+	}
+} %>
+  	<li><a ><small>New Action Plan</small></a></li>
+  	</ul>
 </ul>
 </div>
+
 </td>
 
 <td valign="top" width="85%" >
