@@ -133,21 +133,18 @@ public class PatientInfoSQL extends DataBase{
 		//formTemplate = formTemplateSQL.getFormTemplateByName(1);
 		patientInfo.setFormTemplate(formTemplate);
 		
-		ActionPlan actionPlan = new ActionPlan(0, patientInfo.getCWSNumber());
+		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), userSQL.getUserByUserName("Tom").toCareProvider());
 		ActionEntry actionEntry = new ActionEntry(0);
 		Domain domain = new Domain("b110", "Consciousness");
 		actionEntry.setDomain(domain);
 		actionEntry.setCscore(3);
 		actionEntry.setFscore(1);
 		Action action = new Action("0");
-		action.setCareProvider(careProvider);
+		action.setCareProvider(userSQL.getUserByUserName("Tom").toCareProvider());
 		action.setIntervention("Measurement");
 		actionEntry.addAction(action);
 
-		careProvider = new CareProvider( "John", "abcd1234");
-		careProvider.setEmail("johnd123@gmail.com");
-		careProvider.setFirstName("John");
-		careProvider.setLastName("Doe");
+		careProvider = userSQL.getUserByUserName("Tom").toCareProvider();
 		patientInfo.addCareProvider(careProvider);
 		
 		action = new Action("1");

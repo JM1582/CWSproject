@@ -1,22 +1,32 @@
 package com.servlet;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 import com.model.*;
 
-
-public class ViewActionPlanServlet extends HttpServlet {
+/**
+ * Servlet implementation class CreateActionPlanServlet
+ */
+public class CreateActionPlanServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-    public ViewActionPlanServlet() {
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CreateActionPlanServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
-    
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
@@ -27,22 +37,24 @@ public class ViewActionPlanServlet extends HttpServlet {
 			return;
 		}
 		
-		String actionPlanIdStr = (String) request.getParameter("actionPlanId");
-		int actionPlanId = Integer.valueOf(actionPlanIdStr);
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
-		Map actionPlanMap = patientInfo.getActionPlanMap();
-		ActionPlan actionPlan = (ActionPlan) actionPlanMap.get(actionPlanId);
+		CareProvider careProvider = (CareProvider) session.getAttribute("user");
+		
+		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), careProvider);
+		actionPlan.setDateToday();
+		session.setAttribute("actionPlan", actionPlan);
 		
 		FormTemplate formTemplate = patientInfo.getFormTemplate();
 		Map allDomainMap = formTemplate.getAllDomainMap();
-		
-		session.setAttribute("actionPlan", actionPlan);
 		session.setAttribute("allDomainMap", allDomainMap);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("action_plan_page.jsp");
 		requestDispatcher.forward(request, response);
 	}
-	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request,response);
 	}

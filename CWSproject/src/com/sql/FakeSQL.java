@@ -60,7 +60,7 @@ public class FakeSQL {
 		
 		patientInfo.setFormTemplate(this.getFormTemplate());
 
-		ActionPlan actionPlan = new ActionPlan(0, patientInfo.getCWSNumber());
+		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), this.getUser("Tom").toCareProvider());
 		ActionEntry actionEntry = new ActionEntry(0);
 		Domain domain = new Domain("b110", "Consciousness");
 		actionEntry.setDomain(domain);
@@ -74,7 +74,7 @@ public class FakeSQL {
 		
 		patientInfo.addCareProvider(this.getUser("John").toCareProvider());
 		action = new Action("1");
-		action.setCareProvider(careProvider);
+		action.setCareProvider(this.getUser("John").toCareProvider());
 		action.setIntervention("Test");
 		actionEntry.addAction(action);
 		

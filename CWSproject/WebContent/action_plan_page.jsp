@@ -96,7 +96,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 <%		}
 	}
 } %>
-  	<li><a ><small>New Action Plan</small></a></li>
+  	<li><a href="create_action_plan_servlet"><small>New Action Plan</small></a></li>
   	</ul>
 </ul>
 </div>

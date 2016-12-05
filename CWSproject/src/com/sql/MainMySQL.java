@@ -77,7 +77,7 @@ public class MainMySQL {
 		
 
 		
-		ActionPlan actionPlan = new ActionPlan(0, patientInfo.getCWSNumber());
+		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), careProvider);
 		ActionEntry actionEntry = new ActionEntry(0);
 		Domain domain = new Domain("b110", "Consciousness");
 		actionEntry.setDomain(domain);
