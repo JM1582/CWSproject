@@ -65,10 +65,13 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 	Iterator it = documentMap.keySet().iterator();
 	while(it.hasNext()){
 		int documentId = (Integer)it.next();
-		Document document = (Document)documentMap.get(documentId);
-		if (document != null) { %>
-	<li><a href="edit_document_servlet?documentId=<%=String.valueOf(document.getDocumentId()) %>"><small>
-	<%=document.getDate() %>:<br><%=document.getAuthor().getFirstName() %> <%=document.getAuthor().getLastName() %></small></a></li>
+		Document tmpDocument = (Document)documentMap.get(documentId);
+		if (tmpDocument != null) { %>
+	<li><a href="edit_document_servlet?documentId=<%=String.valueOf(tmpDocument.getDocumentId()) %>"><small>
+		<%=tmpDocument.getDateOnly() %>:<br>
+		<%=tmpDocument.getAuthor().getFirstName() %> <%=tmpDocument.getAuthor().getLastName() %><br>
+		<%=tmpDocument.getAuthor().getTitle() %>
+	</small></a></li>
 <%		}
 	}
 } %>
@@ -81,15 +84,15 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 	Iterator it = actionPlanMap.keySet().iterator();
 	while(it.hasNext()){
 		int actionPlanId = (Integer) it.next();
-		ActionPlan actionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
+		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		int jsfklwef;
-		if (actionPlan != null) { %>
-	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(actionPlan.getActionPlanId()) %>">
-	<small>Action Plan ID: <%=actionPlan.getActionPlanId() %></small></a></li>
+		if (tmpActionPlan != null) { %>
+	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>">
+	<small>Action Plan ID: <%=tmpActionPlan.getActionPlanId() %></small></a></li>
 <%		}
 	}
 } %>
-  	<li><a ><small>New Action Plan</small></a></li>
+  	<li><a href="create_action_plan_servlet"><small>New Action Plan</small></a></li>
   	</ul>
 </ul>
 </div>

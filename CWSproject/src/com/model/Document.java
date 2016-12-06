@@ -80,10 +80,20 @@ public class Document{
 				return true;
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
+	}
+	public String getDateOnly(){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+		Date date = null;
+		try {
+			date = sdf.parse(this.date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		sdf = new SimpleDateFormat("dd/mm/yyyy");
+		return (String)sdf.format(date);
 	}
 	
 	//author;Author

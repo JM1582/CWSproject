@@ -104,7 +104,10 @@ if (document.getSign()){
 		Document tmpDocument = (Document)documentMap.get(documentId);
 		if (document != null) { %>
 	<li><a <%if(documentId==document.getDocumentId()){ %>class="active"<%} %> href="edit_document_servlet?documentId=<%=String.valueOf(tmpDocument.getDocumentId()) %>"><small>
-	<%=tmpDocument.getDate() %>:<br><%=tmpDocument.getAuthor().getFirstName() %> <%=tmpDocument.getAuthor().getLastName() %></small></a></li>
+		<%=document.getDateOnly() %>:<br>
+		<%=document.getAuthor().getFirstName() %> <%=document.getAuthor().getLastName() %><br>
+		<%=document.getAuthor().getTitle() %>
+	</small></a></li>
 <%		}
 	}
 } %>

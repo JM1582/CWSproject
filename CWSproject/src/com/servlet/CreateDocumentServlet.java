@@ -41,6 +41,7 @@ public class CreateDocumentServlet extends HttpServlet {
 		FormTemplate formTemplate = patientInfo.getFormTemplate();
 		if (formTemplate != null) {
 			Document document = new Document(formTemplate, careProvider, patientInfo.getCWSNumber());
+			document.setDateToday();
 			session.setAttribute("document", document);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("edit_document_page.jsp");
 			requestDispatcher.forward(request, response);

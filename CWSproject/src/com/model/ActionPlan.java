@@ -70,4 +70,15 @@ public class ActionPlan {
 		}
 		return false;
 	}
+	public String getDateOnly(){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+		Date date = null;
+		try {
+			date = sdf.parse(this.date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		sdf = new SimpleDateFormat("dd/mm/yyyy");
+		return (String)sdf.format(date);
+	}
 }
