@@ -85,10 +85,12 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 	while(it.hasNext()){
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
-		int jsfklwef;
 		if (tmpActionPlan != null) { %>
-	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>">
-	<small>Action Plan ID: <%=tmpActionPlan.getActionPlanId() %></small></a></li>
+	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
+		<%=tmpActionPlan.getDateOnly() %>:<br>
+		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
+		<%=tmpActionPlan.getAuthor().getTitle() %>
+	</small></a></li>
 <%		}
 	}
 } %>

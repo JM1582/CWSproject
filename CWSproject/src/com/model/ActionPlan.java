@@ -81,4 +81,11 @@ public class ActionPlan {
 		sdf = new SimpleDateFormat("dd/mm/yyyy");
 		return (String)sdf.format(date);
 	}
+	
+	public CareProvider getAuthor(){
+		return this.author;
+	}
+	public void setAuthor(CareProvider careProvider){
+		this.author = careProvider;
+	}
 }

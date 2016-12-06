@@ -102,11 +102,11 @@ if (document.getSign()){
 	while(it.hasNext()){
 		int documentId = (Integer)it.next();
 		Document tmpDocument = (Document)documentMap.get(documentId);
-		if (document != null) { %>
+		if (tmpDocument != null) { %>
 	<li><a <%if(documentId==document.getDocumentId()){ %>class="active"<%} %> href="edit_document_servlet?documentId=<%=String.valueOf(tmpDocument.getDocumentId()) %>"><small>
-		<%=document.getDateOnly() %>:<br>
-		<%=document.getAuthor().getFirstName() %> <%=document.getAuthor().getLastName() %><br>
-		<%=document.getAuthor().getTitle() %>
+		<%=tmpDocument.getDateOnly() %>:<br>
+		<%=tmpDocument.getAuthor().getFirstName() %> <%=tmpDocument.getAuthor().getLastName() %><br>
+		<%=tmpDocument.getAuthor().getTitle() %>
 	</small></a></li>
 <%		}
 	}
@@ -122,8 +122,11 @@ if (document.getSign()){
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
-	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>">
-	<small>Action Plan ID: <%=tmpActionPlan.getActionPlanId() %></small></a></li>
+	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
+		<%=tmpActionPlan.getDateOnly() %>:<br>
+		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
+		<%=tmpActionPlan.getAuthor().getTitle() %>
+	</small></a></li>
 <%		}
 	}
 } %>

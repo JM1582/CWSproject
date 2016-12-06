@@ -94,8 +94,11 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
-	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>">
-	<small>Action Plan ID: <%=tmpActionPlan.getActionPlanId() %></small></a></li>
+	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
+		<%=tmpActionPlan.getDateOnly() %>:<br>
+		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
+		<%=tmpActionPlan.getAuthor().getTitle() %>
+	</small></a></li>
 <%		}
 	}
 } %>

@@ -61,6 +61,7 @@ public class FakeSQL {
 		patientInfo.setFormTemplate(this.getFormTemplate());
 
 		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), this.getUser("Tom").toCareProvider());
+		actionPlan.setDateToday();
 		ActionEntry actionEntry = new ActionEntry(0);
 		Domain domain = new Domain("b110", "Consciousness");
 		actionEntry.setDomain(domain);
