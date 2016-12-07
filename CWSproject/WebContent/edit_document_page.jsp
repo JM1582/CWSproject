@@ -149,16 +149,30 @@ if (document.getSign()){
 
 <!-- the table cell to hold the document -->
 <td valign="top" width="85%" >
-<div style="background:#e5e8d5;">
-<h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2>
+<div style="background:white;">
+<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;">
+<span>
+<p><h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2><p>
+</span>
+<span>
 <form name="documentForm" action="save_document_servlet">
-
-<div align="right">
-<!-- <button type="button" onclick="location.href='sign_document_servlet'" >Sign</button> -->
-<input type="submit" name="sign" value="Sign">
-<input type="submit" value="Save">
-<!--<button type="button" onclick="location.href='create_document_servlet'" >New</button>  -->
+&emsp;
+<input type="submit" name="sign" value="Sign" class="button1">
+<input type="submit" value="Save" class="button1">
+</span>
 </div>
+
+
+<br><br><br><br><br><br><br>
+
+<form name="documentForm" action="save_document_servlet">
+<!-- 
+<div align="right">
+<!-- <button type="button" onclick="location.href='sign_document_servlet'" >Sign</button>
+<input type="submit" name="sign" value="Sign" class="button1">
+<input type="submit" value="Save" class="button1">
+<!--<button type="button" onclick="location.href='create_document_servlet'" >New</button>  
+</div>-->
 
 <div id="document" >
 <% TreeMap partMap = new TreeMap(formTemplate.getPartsMap());

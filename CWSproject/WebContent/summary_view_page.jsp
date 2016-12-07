@@ -57,8 +57,8 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
  <font >&nbsp;<strong><%=patientInfo.getCWSNumber() %></strong></font>
  </span>
  </div> -->
- 
- <div>
+ <!-- cws number and icon -->
+<div>
 <div class="header">
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
 	<strong><%=patientInfo.getCWSNumber() %></strong></p>
@@ -117,8 +117,10 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 </td>
 <!-- summary form -->
 <td valign="top" width="85%"  >
-<div style="background:#e5e8d5;">
-<h2 class="table_header"> &nbsp; COLLABORATIVE SUMMARY</h2>
+<div style="background:white; ">
+<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;">
+<p><h2 class="table_header"> &nbsp; Collaborative Summary</h2><p>
+</div><br><br><br><br><br><br>
 <%
 if (summaryMap.size()==0){ %>
 <p style="font-family:Arial; font-size:30px"> &emsp; Patient record empty, please create a new document!</p>
