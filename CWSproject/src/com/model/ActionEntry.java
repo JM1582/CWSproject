@@ -11,6 +11,8 @@ public class ActionEntry {
 	public ActionEntry(int actionEntryId){
 		this.actionEntryId = actionEntryId;
 		this.actionMap = new HashMap();
+		this.cScore = -100;
+		this.fScore = -100;
 	}
 	//set and get
 	//actionEntryId

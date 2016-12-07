@@ -1,5 +1,8 @@
 package com.model;
 
+import java.util.Iterator;
+import java.util.Map;
+
 public class Domain {
 	private String domainId;
 	private String domainName;
@@ -40,6 +43,17 @@ public class Domain {
 	}
 	public void setComment(String newComment){
 		this.comment = newComment;
+	}
+	public boolean hasDomainValueWithSummaryMap(Map summaryMap){
+		Iterator summaryIt = summaryMap.keySet().iterator();
+		while(summaryIt.hasNext()){
+			String userName = (String) summaryIt.next();
+			Document document = (Document) summaryMap.get(userName);
+			if(document.getDomainValueMap().containsKey(this.domainId)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

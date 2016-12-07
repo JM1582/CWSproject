@@ -66,4 +66,38 @@ public class OnePart {
 	public void removeSubSet(SubSet subSet){
 		this.subSetMap.remove(subSet.getSubSetId());
 	}
+	
+	public boolean isContainDomain(String domainId){
+		Iterator subSetIt = this.subSetMap.keySet().iterator();
+		while(subSetIt.hasNext()){
+			String subSetId = (String) subSetIt.next();
+			SubSet subSet = (SubSet) this.subSetMap.get(subSetId);
+			if(subSet.isContainDomain(domainId)){
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean hasDomainValue(Map domainValueMap){
+		Iterator subSetIt = this.subSetMap.keySet().iterator();
+		while(subSetIt.hasNext()){
+			String subSetId = (String) subSetIt.next();
+			SubSet subSet = (SubSet) this.subSetMap.get(subSetId);
+			if(subSet.hasDomainValue(domainValueMap)){
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean hasDomainValueWithSummaryMap(Map summaryMap){
+		Iterator subSetIt = this.subSetMap.keySet().iterator();
+		while(subSetIt.hasNext()){
+			String subSetId = (String) subSetIt.next();
+			SubSet subSet = (SubSet) this.subSetMap.get(subSetId);
+			if(subSet.hasDomainValueWithSummaryMap(summaryMap)){
+				return true;
+			}
+		}
+		return false;
+	}
 }

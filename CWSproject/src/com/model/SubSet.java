@@ -40,6 +40,35 @@ public class SubSet {
 	public void removeDomain(Domain domain){
 		this.domainMap.remove(domain.getDomainId());
 	}
+	
+	public boolean isContainDomain(String domainId){
+		if(this.domainMap.containsKey(domainId)){
+			return true;
+		}
+		return false;
+	}
+	public boolean hasDomainValue(Map domainValueMap){
+		Iterator domainValueIt = domainValueMap.keySet().iterator();
+		while(domainValueIt.hasNext()){
+			String domainId = (String) domainValueIt.next();
+			if(this.isContainDomain(domainId)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean hasDomainValueWithSummaryMap(Map summaryMap){
+		Iterator summaryIt = summaryMap.keySet().iterator();
+		while(summaryIt.hasNext()){
+			String userName = (String) summaryIt.next();
+			Document document = (Document) summaryMap.get(userName);
+			if(this.hasDomainValue(document.getDomainValueMap())){
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 

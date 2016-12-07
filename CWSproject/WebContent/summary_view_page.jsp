@@ -119,25 +119,29 @@ if(partMap != null){
 			%>
 <table  width="100%" border="1px" cellspacing="0px"  >
 	<!-- parts -->
+	<%if(part.hasDomainValueWithSummaryMap(summaryMap)){ %>
 	<tr><td colspan="<%=scalarValueNum+2 %>" ><h3><%=part.getPartName() %></h3></td></tr>
+	<%} %>
 <%			TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 			if(subSetMap != null){
 				Iterator subSetIt = subSetMap.keySet().iterator();
 				while(subSetIt.hasNext()){
 					String subSetId = (String) subSetIt.next();
-					SubSet subSet = (SubSet) subSetMap.get(subSetId); %>
+					SubSet subSet = (SubSet) subSetMap.get(subSetId);			
+					if(subSet != null){ %>
 	<!-- subsets -->
-	<tr><td colspan="<%=scalarValueNum+2 %>" ><h4><%=subSet.getSubSetName() %></h4></td></tr>				
-<%					if(subSet != null){
-						TreeMap domainMap = new TreeMap(subSet.getDomainMap());
+	<%if(subSet.hasDomainValueWithSummaryMap(summaryMap)){ %>
+	<tr><td colspan="<%=scalarValueNum+2 %>" ><h4><%=subSet.getSubSetName() %></h4></td></tr>
+	<%} %>
+<%						TreeMap domainMap = new TreeMap(subSet.getDomainMap());
 						if(domainMap != null){
 							Iterator domainIt = domainMap.keySet().iterator();
 							while(domainIt.hasNext()){
 								String domainId = (String) domainIt.next();
 								Domain domain = (Domain) domainMap.get(domainId);
-								if(domain != null){
-									summaryMap.get(domainId); %>
+								if(domain != null){ %>
 	<!-- domain -->
+	<%if(domain.hasDomainValueWithSummaryMap(summaryMap)){ %>
 	<tr><td colspan="<%=scalarValueNum+2 %>"><strong><%=domain.getDomainName() %></strong></td></tr>
 	<%Iterator summaryIt = summaryMap.keySet().iterator(); 
 	while(summaryIt.hasNext()){
@@ -153,10 +157,11 @@ if(partMap != null){
 		<%for(int i=0;i<domainValue.length;i++){ %>
 		<td height="50px" width="20%" <%if(domainValue[i].equals("4")||domainValue[i].equals("-4")){ %>bgcolor=#eb6878<%} %>><%=domainValue[i] %></td>
 		<%} %>
-	</tr>		
+	</tr>
 <%		}
-	}
-								}
+	} %>
+	<%} %>
+<%								}
 							}
 						}
 					}
