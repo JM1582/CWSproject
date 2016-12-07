@@ -1,11 +1,39 @@
 @CHARSET "UTF-8";
 .engrave23{
 	font-size:23px;
-	text-shadow: 1px 1px 0px #7ea9bf;
+	text-shadow: 2px 2px 0px #7ea9bf;
 	color:#3d4e55;
 }
 .engrave30{
 	font-size:30px;
-	text-shadow: 1px 1px 0px #7ea9bf;
+	text-shadow: 2px 2px 0px #9fc8cb;
 	color:#3d4e55;
+}
+.engrave45{
+	font-size:45px;
+	text-shadow: 2px 2px 0px #7ea9bf;
+	color:#3d4e55;
+}
+.engrave60{
+	font-size:60px;
+	text-shadow: 2px 2px 0px #7ea9bf;
+	color:#466669;
+	-webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+     line-height:30px;
+}
+
+.table_header{
+	font-family:Arial; 
+	font-size:50px;
+	margin-top:10px;
+	margin-bottom:0;
+}
+.form_instruction{
+	font-family:Arial; 
+	font-size:23px;
+	margin-top:20px;
+	margin-bottom:0;
 }

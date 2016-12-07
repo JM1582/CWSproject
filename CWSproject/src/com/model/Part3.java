@@ -17,8 +17,24 @@ public class Part3 extends OnePart{
 		subSet = new SubSet("e1","PRODUCTS AND TECHNOLOGY");
 		subSet.addDomain(new Domain("e110", "For personal consumption(food,medicines)"));
 		this.addSubSet(subSet);
+		subSet.addDomain(new Domain("e115", "For personal use in daily living"));
+		this.addSubSet(subSet);
+		subSet.addDomain(new Domain("e120", "For personal  indoor and outdoor mobility and transportation"));
+		this.addSubSet(subSet);
+		subSet.addDomain(new Domain("e125", "Products for communication"));
+		this.addSubSet(subSet);
+		subSet.addDomain(new Domain("e150", "Design, construction and building products and technology of buildings for public use"));
+		this.addSubSet(subSet);
+		subSet.addDomain(new Domain("e155", "Design, construction and building products and technology of buildings for private use"));
+		this.addSubSet(subSet);
 		//e2
 		subSet = new SubSet("e2","NATURAL ENVIRONMENT AND HUMAN MADE CHAGES TO ENVIRONMENT");
+		this.addSubSet(subSet);
+		subSet.addDomain(new Domain("e225", "Climate"));
+		this.addSubSet(subSet);
+		subSet.addDomain(new Domain("e240", "Light"));
+		this.addSubSet(subSet);
+		subSet.addDomain(new Domain("e250", "Sound"));
 		this.addSubSet(subSet);
 		//e3
 		subSet = new SubSet("e3","SUPPORT AND RELATIONSHIPS");

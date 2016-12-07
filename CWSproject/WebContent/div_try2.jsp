@@ -1,31 +1,77 @@
-<title>让图片自动适应DIV容器大小</title>
-
-<style>
-
-.aixuexi{
-
-width:200px;
-
-height:200px;
-
-border:1px solid black;
-
-}
-
-.aixuexi img{width:100%;height:100%;}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="aixuexi">
-
-<img src="./images/logo.jpg"/>
-
-</div>
-
-</body>
-
-</html>
+<html> 
+<head> 
+<style> 
+* { 
+padding:0; 
+margin:0; 
+border:0; 
+} 
+#fixed_header { 
+position:fixed; 
+z-index:1; 
+top:0; 
+width:100%; 
+background-color:#ccc; 
+} 
+#navi { 
+margin:0 auto; 
+text-align:center; 
+} 
+li { 
+list-style-type:none; 
+display:inline; 
+} 
+#real_header { 
+position:absolute; 
+width:100%; 
+z-index:2; 
+background-color:#ccc; 
+} 
+#entry { 
+margin:0 auto; 
+text-align:center; 
+background-color:#ccc; 
+} 
+</style> 
+</head> 
+<body> 
+<div id="fixed_header"> 
+<div id="navi"> 
+<ul> 
+<li>News</li> 
+<li>Book</li> 
+<li>Game</li> 
+<li>Sports</li> 
+</ul> 
+</div> 
+</div> 
+<div id="real_header"> 
+<div id="entry"> 
+<p>This is welcome entry</p> 
+</div> 
+<div id="navi"> 
+<ul> 
+<li>News</li> 
+<li>Book</li> 
+<li>Game</li> 
+<li>Sports</li> 
+</ul> 
+</div> 
+</div> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+<br/><br/><br/><br/><br/><br/> 
+</body> 
+</html> 

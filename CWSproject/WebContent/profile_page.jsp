@@ -31,13 +31,13 @@
 	<%return;
 	} %>
 	
-<p class="engrave30"><strong>&nbsp;&nbsp;<%=careProvider.getFirstName() %> <%=careProvider.getLastName() %></strong></p>
-<p class="engrave23"><strong>&emsp;&emsp;<%=careProvider.getTitle() %></strong></p>
-<p class="engrave23"><strong>&emsp;&emsp;Location: <%=careProvider.getFacility() %></strong></p>
-<p class="engrave23"><strong>&emsp;&emsp;Email: <%=careProvider.getEmail() %></strong></p>
+<p class="engrave45"><strong>&emsp;&emsp;&nbsp;&nbsp;<%=careProvider.getFirstName() %> <%=careProvider.getLastName() %></strong></p>
+<p class="engrave23"><strong>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<%=careProvider.getTitle() %></strong></p>
+<p class="engrave23"><strong>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Location: <%=careProvider.getFacility() %></strong></p>
+<p class="engrave23"><strong>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Email: <%=careProvider.getEmail() %></strong></p>
  
 <form align="center" action="search_patient_servlet">
-<p style= font-size:22px>Search for your patient:</p>
+<p class="engrave30"><strong>Search for your patient:</strng></p>
 &emsp;&emsp;&emsp;&emsp;<input type="text" name="CWSNumber" style="width:232px; height:35px;">
 <input type="submit" value="Search" 
 class="button1">
