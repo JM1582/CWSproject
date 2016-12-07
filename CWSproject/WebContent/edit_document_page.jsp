@@ -260,16 +260,21 @@ if (partMap != null) {
 					<!-- label for scalar if scalar has 2 values -->
 						<%if(scalarValueAmount==2){
 							if(i==0){ %>
-						<td class="width_for_2" >Performance</td>
-						<%	} else if(i==1){ %>
 						<td class="width_for_2" >Capacity</td>
+						<%	} else if(i==1){ %>
+						<td class="width_for_2" >Performance</td>
 						<%	}
 						} %>
 					
 						<%for(int j=0;j<scalarValue[i].length;j++){  %>
 						<td class="scalar_colume">
+							<%if(domainValue!=null){ %>
 							<input type="radio" name="<%=domain.getDomainId()+'_'+Integer.toString(i) %>" value="<%=scalarValue[i][j] %>"/
-							<%if(domainValue!=null){ if(domainValue[i].equals(scalarValue[i][j])){  %>checked<%} } %> <%if(editDisabled){ %>disabled=disabled<%} %>>
+							<%if(domainValue[i]!=null){ if(domainValue[i].equals(scalarValue[i][j])){  %>checked<%} } %> <%if(editDisabled){ %>disabled=disabled<%} %>>
+							<%}else{ %>
+							<input type="radio" name="<%=domain.getDomainId()+'_'+Integer.toString(i) %>" value="<%=scalarValue[i][j] %>"/
+							<%if(editDisabled){ %>disabled=disabled<%} %>>
+							<%} %>
 						</td>
 					<%	}
 					}%>

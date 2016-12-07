@@ -52,7 +52,18 @@ public class SubSet {
 		while(domainValueIt.hasNext()){
 			String domainId = (String) domainValueIt.next();
 			if(this.isContainDomain(domainId)){
-				return true;
+				String domainValue[] = (String[]) domainValueMap.get(domainId);
+				if(domainValue!=null){
+					boolean atLeastOne = false;
+					for(int i=0;i<domainValue.length;i++){
+						if(domainValue[i]!=null){
+							atLeastOne = true;
+						}
+					}
+					if(atLeastOne){
+						return true;
+					}
+				}
 			}
 		}
 		return false;

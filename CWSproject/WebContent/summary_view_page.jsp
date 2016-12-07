@@ -171,9 +171,13 @@ if(partMap != null){
 	<tr>
 		<td height="50px" width="20%"><%=document.getAuthor().getTitle() %></td>
 		<td height="50px"><%=document.getAuthor().getFirstName() %> <%=document.getAuthor().getLastName() %></td>
-		<%for(int i=0;i<domainValue.length;i++){ %>
+		<%for(int i=0;i<domainValue.length;i++){
+			if(domainValue[i]!=null){ %>
 		<td height="50px" width="20%" <%if(domainValue[i].equals("4")||domainValue[i].equals("-4")){ %>bgcolor=#eb6878<%} %>><%=domainValue[i] %></td>
-		<%} %>
+		<%	}else{ %>
+		<td height="50px" width="20%">no data</td>
+<%			}
+		} %>
 	</tr>
 <%		}
 	} %>
