@@ -99,8 +99,7 @@ if (document.getSign()){
 <table><tr>
 
 <!-- the table cell to hold nav bar -->
-<td valign="top" width="15%" >
-
+<td valign="top" width="25%" >
 <!-- navigation bar -->
 <div id="nav">
 <br>
@@ -267,6 +266,7 @@ if (partMap != null) {
 				}
 			} %>
 			</table></td></tr>
+			
 		</table></td></tr>
 			<%}
 		}
@@ -281,7 +281,7 @@ if (partMap != null) {
 </form>
 </div>
 </td>
-
+<td></td>
 </tr></table>
 
 </body>
