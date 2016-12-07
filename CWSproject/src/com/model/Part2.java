@@ -5,7 +5,7 @@ public class Part2 extends OnePart{
 	
 	public Part2() {
 		this.setPartId("defaultPart2");
-		this.setPartName("ACTIVITY AND PARTICIPATION");
+		this.setPartName("CAPACITY AND PERFORMANCE");
 		this.setPartDescription("Execution of a task or action by an individual and involvement in a life situation");
 		this.setScalarName(new String[]{"Complete Impairment","Severe Impairment","Moderate Impairment","Mild Impairment", "No Problem", "Not applicable"}); 
 		this.setScalarValue(new String[][]{{"4","3","2","1","0","9"},{"4","3","2","1","0","9"}});

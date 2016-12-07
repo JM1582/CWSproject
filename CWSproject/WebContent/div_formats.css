@@ -95,6 +95,18 @@
 .hidden_above3{
 	height:50px;
 }
+.hidden_above60{
+	height:60px;
+	width:100%;
+	position:fixed;
+}
+.shadow_div{
+width:250px;height:auto;border:#909090 1px solid;background:#fff;color:#333;
+filter:progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=3);/*ie*/
+-moz-box-shadow: 2px 2px 10px #909090;
+-webkit-box-shadow: 2px 2px 10px #909090;
+box-shadow:2px 2px 10px #909090;
+}
 
 
 

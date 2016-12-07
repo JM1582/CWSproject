@@ -11,6 +11,8 @@
 <link rel="stylesheet" type="text/css" href="background.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="div_left_right.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="documents.css">
+<link rel="stylesheet" type="text/css" href="buttons.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="font_styles.css" charset="utf-8" >
 <script type="text/javascript" src="collapse.js" ></script>
 <style type="text/css">
 th {
@@ -43,19 +45,24 @@ th span {
 </head>
 
 <body class="grayblue" >
-<!-- banner -->
+<!-- banner 
 <div class = "backgroundwhite">
 <div class = "green1">
 <h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
 </div>
-
-<!-- the div to hold 2 buttons: close file and logout -->
+<!-- the div to hold 2 buttons: close file and logout
 <div align="right">
 	<button type="button"  onclick="location.href='profile_page.jsp'">Close File</button>
 	<button type="button"  onclick="location.href='logout_servlet'">Logout</button>
 </div></div>
+ banner end -->
+<div align="right" class="banner2" >
+<div class="hidden_above60" ><br>
+	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
+	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
+</div></div>
 
-<!-- banner end -->
+
 
 <!-- login verification -->
 <%CareProvider careProvider = (CareProvider)session.getAttribute("user");
@@ -79,9 +86,13 @@ if (document.getSign()){
 	editDisabled = true;
 } %>
 
-<!-- the div to hold the patient basic information -->
-<div id="header">
-	<h3>CWS No.: <%=patientInfo.getCWSNumber() %>     <img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="50" height="50"></h3>
+
+ <div>
+<div class="header">
+	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
+	<strong><%=patientInfo.getCWSNumber() %></strong></p>
+</div>
+<br><br><br><br><br><br><br>
 </div>
 
 <!-- the table to hold nav bar in left and document in right -->
@@ -139,6 +150,8 @@ if (document.getSign()){
 
 <!-- the table cell to hold the document -->
 <td valign="top" width="85%" >
+<div style="background:#e5e8d5;">
+<h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2>
 <form name="documentForm" action="save_document_servlet">
 
 <div align="right">
@@ -266,6 +279,7 @@ if (partMap != null) {
 } %>
 </div>
 </form>
+</div>
 </td>
 
 </tr></table>
