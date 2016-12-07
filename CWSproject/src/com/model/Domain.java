@@ -49,8 +49,17 @@ public class Domain {
 		while(summaryIt.hasNext()){
 			String userName = (String) summaryIt.next();
 			Document document = (Document) summaryMap.get(userName);
-			if(document.getDomainValueMap().containsKey(this.domainId)){
-				return true;
+			String domainValue[] = (String[]) document.getDomainValueMap().get(domainId);
+			if(domainValue!=null){
+				boolean atLeastOne = false;
+				for(int i=0;i<domainValue.length;i++){
+					if(domainValue[i]!=null){
+						atLeastOne = true;
+					}
+				}
+				if(atLeastOne){
+					return true;
+				}
 			}
 		}
 		return false;

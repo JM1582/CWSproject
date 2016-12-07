@@ -72,7 +72,7 @@ public class SaveDocumentServlet extends HttpServlet {
 								if(request.getParameter(domainId+'_'+Integer.toString(i))!=null){
 									domainValue[i] = request.getParameter(domainId+'_'+Integer.toString(i));
 								} else {
-									domainValue[i] = "no data";
+									domainValue[i] = null;
 								}
 							}
 							if (domainValue != null){
