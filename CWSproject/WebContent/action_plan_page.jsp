@@ -143,7 +143,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	<tr><!--  -->
 	<%if(firstLine){ %>
 		<!-- selecting domain name -->
-		<td><select>
+		<td><select name="domain_<%=Integer.toString(actionEntry.getActionEntryId()) %>">
 		<%Iterator allDomainIt = allDomainMap.keySet().iterator();
 		while(allDomainIt.hasNext()){
 			String tmpDomainId = (String) allDomainIt.next();
@@ -167,12 +167,13 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		<td colspan="3"></td>
 	<%} 
 	firstLine = false; %>
-		<td><select>
+		<td><select name="intervention_<%=Integer.toString(actionEntry.getActionEntryId()) %>">
+			<option><%=action.getIntervention() %></option>
 			<%=action.getIntervention() %>
 		</select></td>
 		<%Map careProviderMap = patientInfo.getCareProviderMap();
 		if(careProviderMap != null) { %>
-		<td><select>
+		<td><select name="responsibility_<%=Integer.toString(actionEntry.getActionEntryId()) %>">
 <%			Iterator careProviderIt = careProviderMap.keySet().iterator();
 			while(careProviderIt.hasNext()){
 				String userName = (String) careProviderIt.next();
@@ -190,7 +191,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 %>
 </table>
 
-<input type="button" onclick="add_domain()" value="+">
+<input type="button" onclick="location.href='add_domain_servlet'" value="+">
 </form>
 </div>
 </td>
