@@ -9,10 +9,10 @@ function expand(objid){
 
 function collapse(objid){
 	var obj=document.getElementById(objid);
-	if(obj.style.display != "none"){
-		obj.style.display="none";
-	}else{
+	if(obj.style.display != "table"){
 		obj.style.display="table";
+	}else{
+		obj.style.display="none";
 	}
 }
 

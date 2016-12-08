@@ -218,7 +218,7 @@ if (partMap != null) {
 	</table></td></tr>
 	
 	<!-- the table to hold 1 part content -->
-	<tr><td><table id="partContent_<%=part.getPartId() %>" width="100%" cellspacing="0" cellpadding="0" >
+	<tr><td><table id="partContent_<%=part.getPartId() %>" width="100%" cellspacing="0" cellpadding="0" style="display: none">
 	<%TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 	if(subSetMap != null){
 		Iterator subSetIt = subSetMap.keySet().iterator();
@@ -240,7 +240,7 @@ if (partMap != null) {
 			</table></td></tr>
 			
 			<!-- the table to hold subset content -->
-			<tr><td><table id="subSetContent_<%=subSet.getSubSetId() %>" width="100%" cellspacing="0" cellpadding="0">
+			<tr><td><table id="subSetContent_<%=subSet.getSubSetId() %>" width="100%" cellspacing="0" cellpadding="0" style="display: none">
 			<%TreeMap domainMap = new TreeMap(subSet.getDomainMap());
 			if(domainMap != null){
 				Iterator domainIt = domainMap.keySet().iterator();
