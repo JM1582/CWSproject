@@ -66,8 +66,7 @@
 	background-size: contain;
     background:url("bgd_banner3	.png");
     position:fixed;	
-
-    
+	top:0;
 }
 
 .header{
@@ -89,8 +88,13 @@
  	   position:fixed;
  	   width:100%;
  	   margin-top:10px;
- 	   }
+}
 
-
+.body_div{
+	padding:0;
+	margin:0;
+	width:100%;
+    top:140px; 
+}
 
 

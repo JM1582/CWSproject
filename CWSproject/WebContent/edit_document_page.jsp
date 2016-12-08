@@ -38,6 +38,13 @@ th span {
 	width: 10%;
 }
 
+.body_div{
+	padding:0;
+	margin:0;
+	width:100%;
+    margin-top:150px; 
+}
+
 </style>
 
 </head>
@@ -54,13 +61,12 @@ th span {
 	<button type="button"  onclick="location.href='logout_servlet'">Logout</button>
 </div></div>
  banner end -->
-<div align="right" class="banner2" >
-<div class="hidden_above60" ><br>
+<div class="banner2" >
+<div class="hidden_above60" align="right"><br>
 	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
 	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
-</div></div>
-
-
+</div>
+</div>
 
 <!-- login verification -->
 <%CareProvider careProvider = (CareProvider)session.getAttribute("user");
@@ -85,22 +91,19 @@ if (document.getSign()){
 } %>
 
 
- <div>
 <div class="header">
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
 	<strong><%=patientInfo.getCWSNumber() %></strong></p>
 </div>
-<br><br><br><br><br><br><br>
-</div>
 
 <!-- the table to hold nav bar in left and document in right -->
+<div class="body_div">
 <table><tr>
 
 <!-- the table cell to hold nav bar -->
 <td valign="top" width="20%" >
 <!-- navigation bar -->
 <div id="nav">
-<br><br><br>
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>"><font size=5 style="line-height:60px">SUMMARY VIEW</font></a></li>
   <li><a class="active" id="provider_input" onclick="expand('document_list')"><font size=5 style="line-height:60px">PROVIDER INPUT</font></a>
@@ -150,7 +153,7 @@ if (document.getSign()){
 <div style="background:#f9faf5;"><!-- the div to hold the document -->
 
 <form name="documentForm" action="save_document_servlet">
-<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;">
+<div class="fixed_title">
 <span>
 
 <%if(document.getSign()){ %>
@@ -197,7 +200,7 @@ if (partMap != null) {
 	<!-- the table to hold 1 part title -->
 	<tr><td><table class="thin_border" id="partTitle_<%=part.getPartId() %>">
 		<tr ><!-- The first row to show the part name and scalarName -->
-			<th >
+			<th class="thin_border">
 				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" border="0">
 				<font class="input_part"><strong>&emsp;<%=part.getPartName() %></strong></font><br><br><font class="input_partDs"><%=part.getPartDescription() %></font>
 			</th>
@@ -306,6 +309,7 @@ if (partMap != null) {
 </td>
 <td></td>
 </tr></table>
+</div>
 
 </body>
 </html>
