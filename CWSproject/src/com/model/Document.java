@@ -14,7 +14,7 @@ public class Document{
 	private String date;
 	private CareProvider author;
 	private String CWSNumber;
-	private boolean sign;
+	private boolean sign=false;
 	private Map domainValueMap;
 
 	public Document(FormTemplate formTemplate, CareProvider author, String CWSNumber){

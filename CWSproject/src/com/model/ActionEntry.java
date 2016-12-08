@@ -2,24 +2,22 @@ package com.model;
 import java.util.*;
 
 public class ActionEntry {
-	private int actionEntryId;
+	private String actionEntryId;
 	private Domain domain;
-	private int cScore;
-	private int fScore;
+	private String cScore;
+	private String fScore;
 	private Map actionMap;
 	//constructor
-	public ActionEntry(int actionEntryId){
+	public ActionEntry(String actionEntryId){
 		this.actionEntryId = actionEntryId;
 		this.actionMap = new HashMap();
-		this.cScore = -100;
-		this.fScore = -100;
 	}
 	//set and get
 	//actionEntryId
-	public int getActionEntryId(){
+	public String getActionEntryId(){
 		return this.actionEntryId;
 	}
-	public void setActionEntryId(int actionEntryId){
+	public void setActionEntryId(String actionEntryId){
 		this.actionEntryId = actionEntryId;
 	}
 	//domain
@@ -30,17 +28,17 @@ public class ActionEntry {
 		this.domain = domain;
 	}
 	//CSore
-	public int getCscore(){
+	public String getCscore(){
 		return this.cScore;
 	}
-	public void setCscore(int newCscore){
+	public void setCscore(String newCscore){
 		this.cScore = newCscore;
 	}
 	//FScore
-	public int getFscore(){
+	public String getFscore(){
 		return this.fScore;
 	}
-	public void setFscore(int newFscore){
+	public void setFscore(String newFscore){
 		this.fScore = newFscore;
 	}
 	//ActionMap---------------------------------------------------------------?????

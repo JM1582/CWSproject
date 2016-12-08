@@ -57,12 +57,12 @@
     <url-pattern>/edit_document_servlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>viewActionPlanServlet</servlet-name>
-    <servlet-class>com.servlet.ViewActionPlanServlet</servlet-class>
+    <servlet-name>editActionPlanServlet</servlet-name>
+    <servlet-class>com.servlet.EditActionPlanServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>viewActionPlanServlet</servlet-name>
-    <url-pattern>/view_action_plan_servlet</url-pattern>
+    <servlet-name>editActionPlanServlet</servlet-name>
+    <url-pattern>/edit_action_plan_servlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>signDocumentServlet</servlet-name>

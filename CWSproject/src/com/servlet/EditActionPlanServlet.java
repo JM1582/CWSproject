@@ -9,10 +9,10 @@ import javax.servlet.http.*;
 import com.model.*;
 
 
-public class ViewActionPlanServlet extends HttpServlet {
+public class EditActionPlanServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-    public ViewActionPlanServlet() {
+    public EditActionPlanServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

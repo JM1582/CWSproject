@@ -106,7 +106,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
-	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
+	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
 		<%=tmpActionPlan.getDateOnly() %>:<br>
 		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
 		<%=tmpActionPlan.getAuthor().getTitle() %>
@@ -144,7 +144,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	if(actionEntryMap!=null){
 		Iterator actionEntryIt = actionEntryMap.keySet().iterator();
 		while(actionEntryIt.hasNext()){
-			int actionEntryId = (Integer) actionEntryIt.next();
+			String actionEntryId = (String) actionEntryIt.next();
 			ActionEntry actionEntry = (ActionEntry) actionEntryMap.get(actionEntryId);
 			Map actionMap = actionEntry.getActionMap();
 			Iterator actionIt = actionMap.keySet().iterator();
@@ -156,42 +156,43 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	<tr><!--  -->
 	<%if(firstLine){ %>
 		<!-- selecting domain name -->
-		<td><select name="domain_<%=Integer.toString(actionEntry.getActionEntryId()) %>">
+		<td><select name="domain_<%=actionEntry.getActionEntryId() %>">
 		<%Iterator allDomainIt = allDomainMap.keySet().iterator();
 		while(allDomainIt.hasNext()){
 			String tmpDomainId = (String) allDomainIt.next();
 			Domain tempDomain = (Domain) allDomainMap.get(tmpDomainId); %>
-			<option <%if(tmpDomainId.equals(actionEntry.getDomain().getDomainId())){ %>selected<%} %>>
+			<option <%if(tmpDomainId.equals(actionEntry.getDomain().getDomainId())){ %>selected<%} %> value="<%=tmpDomainId %>">
 				<%=tempDomain.getDomainName() %>
 			</option>
 		<%} %>
 		</select></td>
 	<!--current score and future score has default value -->
-		<td><input type="text" name="cScore_<%=Integer.toString(actionEntry.getActionEntryId()) %>" 
-		<%if(actionEntry.getCscore()!=-100){ %>value="<%=actionEntry.getCscore() %>"<%} %> ></td>
-		<td><input type="text" name="fScore_<%=Integer.toString(actionEntry.getActionEntryId()) %>" 
-		<%if(actionEntry.getFscore()!=-100){ %>value="<%=actionEntry.getFscore() %>"<%} %> ></td>
+		<td><input type="text" name="cScore_<%=actionEntry.getActionEntryId() %>" 
+		<%if(actionEntry.getCscore()!=null){ %>value="<%=actionEntry.getCscore() %>"<%} %> ></td>
+		<td><input type="text" name="fScore_<%=actionEntry.getActionEntryId() %>" 
+		<%if(actionEntry.getFscore()!=null){ %>value="<%=actionEntry.getFscore() %>"<%} %> ></td>
 	<!-- 
-		<td><input type="text" name="cScore_<%=Integer.toString(actionEntry.getActionEntryId()) %>" value=  ""></td>
-		<td><input type="text" name="fScore_<%=Integer.toString(actionEntry.getActionEntryId()) %>" value= "" ></td>
+		<td><input type="text" name="cScore_<%=actionEntry.getActionEntryId() %>" value=  ""></td>
+		<td><input type="text" name="fScore_<%=actionEntry.getActionEntryId() %>" value= "" ></td>
 	-->
 	<%} else{ %>
 		<!-- not the firstline of action entry -->
 		<td colspan="3"></td>
 	<%} 
 	firstLine = false; %>
-		<td><select name="intervention_<%=Integer.toString(actionEntry.getActionEntryId()) %>">
-			<option><%=action.getIntervention() %></option>
-			<%=action.getIntervention() %>
+		<td><select name="intervention_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
+			<option value="<%=action.getIntervention() %>"><%=action.getIntervention() %></option>
 		</select></td>
 		<%Map careProviderMap = patientInfo.getCareProviderMap();
 		if(careProviderMap != null) { %>
-		<td><select name="responsibility_<%=Integer.toString(actionEntry.getActionEntryId()) %>">
+		<td><select name="responsibility_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
 <%			Iterator careProviderIt = careProviderMap.keySet().iterator();
 			while(careProviderIt.hasNext()){
 				String userName = (String) careProviderIt.next();
 				CareProvider tmpCareProvider = (CareProvider) careProviderMap.get(userName); %>
-			<option <%if(userName.equals(action.getCareProvider().getUserName())){ %>selected<%} %>><%=tmpCareProvider.getTitle() %>: <%=tmpCareProvider.getFirstName() %> <%=tmpCareProvider.getLastName() %></option>
+			<option <%if(userName.equals(action.getCareProvider().getUserName())){ %>selected<%} %> value="<%=userName %>">
+				<%=tmpCareProvider.getTitle() %>: <%=tmpCareProvider.getFirstName() %> <%=tmpCareProvider.getLastName() %>
+			</option>
 <%			} %>
 		</select></td>
 <%		} %>
