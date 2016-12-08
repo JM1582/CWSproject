@@ -108,13 +108,8 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
-<<<<<<< HEAD
-	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
-		<%=tmpActionPlan.getDateOnly() %><br>
-=======
 	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
-		<%=tmpActionPlan.getDateOnly() %>:<br>
->>>>>>> 1a0ffa69cfb909a24bdac4e2c686d41d5bc7e3d4
+		<%=tmpActionPlan.getDateOnly() %><br>
 		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
 		<%=tmpActionPlan.getAuthor().getTitle() %>
 	</small></a></li>
@@ -166,17 +161,10 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	<tr><!--  -->
 	<%if(firstLine){ %>
 		<!-- selecting domain name -->
-<<<<<<< HEAD
-		<td height="80px"><select style="height:80px;">
-=======
-		<td><select name="domain_<%=actionEntry.getActionEntryId() %>">
-<<<<<<< HEAD
->>>>>>> 1a0ffa69cfb909a24bdac4e2c686d41d5bc7e3d4
-=======
+		<td height="80px"><select style="height:80px;" name="domain_<%=actionEntry.getActionEntryId() %>">
 		<%if(actionEntry.getDomain()==null){ %>
 			<option selected></option>
 		<%} %>
->>>>>>> 3564789ec59af030778f7fc5dc92499d722598fc
 		<%Iterator allDomainIt = allDomainMap.keySet().iterator();
 		while(allDomainIt.hasNext()){
 			String tmpDomainId = (String) allDomainIt.next();
@@ -232,17 +220,8 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 }
 %>
 </table>
-<<<<<<< HEAD
-</div>
-<input type="button" onclick="add_domain()" value="+">
-=======
 
-<<<<<<< HEAD
-<input type="button" onclick="location.href='add_domain_servlet'" value="+">
->>>>>>> 1a0ffa69cfb909a24bdac4e2c686d41d5bc7e3d4
-=======
 <input type="button" onclick="location.href='add_action_entry_servlet'" value="+">
->>>>>>> 3564789ec59af030778f7fc5dc92499d722598fc
 </form>
 </div>
 </td>
