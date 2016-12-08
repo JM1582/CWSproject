@@ -1,22 +1,39 @@
 package com.model;
 
 public enum Intervention {
-	DE {
-		@Override
-		public String toString() {
-			return "Germany";
-		}
-	},
-	IT {
-		@Override
-	    public String toString() {
-	      return "Italy";
-	    }
-	  },
-	  US {
-	    @Override
-	    public String toString() {
-	      return "United States";
-	    }
-	  }
+	ASSESSMENT,
+	MEASUREMENT,
+	TEST,
+	BUIPSY,
+	SPECIMEN_COLLECTION,
+	MONITORING,
+	CHALLENGE,
+	ASSAY,
+	CULTURE,
+	ALIMENTATION,
+	DRESSING,
+	VENTILATION_TRANSFUSION,
+	PROCEDURES,
+	MANUAL_THERAPY,
+	PSYCHOTHERAPY,
+	EXERCISE,
+	EDUCATION,
+	COUNSELLING,
+	TRAINING,
+	WORKFORCE_DEVELOPMENT,
+	ACCUPUNCTURE,
+	PREPARATION,
+	PROVISION,
+	CARE_GIVING,
+	PERSONAL_ASSISTANCE,
+	PERSONAL_SUPPORT,
+	ADVOCACY,
+	VROKERAGE,
+	DISPENSING,
+	PRESCRIPTION,
+	TRANSPORT,
+	COMMUNITY_DEVELOPMENT,
+	PERSONAL_RISK_REDUCTION,
+	DIETARY_MODIFICATIONS,
+	ENVIRONMENTAL_REMEDIATION;
 }
