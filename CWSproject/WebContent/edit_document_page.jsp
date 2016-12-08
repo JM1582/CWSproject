@@ -216,7 +216,7 @@ if (partMap != null) {
 	</table></td></tr>
 	
 	<!-- the table to hold 1 part content -->
-	<tr><td><table class="collapse_table" id="partContent_<%=part.getPartId() %>">
+	<tr><td><table class="collapse_table" id="partContent_<%=part.getPartId() %>" cellspacing="0" cellpadding="0">
 	<%TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 	if(subSetMap != null){
 		Iterator subSetIt = subSetMap.keySet().iterator();
@@ -226,7 +226,7 @@ if (partMap != null) {
 			if(subSet != null){%>
 		
 		<!-- the table to hold 1 subset -->
-		<tr><td><table class="disabled_border" id="subSet_<%=subSet.getSubSetId() %>">
+		<tr><td><table class="disabled_border" id="subSet_<%=subSet.getSubSetId() %>" cellspacing="0" cellpadding="0">
 			
 			<!-- the table to hold subset title -->
 			<tr><td><table class="thin_border" id="subSetTitle_<%=subSet.getSubSetId() %>">
