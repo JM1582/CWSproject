@@ -78,13 +78,16 @@ public class SaveActionPlanServlet extends HttpServlet {
 							Action action = (Action) actionMap.get(actionId);
 							action.setIntervention(request.getParameter("intervention_"+actionEntry.getActionEntryId()+"_"+action.getActionId()));
 							String userName = request.getParameter("responsibility_"+actionEntry.getActionEntryId()+"_"+action.getActionId());
-							FakeSQL fakeSQL = new FakeSQL();
-							CareProvider tmpCareProvidre = fakeSQL.getUser(userName).toCareProvider();
-							action.setCareProvider(tmpCareProvidre); 
+							if(userName!=null && !userName.equals("")){
+								FakeSQL fakeSQL = new FakeSQL();
+								CareProvider tmpCareProvidre = fakeSQL.getUser(userName).toCareProvider();
+								action.setCareProvider(tmpCareProvidre); 
+							}
 						}
 					}
 				}
 			}
+			patientInfo.addActionPlan(actionPlan);
 		}
 		if(request.getParameter("sign") != null){
 			if(actionPlan.getSign()){
@@ -111,8 +114,7 @@ public class SaveActionPlanServlet extends HttpServlet {
 			out.println("location='action_plan_page.jsp';");
 			out.println("</script>");
 		}
-
-		patientInfo.addActionPlan(actionPlan);;
+		
 		session.setAttribute("patientInfo", patientInfo);
 		session.setAttribute("actionPlan", actionPlan);
 		session.setAttribute("allDomainMap", allDomainMap);

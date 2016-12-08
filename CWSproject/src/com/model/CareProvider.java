@@ -5,26 +5,25 @@ import com.sql.*;
 
 
 public class CareProvider extends User{
-	private Map patientInfoMap;
+	private Map<String, PatientInfo> patientInfoMap;
 
 	public CareProvider(String userName, String passWord) {
 		super(userName, passWord);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public CareProvider getCareProvider() {
 		return this;
 	}
 	
-	public Map getPatientInfoMap(){
+	public Map<String, PatientInfo> getPatientInfoMap(){
 		return this.patientInfoMap;
 	}
-	public void setPatientInfoMap(Map patientInfoMap){
+	public void setPatientInfoMap(Map<String, PatientInfo> patientInfoMap){
 		this.patientInfoMap = patientInfoMap;
 	}
 	
-	public Map getMyPatientInfoMap(){
-		Map patientInfoMap = new HashMap();
+	public Map<String, PatientInfo> getMyPatientInfoMap(){
+		Map<String, PatientInfo> patientInfoMap = new HashMap<String, PatientInfo>();
 		PatientInfo patientInfo = new PatientInfo("cws0001", 1);
 		patientInfoMap.put(patientInfo.getCWSNumber(), patientInfo);
 		return patientInfoMap;

@@ -170,12 +170,18 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		<td height="80px"><select style="height:80px;">
 =======
 		<td><select name="domain_<%=actionEntry.getActionEntryId() %>">
+<<<<<<< HEAD
 >>>>>>> 1a0ffa69cfb909a24bdac4e2c686d41d5bc7e3d4
+=======
+		<%if(actionEntry.getDomain()==null){ %>
+			<option selected></option>
+		<%} %>
+>>>>>>> 3564789ec59af030778f7fc5dc92499d722598fc
 		<%Iterator allDomainIt = allDomainMap.keySet().iterator();
 		while(allDomainIt.hasNext()){
 			String tmpDomainId = (String) allDomainIt.next();
 			Domain tempDomain = (Domain) allDomainMap.get(tmpDomainId); %>
-			<option <%if(tmpDomainId.equals(actionEntry.getDomain().getDomainId())){ %>selected<%} %> value="<%=tmpDomainId %>">
+			<option <%if(actionEntry.getDomain()!=null){ if(tmpDomainId.equals(actionEntry.getDomain().getDomainId())){ %>selected<%} } %> value="<%=tmpDomainId %>">
 				<%=tempDomain.getDomainName() %>
 			</option>
 		<%} %>
@@ -195,16 +201,24 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	<%} 
 	firstLine = false; %>
 		<td><select name="intervention_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
+			<!-- need to add intervention list -->
+			<%if(action.getIntervention()==null){ %>
+			<option selected></option>
+			<%} else { %>
 			<option value="<%=action.getIntervention() %>"><%=action.getIntervention() %></option>
+			<%} %>
 		</select></td>
 		<%Map careProviderMap = patientInfo.getCareProviderMap();
 		if(careProviderMap != null) { %>
 		<td><select name="responsibility_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
+			<%if(action.getCareProvider()==null){ %>
+				<option selected></option>
+			<%} %>
 <%			Iterator careProviderIt = careProviderMap.keySet().iterator();
 			while(careProviderIt.hasNext()){
 				String userName = (String) careProviderIt.next();
 				CareProvider tmpCareProvider = (CareProvider) careProviderMap.get(userName); %>
-			<option <%if(userName.equals(action.getCareProvider().getUserName())){ %>selected<%} %> value="<%=userName %>">
+			<option <%if(action.getCareProvider()!=null){ if(userName.equals(action.getCareProvider().getUserName())){ %>selected<%} } %> value="<%=userName %>">
 				<%=tmpCareProvider.getTitle() %>: <%=tmpCareProvider.getFirstName() %> <%=tmpCareProvider.getLastName() %>
 			</option>
 <%			} %>
@@ -223,8 +237,12 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 <input type="button" onclick="add_domain()" value="+">
 =======
 
+<<<<<<< HEAD
 <input type="button" onclick="location.href='add_domain_servlet'" value="+">
 >>>>>>> 1a0ffa69cfb909a24bdac4e2c686d41d5bc7e3d4
+=======
+<input type="button" onclick="location.href='add_action_entry_servlet'" value="+">
+>>>>>>> 3564789ec59af030778f7fc5dc92499d722598fc
 </form>
 </div>
 </td>

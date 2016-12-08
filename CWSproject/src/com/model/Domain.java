@@ -44,8 +44,8 @@ public class Domain {
 	public void setComment(String newComment){
 		this.comment = newComment;
 	}
-	public boolean hasDomainValueWithSummaryMap(Map summaryMap){
-		Iterator summaryIt = summaryMap.keySet().iterator();
+	public boolean hasDomainValueWithSummaryMap(Map<String, Document> summaryMap){
+		Iterator<String> summaryIt = summaryMap.keySet().iterator();
 		while(summaryIt.hasNext()){
 			String userName = (String) summaryIt.next();
 			Document document = (Document) summaryMap.get(userName);

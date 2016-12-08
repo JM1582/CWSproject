@@ -10,12 +10,12 @@ public class ActionPlan {
 	private CareProvider author;
 	private String date;
 	private boolean sign=false;
-	private Map actionEntryMap;
+	private Map<String, ActionEntry> actionEntryMap;
 	
 	public ActionPlan(String CWSNumber, CareProvider author){
 		this.CWSNumber = CWSNumber;
 		this.author = author;
-		this.actionEntryMap = new HashMap();
+		this.actionEntryMap = new HashMap<String, ActionEntry>();
 	}
 	
 	public int getActionPlanId(){
@@ -32,10 +32,10 @@ public class ActionPlan {
 		this.CWSNumber = CWSNumber;
 	}
 
-	public Map getActionEntryMap(){
+	public Map<String, ActionEntry> getActionEntryMap(){
 		return this.actionEntryMap;
 	}
-	public void setActionEntryMap(Map actionEntryMap){
+	public void setActionEntryMap(Map<String, ActionEntry> actionEntryMap){
 		this.actionEntryMap = actionEntryMap;
 	}
 	public void addActionEntry(ActionEntry actionEntry){
@@ -66,7 +66,6 @@ public class ActionPlan {
 				return true;
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
