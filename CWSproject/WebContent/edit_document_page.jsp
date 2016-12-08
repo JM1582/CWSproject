@@ -149,13 +149,21 @@ if (document.getSign()){
 
 <!-- the table cell to hold the document -->
 <td valign="top" width="85%" >
-<div style="background:white;">
+<div style="background:white;"><!-- the div to hold the document -->
+
+<form name="documentForm" action="save_document_servlet">
 <div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;">
 <span>
-<p><h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2><p>
+<p><h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2></p>
+<%if(document.getSign()){ %>
+<p><h2 class="form_instruction"> &nbsp;Document already be signed by <%=document.getAuthor().getTitle() %> 
+<%=document.getAuthor().getFirstName() %> 
+<%=document.getAuthor().getLastName() %> 
+<%=document.getDate() %>.</h2></p>
+<%} %>
+
 </span>
 <span>
-<form name="documentForm" action="save_document_servlet">
 &emsp;
 <input type="submit" name="sign" value="Sign" class="button1">
 <input type="submit" value="Save" class="button1">
@@ -164,8 +172,6 @@ if (document.getSign()){
 
 
 <br><br><br><br><br><br><br>
-
-<form name="documentForm" action="save_document_servlet">
 <!-- 
 <div align="right">
 <!-- <button type="button" onclick="location.href='sign_document_servlet'" >Sign</button>
@@ -296,11 +302,11 @@ if (partMap != null) {
 <%		}
 	}
 } %>
-</div>
+</div><!-- document -->
 </form>
 </div>
 </td>
-<td></td>
+
 </tr></table>
 
 </body>
