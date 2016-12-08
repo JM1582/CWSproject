@@ -95,11 +95,6 @@ if (document.getSign()){
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
 	<strong><%=patientInfo.getCWSNumber() %></strong></p>
 </div>
-<<<<<<< HEAD
-<br><br><br><br><br><br>
-</div>
-=======
->>>>>>> 4095e8facf09e59b07088f39b1bb6ff57e870b8c
 
 <!-- the table to hold nav bar in left and document in right -->
 <div class="body_div">
@@ -158,13 +153,9 @@ if (document.getSign()){
 <div style="background:#f9faf5;"><!-- the div to hold the document -->
 
 <form name="documentForm" action="save_document_servlet">
-<<<<<<< HEAD
-<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;box-shadow:2px 2px 10px #909090;f">
-=======
-<div class="fixed_title">
->>>>>>> 4095e8facf09e59b07088f39b1bb6ff57e870b8c
-<span>
 
+<div class="fixed_title">
+<span>
 <%if(document.getSign()){ %>
 <p><h3 class="form_signed"> &nbsp;Signed by <%=document.getAuthor().getTitle() %> 
 <font class="signiture"><%=document.getAuthor().getFirstName() %> 
