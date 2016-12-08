@@ -15,13 +15,13 @@ public class Document{
 	private CareProvider author;
 	private String CWSNumber;
 	private boolean sign=false;
-	private Map domainValueMap;
+	private Map<String, String[]> domainValueMap;
 
 	public Document(FormTemplate formTemplate, CareProvider author, String CWSNumber){
 		this.formTemplate = formTemplate;
 		this.author = author;
 		this.CWSNumber = CWSNumber;
-		this.domainValueMap = new HashMap();
+		this.domainValueMap = new HashMap<String, String[]>();
 	}
 
 	public FormTemplate getFormTemplate(){
@@ -111,10 +111,10 @@ public class Document{
 		this.documentId = documentId;
 	}
 	//valueMap
-	public Map getDomainValueMap() {
+	public Map<String, String[]> getDomainValueMap() {
 		return this.domainValueMap;
 	}
-	public void setDomainValueMap(Map domainValueMap){
+	public void setDomainValueMap(Map<String, String[]> domainValueMap){
 		this.domainValueMap = domainValueMap;
 	}
 	public void addDomainValue(String domainId, String domainValue[]){

@@ -6,11 +6,11 @@ public class ActionEntry {
 	private Domain domain;
 	private String cScore;
 	private String fScore;
-	private Map actionMap;
+	private Map<String, Action> actionMap;
 	//constructor
 	public ActionEntry(String actionEntryId){
 		this.actionEntryId = actionEntryId;
-		this.actionMap = new HashMap();
+		this.actionMap = new HashMap<String, Action>();
 	}
 	//set and get
 	//actionEntryId
@@ -43,19 +43,19 @@ public class ActionEntry {
 	}
 	//ActionMap---------------------------------------------------------------?????
 	
-	public Map getActionMap() {
+	public Map<String, Action> getActionMap() {
 		return this.actionMap;
 	}
-	public void setActionMap(Map actionMap) {
+	public void setActionMap(Map<String, Action> actionMap) {
 		this.actionMap = actionMap;
 	}
 	//addAction function
 	public void addAction(Action action){
-		this.actionMap.put(action.getCareProvider().getUserName(), action);
+		this.actionMap.put(action.getActionId(), action);
 	}
 	//removeAction
 	public void removeAction(Action action) {
-		actionMap.remove(action.getCareProvider().getUserName());
+		actionMap.remove(action.getActionId());
 	}
 
 }
