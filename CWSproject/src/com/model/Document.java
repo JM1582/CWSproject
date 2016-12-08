@@ -67,12 +67,12 @@ public class Document{
 	}
 	public void setDateToday(){
 		//Month need to be changed!!!!
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		Date date = new Date();
 		this.date = (String)sdf.format(date);
 	}
 	public boolean laterThan(Document document){
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		try {
 			Date dateFromThis = sdf.parse(this.getDate());
 			Date dateFormParam = sdf.parse(document.getDate());
@@ -85,14 +85,14 @@ public class Document{
 		return false;
 	}
 	public String getDateOnly(){
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		Date date = null;
 		try {
 			date = sdf.parse(this.date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		sdf = new SimpleDateFormat("dd/MMM/yyyy");
+		sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
 		return (String)sdf.format(date);
 	}
 	

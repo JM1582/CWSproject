@@ -53,12 +53,13 @@ public class ActionPlan {
 	}
 	public void setDateToday(){
 		//Month need to be changed!!!!
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		Date date = new Date();
-		this.date = (String)sdf.format(date);
+		String dateStr =  (String)sdf.format(date);
+		this.date = dateStr;
 	}
 	public boolean laterThan(ActionPlan actionPlan){
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		try {
 			Date dateFromThis = sdf.parse(this.getDate());
 			Date dateFormParam = sdf.parse(actionPlan.getDate());
@@ -71,15 +72,16 @@ public class ActionPlan {
 		return false;
 	}
 	public String getDateOnly(){
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		Date date = null;
 		try {
 			date = sdf.parse(this.date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		sdf = new SimpleDateFormat("dd/mm/yyyy");
-		return (String)sdf.format(date);
+		sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+		String dateStr =  (String)sdf.format(date);
+		return dateStr;
 	}
 	
 	public CareProvider getAuthor(){
