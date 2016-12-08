@@ -68,7 +68,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 
 <table >
 <tr>
-<td valign="top" width="25%" >
+<td valign="top" width="20%" >
 <!-- navigation bar -->
 <div id="nav">
 <br>
@@ -83,7 +83,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 		Document tmpDocument = (Document)documentMap.get(documentId);
 		if (tmpDocument != null) { %>
 	<li><a href="edit_document_servlet?documentId=<%=String.valueOf(tmpDocument.getDocumentId()) %>"><small>
-		<%=tmpDocument.getDateOnly() %>:<br>
+		<%=tmpDocument.getDateOnly() %><br>
 		<%=tmpDocument.getAuthor().getFirstName() %> <%=tmpDocument.getAuthor().getLastName() %><br>
 		<%=tmpDocument.getAuthor().getTitle() %>
 	</small></a></li>
@@ -102,7 +102,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
 	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
-		<%=tmpActionPlan.getDateOnly() %>:<br>
+		<%=tmpActionPlan.getDateOnly() %><br>
 		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
 		<%=tmpActionPlan.getAuthor().getTitle() %>
 	</small></a></li>
@@ -120,10 +120,10 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 <div style="background:white; ">
 <div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;">
 <p><h2 class="table_header"> &nbsp; Collaborative Summary</h2><p>
-</div><br><br><br><br><br><br>
+</div><br><br><br><br><br>
 <%
 if (summaryMap.size()==0){ %>
-<p style="font-family:Arial; font-size:30px"> &emsp; Patient record empty, please create a new document!</p>
+<p style="font-family:Arial; font-size:30px"> &emsp; Patient record empty, please to go "Provider Input" to create a new document!</p>
 <%	} else {
 TreeMap partMap = new TreeMap(formTemplate.getPartsMap());
 if(partMap != null){

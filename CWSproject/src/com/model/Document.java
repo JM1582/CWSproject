@@ -67,7 +67,7 @@ public class Document{
 	}
 	public void setDateToday(){
 		//Month need to be changed!!!!
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = new Date();
 		this.date = (String)sdf.format(date);
 	}
