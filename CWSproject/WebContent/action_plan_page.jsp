@@ -127,13 +127,13 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 <td valign="top" width="85%" >
 <div id="action_plan">
 <form name="actionPlanForm" action="save_action_plan_servlet">
-<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:20px;">
+<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:20px;box-shadow:2px 2px 10px #909090;">
 <p><h2 class="table_header"> &nbsp; Action Plan</h2><p>
 <div class="no_margin"><span>
 &emsp;
 <input type="submit" name="sign" value="Sign" class="button1">
 <input type="submit" value="Save" class="button1"></span></div>
-</div><br><br><br><br><br><br><br><br>
+</div><br><br><br><br><br><br><br>
 
 
 <div style="background:white; ">
@@ -162,7 +162,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	<tr><!--  -->
 	<%if(firstLine){ %>
 		<!-- selecting domain name -->
-		<td height="80px"><select style="height:80px;" name="domain_<%=actionEntry.getActionEntryId() %>">
+		<td height="60px"><select style="height:50px;width:auto;" name="domain_<%=actionEntry.getActionEntryId() %>">
 		<%if(actionEntry.getDomain()==null){ %>
 			<option selected></option>
 		<%} %>
@@ -177,9 +177,9 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		</select></td>
 	<!--current score and future score has default value -->
 		<td><input type="text" name="cScore_<%=actionEntry.getActionEntryId() %>" 
-		<%if(actionEntry.getCscore()!=null){ %>value="<%=actionEntry.getCscore() %>"<%} %> ></td>
+		<%if(actionEntry.getCscore()!=null){ %>value="<%=actionEntry.getCscore() %>"<%} %>style="height:50px;" ></td>
 		<td><input type="text" name="fScore_<%=actionEntry.getActionEntryId() %>" 
-		<%if(actionEntry.getFscore()!=null){ %>value="<%=actionEntry.getFscore() %>"<%} %> ></td>
+		<%if(actionEntry.getFscore()!=null){ %>value="<%=actionEntry.getFscore() %>"<%} %> style="height:50px;"></td>
 	<!-- 
 		<td><input type="text" name="cScore_<%=actionEntry.getActionEntryId() %>" value=  ""></td>
 		<td><input type="text" name="fScore_<%=actionEntry.getActionEntryId() %>" value= "" ></td>
@@ -189,7 +189,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		<td colspan="3"></td>
 	<%} 
 	firstLine = false; %>
-		<td><select name="intervention_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
+		<td><select style="height:50px;"name="intervention_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
 			<!-- need to add intervention list -->
 			<%if(action.getIntervention()==null){ %>
 			<option selected></option>
@@ -199,7 +199,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		</select></td>
 		<%Map careProviderMap = patientInfo.getCareProviderMap();
 		if(careProviderMap != null) { %>
-		<td><select name="responsibility_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
+		<td><select style="height:50px;"name="responsibility_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
 			<%if(action.getCareProvider()==null){ %>
 				<option selected></option>
 			<%} %>
@@ -221,10 +221,9 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 }
 %>
 </table>
-
 <input type="button" onclick="location.href='add_action_entry_servlet'" value="+">
 </form>
-</div>
+
 </td>
 <td></td>
 </tr></table>

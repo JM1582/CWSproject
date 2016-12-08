@@ -118,7 +118,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 <!-- summary form -->
 <td valign="top" width="85%"  >
 <div style="background:white; ">
-<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;">
+<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:0px;margin-bottom:px;box-shadow:2px 5px 10px #6f8788;" >
 <p><h2 class="table_header"> &nbsp; Collaborative Summary</h2><p>
 </div><br><br><br><br><br>
 <%

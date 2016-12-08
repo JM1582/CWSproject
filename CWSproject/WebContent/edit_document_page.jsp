@@ -90,7 +90,7 @@ if (document.getSign()){
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
 	<strong><%=patientInfo.getCWSNumber() %></strong></p>
 </div>
-<br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
 </div>
 
 <!-- the table to hold nav bar in left and document in right -->
@@ -150,14 +150,14 @@ if (document.getSign()){
 <div style="background:#f9faf5;"><!-- the div to hold the document -->
 
 <form name="documentForm" action="save_document_servlet">
-<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;">
+<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;box-shadow:2px 2px 10px #909090;f">
 <span>
 
 <%if(document.getSign()){ %>
-<p><h2 class="form_instruction"> &nbsp;Document already be signed by <%=document.getAuthor().getTitle() %> 
-<%=document.getAuthor().getFirstName() %> 
-<%=document.getAuthor().getLastName() %> 
-<%=document.getDate() %>.</h2></p>
+<p><h3 class="form_signed"> &nbsp;Signed by <%=document.getAuthor().getTitle() %> 
+<font class="signiture"><%=document.getAuthor().getFirstName() %> 
+<%=document.getAuthor().getLastName() %> </font>
+on <%=document.getDate() %>.</h3></p>
 <%}else { %>
 <p><h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2></p><%}%>
 </span>

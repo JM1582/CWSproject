@@ -47,7 +47,8 @@
 	font-family:Arial; 
 	font-size:25px;
 	margin-top:0px;
-	margin-bottom:0;	
+	margin-bottom:0;
+	align:left;	
 }
 .input_partDs{
 	font-family:Arial; 
@@ -70,5 +71,14 @@
 .summaryEntry{
 	font-size:20px;
 	font-family:Arial;
-	
+}
+.signiture{
+	font-family:Mistral;
+	font-size:45px;
+}
+.form_signed{
+	font-family:Arial; 
+	font-size:25px;
+	margin-top:0px;
+	margin-bottom:0;
 }
