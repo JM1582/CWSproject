@@ -17,11 +17,11 @@
         <div class="black2" align = "center">
         <form name="loginForm" method="post" action="login_servlet" onSubmit="return submitcheck()"  >
         <br><br><br><br>
- 		<font color=white align="left" size = "4"> User name: </font>
+ 		<font color=white align="left" size = "6"> User name: </font>
  		
 		<input type="text" name="userName" style="width:223px; height:30px;" >
 		<br><br>
- 	&nbsp;<font color="white" align="left" size = "4"> Password: </font>
+ 	&nbsp;<font color="white" align="left" size = "6"> Password: </font>
 		<input type="password" name="passWord" style="width:223px; height:30px;">
 		<br><br><br>
 			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;

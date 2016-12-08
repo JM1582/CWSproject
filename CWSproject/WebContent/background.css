@@ -17,7 +17,7 @@
  	   background-size:100%, 100%;
  	   }
 .picLUp2{
-	 background:url("bgd_folder_blue.png") no-repeat;
+	 background:url("bgd_folder_icon2.png") no-repeat;
   	 background-color:#9dee5eb;
   	 padding:0;
  	 margin:0;
@@ -82,7 +82,14 @@
     top:60px; 
 }
 
-
+.summary_banner{
+	 background:url("border_green.png") no-repeat;
+ 	   padding:0;
+ 	   background-size:100%, 100%;
+ 	   position:fixed;
+ 	   width:100%;
+ 	   margin-top:10px;
+ 	   }
 
 
 

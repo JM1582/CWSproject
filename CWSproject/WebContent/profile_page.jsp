@@ -38,7 +38,7 @@
  
 <form align="center" action="search_patient_servlet">
 <p class="engrave30"><strong>Search for your patient:</strng></p>
-&emsp;&emsp;&emsp;&emsp;<input type="text" name="CWSNumber" style="width:232px; height:35px;">
+&emsp;&emsp;&emsp;&emsp;<input type="text" name="CWSNumber" style="width:400px; height:35px;border-radius:10px;">
 <input type="submit" value="Search" 
 class="button1">
 <br><br><br><br>
