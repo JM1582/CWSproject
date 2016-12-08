@@ -43,3 +43,27 @@
 	margin-top:0px;
 	margin-bottom:0;
 }
+.input_part{
+	font-family:Arial; 
+	font-size:25px;
+	margin-top:0px;
+	margin-bottom:0;	
+}
+.input_partDs{
+	font-family:Arial; 
+	font-size:25px;
+	margin-top:0px;
+	margin-bottom:0;	
+}
+.input_subpart{
+	font-family:Arial; 
+	font-size:20px;
+	margin-top:0px;
+	margin-bottom:0;	
+}
+.input_domain{
+	font-family:Arial; 
+	font-size:20px;
+	margin-top:0px;
+	margin-bottom:0;	
+}

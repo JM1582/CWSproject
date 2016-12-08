@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="buttons.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="font_styles.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="formcell_format.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="score_sheet_format.css" charset="utf-8" >
 <script type="text/javascript" src="collapse.js" ></script>
 
 <script type="text/javascript">

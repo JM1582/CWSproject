@@ -13,10 +13,12 @@
 <link rel="stylesheet" type="text/css" href="documents.css">
 <link rel="stylesheet" type="text/css" href="buttons.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="font_styles.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="borderformat.css" charset="utf-8" >
+
 <script type="text/javascript" src="collapse.js" ></script>
 <style type="text/css">
 th {
-  border: 1px solid #000;
+  border: 1px solid #99acbd;
   position: relative;
   padding: 10px;
 }
@@ -149,7 +151,7 @@ if (document.getSign()){
 
 <!-- the table cell to hold the document -->
 <td valign="top" width="85%" >
-<div style="background:white;"><!-- the div to hold the document -->
+<div style="background:#f9faf5;"><!-- the div to hold the document -->
 
 <form name="documentForm" action="save_document_servlet">
 <div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;">
@@ -194,14 +196,14 @@ if (partMap != null) {
 %>
 
 <!-- the table to hold 1 part -->
-<table id="part_<%=part.getPartId() %>" width="100%" cellspacing="0" cellpadding="0"><!-- change table format -->
+<table  width="100%" cellspacing="0" cellpadding="0" id="part_<%=part.getPartId() %>"><!-- change table format -->
 	
 	<!-- the table to hold 1 part title -->
 	<tr><td><table id="partTitle_<%=part.getPartId() %>" width="100%" border="1">
-		<tr><!-- The first row to show the part name and scalarName -->
+		<tr ><!-- The first row to show the part name and scalarName -->
 			<td>
-				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" >
-				<strong><%=part.getPartName() %></strong><br><br><%=part.getPartDescription() %>
+				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" border="0">
+				<font class="input_part"><strong>&emsp;<%=part.getPartName() %></strong></font><br><br><font class="input_partDs"><%=part.getPartDescription() %></font>
 			</td>
 			<%for(int i=0;i<scalarName.length;i++){ %>
 			<th class="scalar_colume" height="150"><span><small><%=scalarName[i] %></small></span></th>
@@ -218,7 +220,7 @@ if (partMap != null) {
 	</table></td></tr>
 	
 	<!-- the table to hold 1 part content -->
-	<tr><td><table id="partContent_<%=part.getPartId() %>" width="100%" cellspacing="0" cellpadding="0" style="display: none">
+	<tr><td><table id="partContent_<%=part.getPartId() %>" width="100%" cellspacing="0" cellpadding="0" style="border-top-color:#99acbd; border-top:1px;border-bottom-color:#f9faf5; display: none">
 	<%TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 	if(subSetMap != null){
 		Iterator subSetIt = subSetMap.keySet().iterator();
@@ -228,14 +230,14 @@ if (partMap != null) {
 			if(subSet != null){%>
 		
 		<!-- the table to hold 1 subset -->
-		<tr><td><table id="subSet_<%=subSet.getSubSetId() %>" width="100%" cellspacing="0" cellpadding="0" >
+		<tr><td><table id="subSet_<%=subSet.getSubSetId() %>" width="100%" cellspacing="0" cellpadding="0">
 			
 			<!-- the table to hold subset title -->
 			<tr><td><table id="subSetTitle_<%=subSet.getSubSetId() %>" width="100%" border="1">
 				<!-- The row to show subset title -->
 				<tr><td with="100%">
 					<img id="collapse_icon" align="left" onclick="collapse('subSetContent_<%=subSet.getSubSetId() %>')" src="collapse.png" width="15" height="15" >
-					<%=subSet.getSubSetName() %>
+					<font class="input_subpart">&emsp;<%=subSet.getSubSetName() %></font>
 				</td></tr>
 			</table></td></tr>
 			
@@ -260,7 +262,7 @@ if (partMap != null) {
 					<tr>
 						<%if(i==0){ %>
 							<!-- <td rowspan="<%=scalarValue.length %>" width="5%"><%=domain.getDomainId() %></td> -->
-							<td rowspan="<%=scalarValue.length %>" ><%=domain.getDomainName() %></td>
+							<td rowspan="<%=scalarValue.length %>" ><font class="input_domain">&emsp;&emsp;&emsp;<%=domain.getDomainName() %></font></td>
 						<%} %>
 					
 					<!-- label for scalar if scalar has 2 values -->
