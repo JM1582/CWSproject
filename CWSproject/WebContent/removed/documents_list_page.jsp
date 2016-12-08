@@ -69,7 +69,7 @@ PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">SUMMARY VIEW</a></li>
   <li><a class="active" href="documents_list_page.jsp">PROVIDER INPUT</a></li>
-  <li><a href="view_action_plan_servlet">ACTION PLAN</a></li>
+  <li><a href="edit_action_plan_servlet">ACTION PLAN</a></li>
 </ul>
 </td>
 

@@ -5,10 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ActionPlan {
-	private int actionPlanId;
+	private int actionPlanId=-1;
 	private String CWSNumber;
 	private CareProvider author;
 	private String date;
+	private boolean sign=false;
 	private Map actionEntryMap;
 	
 	public ActionPlan(String CWSNumber, CareProvider author){
@@ -87,5 +88,11 @@ public class ActionPlan {
 	}
 	public void setAuthor(CareProvider careProvider){
 		this.author = careProvider;
+	}
+	public boolean getSign(){
+		return this.sign;
+	}
+	public void setSign(boolean sign){
+		this.sign = sign;
 	}
 }
