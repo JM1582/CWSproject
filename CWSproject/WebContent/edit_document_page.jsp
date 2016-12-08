@@ -121,7 +121,7 @@ if (document.getSign()){
 <%		}
 	}
 } %>
-  	<li><a href="create_document_servlet" ><font size=5 style="line-height:60px">New Document</font></a></li>
+  	<li><a href="create_document_servlet" ><font size=4.5>New Document</font></a></li>
   	</ul>
   </li>
   <li><a id="action_plan" onclick="expand('action_plan_list')"><font size=5 style="line-height:60px">ACTION PLAN</font></a></li>
@@ -140,7 +140,7 @@ if (document.getSign()){
 <%		}
 	}
 } %>
-  	<li><a href="create_action_plan_servlet"><small>New Action Plan</small></a></li>
+  	<li><a href="create_action_plan_servlet"><font size=4.5>New Action Plan</font></a></li>
   	</ul>
 </ul>
 </div>
@@ -154,14 +154,14 @@ if (document.getSign()){
 <form name="documentForm" action="save_document_servlet">
 <div style="position:fixed; background:#e5e8d4; width:100%; margin-top:10px;">
 <span>
-<p><h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2></p>
+
 <%if(document.getSign()){ %>
 <p><h2 class="form_instruction"> &nbsp;Document already be signed by <%=document.getAuthor().getTitle() %> 
 <%=document.getAuthor().getFirstName() %> 
 <%=document.getAuthor().getLastName() %> 
 <%=document.getDate() %>.</h2></p>
-<%} %>
-
+<%}else { %>
+<p><h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2></p><%}%>
 </span>
 <span>
 &emsp;
@@ -306,7 +306,7 @@ if (partMap != null) {
 </form>
 </div>
 </td>
-
+<td></td>
 </tr></table>
 
 </body>
