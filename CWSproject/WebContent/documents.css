@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+
+.vertical {
+  -ms-transform:rotate(270deg); /* IE 9 */
+  -moz-transform:rotate(270deg); /* Firefox */
+  -webkit-transform:rotate(270deg); /* Safari and Chrome */
+  -o-transform:rotate(270deg); /* Opera */
+}
+
+.disabled_border{
+	border-collapse: collapse;
+	width: 100%;
+	border-spacing: 0;
+	margin: 0px;
+	padding: 0px;
+	border: 0;
+}
+
+.collapse_table{
+	border-collapse: collapse;
+	width: 100%;
+	border-spacing: 0;
+	margin: 0px;
+	padding: 0px;
+	border: 0;
+	display: none;
+}
+
+.thin_border{
+	border-collapse: collapse;
+	width: 100%;
+	border-spacing: 0;
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid black;
+}
+
+.scalar_colume{
+	width: 3%;
+	border: 1px solid black;
+}

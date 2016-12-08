@@ -38,10 +38,6 @@ th span {
 	width: 10%;
 }
 
-.scalar_colume{
-	width: 3%;
-}
-
 </style>
 
 </head>
@@ -196,15 +192,15 @@ if (partMap != null) {
 %>
 
 <!-- the table to hold 1 part -->
-<table  width="100%" cellspacing="0" cellpadding="0" id="part_<%=part.getPartId() %>"><!-- change table format -->
+<table  class="disabled_border" id="part_<%=part.getPartId() %>" cellspacing="0" cellpadding="0"><!-- change table format -->
 	
 	<!-- the table to hold 1 part title -->
-	<tr><td><table id="partTitle_<%=part.getPartId() %>" width="100%" border="1">
+	<tr><td><table class="thin_border" id="partTitle_<%=part.getPartId() %>">
 		<tr ><!-- The first row to show the part name and scalarName -->
-			<td>
+			<th >
 				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" border="0">
 				<font class="input_part"><strong>&emsp;<%=part.getPartName() %></strong></font><br><br><font class="input_partDs"><%=part.getPartDescription() %></font>
-			</td>
+			</th>
 			<%for(int i=0;i<scalarName.length;i++){ %>
 			<th class="scalar_colume" height="150"><span><small><%=scalarName[i] %></small></span></th>
 			<%} %>
@@ -220,7 +216,7 @@ if (partMap != null) {
 	</table></td></tr>
 	
 	<!-- the table to hold 1 part content -->
-	<tr><td><table id="partContent_<%=part.getPartId() %>" width="100%" cellspacing="0" cellpadding="0" style="border-top-color:#99acbd; border-top:1px;border-bottom-color:#f9faf5; display: none">
+	<tr><td><table class="collapse_table" id="partContent_<%=part.getPartId() %>">
 	<%TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 	if(subSetMap != null){
 		Iterator subSetIt = subSetMap.keySet().iterator();
@@ -230,10 +226,10 @@ if (partMap != null) {
 			if(subSet != null){%>
 		
 		<!-- the table to hold 1 subset -->
-		<tr><td><table id="subSet_<%=subSet.getSubSetId() %>" width="100%" cellspacing="0" cellpadding="0">
+		<tr><td><table class="disabled_border" id="subSet_<%=subSet.getSubSetId() %>">
 			
 			<!-- the table to hold subset title -->
-			<tr><td><table id="subSetTitle_<%=subSet.getSubSetId() %>" width="100%" border="1">
+			<tr><td><table class="thin_border" id="subSetTitle_<%=subSet.getSubSetId() %>">
 				<!-- The row to show subset title -->
 				<tr><td with="100%">
 					<img id="collapse_icon" align="left" onclick="collapse('subSetContent_<%=subSet.getSubSetId() %>')" src="collapse.png" width="15" height="15" >
@@ -242,7 +238,7 @@ if (partMap != null) {
 			</table></td></tr>
 			
 			<!-- the table to hold subset content -->
-			<tr><td><table id="subSetContent_<%=subSet.getSubSetId() %>" width="100%" cellspacing="0" cellpadding="0" style="display: none">
+			<tr><td><table class="collapse_table" id="subSetContent_<%=subSet.getSubSetId() %>" cellspacing="0" cellpadding="0">
 			<%TreeMap domainMap = new TreeMap(subSet.getDomainMap());
 			if(domainMap != null){
 				Iterator domainIt = domainMap.keySet().iterator();
@@ -252,7 +248,7 @@ if (partMap != null) {
 					if(domain != null){ %>
 				
 				<!-- the table to hold domain -->
-				<tr><td><table id="domain_<%=domain.getDomainId() %>" width="100%" border="1">
+				<tr><td><table class="thin_border" id="domain_<%=domain.getDomainId() %>">
 
 <%					String domainValue[] = null;
 					if(domainValueMap.containsKey(domain.getDomainId())){
