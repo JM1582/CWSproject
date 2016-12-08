@@ -71,10 +71,10 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 <td valign="top" width="20%" >
 <!-- navigation bar -->
 <div id="nav">
-<br>
+<br><br><br>
 <ul>
-  <li><a class="active" href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">SUMMARY VIEW</a></li>
-  <li><a id="provider_input" onclick="expand('document_list')">PROVIDER INPUT</a>
+  <li><a class="active" href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>"><font size=5 style="line-height:60px">SUMMARY VIEW</font></a></li>
+  <li><a id="provider_input" onclick="expand('document_list')"><font size=5 style="line-height:60px">PROVIDER INPUT</font></a>
   	<ul id="document_list" class="sublist_collapse">
 <%if(documentMap != null){
 	Iterator it = documentMap.keySet().iterator();
@@ -90,10 +90,10 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 <%		}
 	}
 } %>
-  	<li><a href="create_document_servlet" ><small>New Document</small></a></li>
+  	<li><a href="create_document_servlet" ><font size=4.5>New Document</font></a></li>
   	</ul>
   </li>
-  <li><a id="action_plan" onclick="expand('action_plan_list')">ACTION PLAN</a></li>
+  <li><a id="action_plan" onclick="expand('action_plan_list')"><font size=5 style="line-height:60px">ACTION PLAN</font></a></li>
   	<ul id="action_plan_list" class="sublist_collapse">
 <%if(actionPlanMap != null){
 	Iterator it = actionPlanMap.keySet().iterator();
@@ -114,7 +114,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 <%		}
 	}
 } %>
-  	<li><a href="create_action_plan_servlet"><small>New Action Plan</small></a></li>
+  	<li><a href="create_action_plan_servlet"><font size=4.5>New Action Plan</font></a></li>
   	</ul>
 </ul>
 </div>

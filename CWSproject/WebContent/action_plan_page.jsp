@@ -77,7 +77,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 
 <!-- navigation bar -->
 <div id="nav">
-<br>
+<br><br><br>
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">SUMMARY VIEW</a></li>
   <li><a 
