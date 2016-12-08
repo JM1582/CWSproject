@@ -137,7 +137,7 @@ if(partMap != null){
 <table  width="100%" border="1px" cellspacing="0px"  >
 	<!-- parts -->
 	<%if(part.hasDomainValueWithSummaryMap(summaryMap)){ %>
-	<tr><td colspan="<%=scalarValueNum+2 %>" ><h3><%=part.getPartName() %></h3></td></tr>
+	<tr><td colspan="<%=scalarValueNum+2 %>" ><h3><font class="input_part"><%=part.getPartName() %></font></h3></td></tr>
 	<%} %>
 <%			TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 			if(subSetMap != null){
@@ -148,7 +148,7 @@ if(partMap != null){
 					if(subSet != null){ %>
 	<!-- subsets -->
 	<%if(subSet.hasDomainValueWithSummaryMap(summaryMap)){ %>
-	<tr><td colspan="<%=scalarValueNum+2 %>" ><h4><%=subSet.getSubSetName() %></h4></td></tr>
+	<tr><td colspan="<%=scalarValueNum+2 %>" ><h4><font class="input_subpart">&emsp;<%=subSet.getSubSetName() %></font></h4></td></tr>
 	<%} %>
 <%						TreeMap domainMap = new TreeMap(subSet.getDomainMap());
 						if(domainMap != null){
@@ -159,7 +159,7 @@ if(partMap != null){
 								if(domain != null){ %>
 	<!-- domain -->
 	<%if(domain.hasDomainValueWithSummaryMap(summaryMap)){ %>
-	<tr><td colspan="<%=scalarValueNum+2 %>"><strong><%=domain.getDomainName() %></strong></td></tr>
+	<tr><td colspan="<%=scalarValueNum+2 %>"><font class="input_domain"><strong>&emsp;&emsp;<%=domain.getDomainName() %></strong></font></td></tr>
 	<%Iterator summaryIt = summaryMap.keySet().iterator(); 
 	while(summaryIt.hasNext()){
 		String userName = (String) summaryIt.next();
@@ -169,13 +169,13 @@ if(partMap != null){
 			String domainValue[] = (String[]) domainValueMap.get(domainId); %>
 	<!-- Title, Name, Domain Value -->
 	<tr>
-		<td height="50px" width="20%"><%=document.getAuthor().getTitle() %></td>
-		<td height="50px"><%=document.getAuthor().getFirstName() %> <%=document.getAuthor().getLastName() %></td>
+		<td height="50px" width="20%" align="center" class="summaryEntry"><%=document.getAuthor().getTitle() %></td>
+		<td height="50px" align="center" class="summaryEntry"><%=document.getAuthor().getFirstName() %> <%=document.getAuthor().getLastName() %></td>
 		<%for(int i=0;i<domainValue.length;i++){
 			if(domainValue[i]!=null){ %>
-		<td height="50px" width="20%" <%if(domainValue[i].equals("4")||domainValue[i].equals("-4")){ %>bgcolor=#eb6878<%} %>><%=domainValue[i] %></td>
+		<td height="50px" width="20%" align="center" class="summaryEntry"<%if(domainValue[i].equals("4")||domainValue[i].equals("-4")){ %>bgcolor=#eb6878;<%} %>><%=domainValue[i] %></td>
 		<%	}else{ %>
-		<td height="50px" width="20%">no data</td>
+		<td height="50px" width="20%" align="center" class="summaryEntry">no data</td>
 <%			}
 		} %>
 	</tr>
