@@ -108,7 +108,11 @@ filter:progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,stre
 box-shadow:2px 2px 10px #909090;
 }
 
-
+.no_margin{
+	height:30px;
+	margin-top:0;
+	margin-bottom:0;
+}
 
 
 

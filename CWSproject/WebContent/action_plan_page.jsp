@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="div_left_right.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="buttons.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="font_styles.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="formcell_format.css" charset="utf-8" >
 <script type="text/javascript" src="collapse.js" ></script>
 
 <script type="text/javascript">
@@ -72,14 +73,15 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 
 <table><tr>
 
-<td valign="top" width="25%" >
+<td valign="top" width="20%" >
 
 <!-- navigation bar -->
 <div id="nav">
 <br>
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>">SUMMARY VIEW</a></li>
-  <li><a id="provider_input" onclick="expand('document_list')">PROVIDER INPUT</a>
+  <li><a 
+	id="provider_input" onclick="expand('document_list')">PROVIDER INPUT</a>
   	<ul id="document_list" class="sublist_collapse">
 <%if(documentMap != null){
 	Iterator it = documentMap.keySet().iterator();
@@ -88,7 +90,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		Document tmpDocument = (Document)documentMap.get(documentId);
 		if (tmpDocument != null) { %>
 	<li><a href="edit_document_servlet?documentId=<%=String.valueOf(tmpDocument.getDocumentId()) %>"><small>
-		<%=tmpDocument.getDateOnly() %>:<br>
+		<%=tmpDocument.getDateOnly() %><br>
 		<%=tmpDocument.getAuthor().getFirstName() %> <%=tmpDocument.getAuthor().getLastName() %><br>
 		<%=tmpDocument.getAuthor().getTitle() %>
 	</small></a></li>
@@ -106,8 +108,13 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
+<<<<<<< HEAD
+	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
+		<%=tmpActionPlan.getDateOnly() %><br>
+=======
 	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
 		<%=tmpActionPlan.getDateOnly() %>:<br>
+>>>>>>> 1a0ffa69cfb909a24bdac4e2c686d41d5bc7e3d4
 		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
 		<%=tmpActionPlan.getAuthor().getTitle() %>
 	</small></a></li>
@@ -123,21 +130,24 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 
 <td valign="top" width="85%" >
 <div id="action_plan">
-<h2 class="table_header">Action Plan</h2>
-
-<form iname="actionPlanForm" action="save_action_plan_servlet">
-<div align="right">
+<form name="actionPlanForm" action="save_action_plan_servlet">
+<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:20px;">
+<p><h2 class="table_header"> &nbsp; Action Plan</h2><p>
+<div class="no_margin"><span>
+&emsp;
 <input type="submit" name="sign" value="Sign" class="button1">
-<input type="submit" value="Save" class="button1">
-</div>
+<input type="submit" value="Save" class="button1"></span></div>
+</div><br><br><br><br><br><br><br><br>
 
+
+<div style="background:white; ">
 <table border="1" width="100%">
-	<tr>
-		<td><strong>Domain</strong></td>
-		<td><strong>Current Score</strong></td>
-		<td><strong>Future Score</strong></td>
-		<td><strong>Intervention</strong></td>
-		<td><strong>Responsibility</strong></td>
+	<tr >
+		<td class="tr1_td1"><font><strong>Domain</strong></font></td>
+		<td class="tr1_td2"><font><strong>Current Score</strong></font></td>
+		<td class="tr1_td3"><font><strong>Future Score</strong></font></td>
+		<td class="tr1_td4"><font><strong>Intervention</strong></font></td>
+		<td class="tr1_td5"><font><strong>Responsibility</strong></font></td>
 	</tr>
 <%if(actionPlan != null){
 	Map actionEntryMap = actionPlan.getActionEntryMap();
@@ -156,10 +166,17 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	<tr><!--  -->
 	<%if(firstLine){ %>
 		<!-- selecting domain name -->
+<<<<<<< HEAD
+		<td height="80px"><select style="height:80px;">
+=======
 		<td><select name="domain_<%=actionEntry.getActionEntryId() %>">
+<<<<<<< HEAD
+>>>>>>> 1a0ffa69cfb909a24bdac4e2c686d41d5bc7e3d4
+=======
 		<%if(actionEntry.getDomain()==null){ %>
 			<option selected></option>
 		<%} %>
+>>>>>>> 3564789ec59af030778f7fc5dc92499d722598fc
 		<%Iterator allDomainIt = allDomainMap.keySet().iterator();
 		while(allDomainIt.hasNext()){
 			String tmpDomainId = (String) allDomainIt.next();
@@ -215,12 +232,21 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 }
 %>
 </table>
+<<<<<<< HEAD
+</div>
+<input type="button" onclick="add_domain()" value="+">
+=======
 
+<<<<<<< HEAD
+<input type="button" onclick="location.href='add_domain_servlet'" value="+">
+>>>>>>> 1a0ffa69cfb909a24bdac4e2c686d41d5bc7e3d4
+=======
 <input type="button" onclick="location.href='add_action_entry_servlet'" value="+">
+>>>>>>> 3564789ec59af030778f7fc5dc92499d722598fc
 </form>
 </div>
 </td>
-
+<td></td>
 </tr></table>
 
 </body>

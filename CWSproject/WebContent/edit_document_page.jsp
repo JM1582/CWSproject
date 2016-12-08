@@ -99,7 +99,7 @@ if (document.getSign()){
 <table><tr>
 
 <!-- the table cell to hold nav bar -->
-<td valign="top" width="25%" >
+<td valign="top" width="20%" >
 <!-- navigation bar -->
 <div id="nav">
 <br>
@@ -114,7 +114,7 @@ if (document.getSign()){
 		Document tmpDocument = (Document)documentMap.get(documentId);
 		if (tmpDocument != null) { %>
 	<li><a <%if(documentId==document.getDocumentId()){ %>class="active"<%} %> href="edit_document_servlet?documentId=<%=String.valueOf(tmpDocument.getDocumentId()) %>"><small>
-		<%=tmpDocument.getDateOnly() %>:<br>
+		<%=tmpDocument.getDateOnly() %><br>
 		<%=tmpDocument.getAuthor().getFirstName() %> <%=tmpDocument.getAuthor().getLastName() %><br>
 		<%=tmpDocument.getAuthor().getTitle() %>
 	</small></a></li>
@@ -132,8 +132,13 @@ if (document.getSign()){
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
+<<<<<<< HEAD
+	<li><a href="view_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
+		<%=tmpActionPlan.getDateOnly() %><br>
+=======
 	<li><a href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
 		<%=tmpActionPlan.getDateOnly() %>:<br>
+>>>>>>> 1a0ffa69cfb909a24bdac4e2c686d41d5bc7e3d4
 		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
 		<%=tmpActionPlan.getAuthor().getTitle() %>
 	</small></a></li>
@@ -171,7 +176,13 @@ if (document.getSign()){
 </div>
 
 
+<<<<<<< HEAD
 <br><br><br><br><br><br><br>
+=======
+<br><br><br><br><br><br>
+
+<form name="documentForm" action="save_document_servlet">
+>>>>>>> cda26aef6f6dd6a521f888ab366bd5496c6614c2
 <!-- 
 <div align="right">
 <!-- <button type="button" onclick="location.href='sign_document_servlet'" >Sign</button>
