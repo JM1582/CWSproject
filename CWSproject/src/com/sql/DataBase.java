@@ -12,7 +12,7 @@ public class DataBase {
 		Class.forName("com.mysql.jdbc.Driver");
 		String url = "jdbc:mysql://localhost:3306/CWSproject"; //接口3306，明确database的location
 		String user = "root";
-		String password = "liusheng95";
+		String password = "abcd1234";
 		try {
 			conn = DriverManager.getConnection(url,user,password);
 		} catch (Exception e) {
@@ -53,7 +53,7 @@ public class DataBase {
 				+ "patientId int not null auto_increment,"
 				+ "CWSNumber varchar(20) not null,"
 				+ "icon int not null,"
-				+ "MRP int,"
+				//+ "MRP int,"
 				+ "formTemplateId int,"
 				+ "primary key (patientId),"
 				+ "unique key (CWSNumber) )";
@@ -242,10 +242,9 @@ public class DataBase {
 		try{
 			st.close();
 			conn.close();
-			System.out.println("Database closing success.");
 		} catch (Exception e) {
 			System.out.println("Database closing fail.");
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	

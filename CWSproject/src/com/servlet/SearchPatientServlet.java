@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.*;
+import java.sql.SQLException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,7 +23,19 @@ public class SearchPatientServlet extends HttpServlet{
 		}
 		
 		PatientInfoSQL patientInforSQL = new PatientInfoSQL();
-		PatientInfo patientInfo = patientInforSQL.fakeSearchPatient(CWSNumber);
+		try {
+			patientInforSQL.connet();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			PrintWriter out = response.getWriter();
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Database connection failed, please retry.');");
+			out.println("location='login_page.jsp';");
+			out.println("</script>");
+			return;
+		}
+		PatientInfo patientInfo = patientInforSQL.getPatientInfoByCWSNumber(CWSNumber);
+		patientInforSQL.disconnect();
 		if (patientInfo != null){
 			session.setAttribute("patientInfo", patientInfo);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("view_patient_summary_servlet?CWSNumber="+patientInfo.getCWSNumber());

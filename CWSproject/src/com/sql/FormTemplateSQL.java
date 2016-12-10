@@ -7,11 +7,31 @@ import com.model.*;
 
 public class FormTemplateSQL extends DataBase{
 	
+	public int searchFormTemplateId(String formTemplateName){
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return -1;
+		}
+		String strSQL = "select * from formTemplate where formTemplateName='"+formTemplateName+"'";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			if(rs.next()){
+				return rs.getInt("formTemplateId");
+			}
+		} catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+		return -1;
+		
+	}
+	
 	public void createFormTemplate(FormTemplate formTemplate){
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return;
 		}
@@ -25,6 +45,8 @@ public class FormTemplateSQL extends DataBase{
 			e.printStackTrace();
 			return;
 		}
+		
+		formTemplate.setTemplateId(this.searchFormTemplateId(formTemplate.getTemplateName()));
 		
 		Map partMap = formTemplate.getPartsMap();
 		Iterator partIt = partMap.keySet().iterator();
@@ -90,7 +112,6 @@ public class FormTemplateSQL extends DataBase{
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return;
 		}
@@ -179,7 +200,6 @@ public class FormTemplateSQL extends DataBase{
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		String strSQL = "select * from formTemplate where formTemplateId="+Integer.toString(formTemplateId);
@@ -198,40 +218,47 @@ public class FormTemplateSQL extends DataBase{
 				formTemplate.setTemplateId(rs.getInt("formTemplateId"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		formTemplate.setPartsMap(this.getPartMap(formTemplateId));
-		//!!!!!need add domain search
 		return formTemplate;
 	}
 
-	public FormTemplate getFormTemplateByName(int formTemplateId){
-		try{
-			st = conn.createStatement();
-			String strSQL = "select * from formTemplate where formTemplateId="+Integer.toString(formTemplateId);
-			ResultSet rs = st.executeQuery(strSQL);
-			rs.next();
-			FormTemplate formTemplate = new FormTemplate(rs.getString("formTemplateName"));
-			formTemplate.setTemplateId(rs.getInt("formTemplateId"));
-			formTemplate.setPartsMap(this.getPartMap(rs.getInt("formTemplateId")));
-			return formTemplate;
-		}catch (Exception e){
-			System.out.println("Database query fail.");
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
-	
-	public Map getPartMap(int formTemplateId){
-		Map partMap = new HashMap();
-		OnePart part;
-		SubSet subSet;
-		Domain domain;
+	public FormTemplate getFormTemplateByName(String formTemplateName){
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from formTemplate where formTemplateName='"+formTemplateName+"'";
+		ResultSet rs = null;
+		try{
+			rs = st.executeQuery(strSQL);
+		}catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+			return null;
+		}
+		FormTemplate formTemplate = null;
+		try {
+			if(rs.next()){ 
+				formTemplate= new FormTemplate(rs.getString("formTemplateName"));
+				formTemplate.setTemplateId(rs.getInt("formTemplateId"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		formTemplate.setPartsMap(this.getPartMap(formTemplate.getTemplateId()));
+		return formTemplate;
+	}
+	
+	public Map<String, OnePart> getPartMap(int formTemplateId){
+		Map<String, OnePart> partMap = new HashMap<String, OnePart>();
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 		String strSQL = "select * from formTemplate_domain where formTemplateId="+Integer.toString(formTemplateId);
@@ -239,57 +266,152 @@ public class FormTemplateSQL extends DataBase{
 		try {
 			rs = st.executeQuery(strSQL);
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try{
 			while(rs.next()){
-				part=this.getPart(rs.getString("partId"));
-				subSet=this.getSubSet(rs.getString("subSetId"));
-				domain=this.getDomain(rs.getString("domainId"));
-				
-				subSet.addDomain(domain);
-				part.addSubSet(subSet);
-				
-				
-				partMap.put(rs.getShort("partId"), part);
-				
-				subSet = new SubSet(rs.getString("subSetId"), rs.getString("subSetName"));
-				subSet.setSubSetId(rs.getString("subSetId"));
-				
+				String partId = rs.getString("partId");
+				if(!partMap.containsKey(partId)){
+					OnePart part=this.getPart(partId);
+					part.setSubSetMap(this.getSubSetMap(partId,formTemplateId));
+					partMap.put(partId, part);
+				}
 			}
-			//!!!!!need add domain search
 			return partMap;
 		}catch (Exception e){
 			System.out.println("Database query fail.");
-			System.out.println(e.getMessage());
-			return null;
+			e.printStackTrace();
 		}
+		return null;
 	}
 	
+	private Map<String, SubSet> getSubSetMap(String partId, int formTemplateId) {
+		Map<String, SubSet> subSetMap = new HashMap<String, SubSet>();
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from formTemplate_domain where "
+				+ "formTemplateId="+Integer.toString(formTemplateId)+" and "
+				+ "partId='"+partId+"'";
+		ResultSet rs = null;
+		try {
+			rs = st.executeQuery(strSQL);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try{
+			while(rs.next()){
+				String subSetId = rs.getString("subSetId");
+				if(!subSetMap.containsKey(subSetId)){
+					SubSet subSet=this.getSubSet(subSetId);
+					subSet.setDomainMap(this.getDomainMap(subSetId,partId,formTemplateId));
+					subSetMap.put(subSetId, subSet);
+				}
+			}
+			return subSetMap;
+		}catch (Exception e){
+			System.out.println("Database query fail.");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private Map<String, Domain> getDomainMap(String subSetId, String partId, int formTemplateId) {
+		Map<String, Domain> domaintMap = new HashMap<String, Domain>();
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from formTemplate_domain where "
+				+ "formTemplateId="+Integer.toString(formTemplateId)+" and "
+				+ "partId='"+partId+"' and "
+				+ "subSetId='"+subSetId+"'";
+		ResultSet rs = null;
+		try {
+			rs = st.executeQuery(strSQL);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try{
+			while(rs.next()){
+				String domainId = rs.getString("domainId");
+				if(!domaintMap.containsKey(domainId)){
+					Domain domain=this.getDomain(domainId);
+					domaintMap.put(domainId, domain);
+				}
+			}
+			return domaintMap;
+		}catch (Exception e){
+			System.out.println("Database query fail.");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public OnePart getPart(String partId){
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from onePart where partId='"+partId+"'";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			if(rs.next()){
+				OnePart part = new OnePart();
+				part.setPartId(partId);
+				part.setPartName(rs.getString("partName"));
+				part.setPartDescription(rs.getString("partDescription"));
+				return part;
+			}
+		}catch (Exception e){
+			System.out.println("Database query fail.");
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
 	public SubSet getSubSet(String subSetId){
-		try{
+		try {
 			st = conn.createStatement();
-			String strSQL = "select * from subSet where subSetId='"+subSetId+"'";
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from subSet where subSetId='"+subSetId+"'";
+		try{
 			ResultSet rs = st.executeQuery(strSQL);
-			rs.next();
-			SubSet subSet = new SubSet(rs.getString("subSetId"), rs.getString("subSetName"));
-			//subSet.setTemplateId(rs.getInt("formTemplateId"));
-			//!!!!!need add domain search
-			return subSet;
+			if(rs.next()){
+				SubSet subSet = new SubSet(rs.getString("subSetId"), rs.getString("subSetName"));
+				return subSet;
+			}
 		}catch (Exception e){
 			System.out.println("Database query fail.");
-			System.out.println(e.getMessage());
-			return null;
+			e.printStackTrace();
 		}
+		return null;
 		
 	}
 
 	public Domain getDomain(String domainId){
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from domain where domainId='"+domainId+"'";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			if(rs.next()){
+				Domain domain = new Domain(rs.getString("domainId"), rs.getString("domainName"));
+				return domain;
+			}
+		}catch (Exception e){
+			System.out.println("Database query fail.");
+			e.printStackTrace();
+		}
 		return null;
 	}
 	

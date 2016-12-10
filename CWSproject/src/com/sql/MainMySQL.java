@@ -58,6 +58,7 @@ public class MainMySQL {
 		FormTemplateSQL formTemplateSQL= new FormTemplateSQL();
 		formTemplateSQL.connet();
 		formTemplateSQL.createFormTemplate(formTemplate);
+		formTemplate.setTemplateId(formTemplateSQL.searchFormTemplateId(formTemplate.getTemplateName()));
 		formTemplateSQL.setFormTemplate(formTemplate);
 		
 		//========================================================
@@ -71,11 +72,19 @@ public class MainMySQL {
 		patientInfo.addCareProvider(careProvider);
 		
 		//formTemplate = formTemplateSQL.getFormTemplateByName(1);
+		formTemplate=formTemplateSQL.getFormTemplateByName("default");
 		patientInfo.setFormTemplate(formTemplate);
 		
+		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
+		patientInfoSQL.connet();
+		patientInfoSQL.createPatientInfo(patientInfo);
+		patientInfoSQL.setPatientInfo(patientInfo);
 		
+		//========================================================
 		
-
+		userSQL.disconnect();
+		formTemplateSQL.disconnect();
+		patientInfoSQL.disconnect();
 		
 		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), careProvider);
 		ActionEntry actionEntry = new ActionEntry("0");

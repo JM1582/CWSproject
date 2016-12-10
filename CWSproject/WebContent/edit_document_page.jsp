@@ -62,7 +62,7 @@ th span {
 </div></div>
  banner end -->
 <div class="banner2" >
-<div class="hidden_above60" align="right"><br>
+<div class="hidden_above60" align="right" ><br>
 	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
 	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
 </div>
@@ -91,7 +91,7 @@ if (document.getSign()){
 } %>
 
 
-<div class="header">
+<div class="header" >
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
 	<strong><%=patientInfo.getCWSNumber() %></strong></p>
 </div>
@@ -154,7 +154,7 @@ if (document.getSign()){
 
 <form name="documentForm" action="save_document_servlet">
 
-<div class="fixed_title">
+<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:0px;margin-bottom:px;box-shadow:2px 5px 10px #6f8788;">
 <span>
 <%if(document.getSign()){ %>
 <p><h3 class="form_signed"> &nbsp;Signed by <%=document.getAuthor().getTitle() %> 
@@ -181,7 +181,7 @@ on <%=document.getDate() %>.</h3></p>
 <!--<button type="button" onclick="location.href='create_document_servlet'" >New</button>  
 </div>-->
 
-<div id="document" >
+<div id="document" style="display:block;">
 <% TreeMap partMap = new TreeMap(formTemplate.getPartsMap());
 if (partMap != null) {
 	Iterator partIt = partMap.keySet().iterator();
@@ -200,9 +200,9 @@ if (partMap != null) {
 	<!-- the table to hold 1 part title -->
 	<tr><td><table class="thin_border" id="partTitle_<%=part.getPartId() %>">
 		<tr ><!-- The first row to show the part name and scalarName -->
-			<th class="thin_border">
+			<th>
 				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" border="0">
-				<font class="input_part"><strong>&emsp;<%=part.getPartName() %></strong></font><br><br><font class="input_partDs"><%=part.getPartDescription() %></font>
+				<font align="left" class="input_part">&emsp;<%=part.getPartName() %></font><br><br><font class="input_partDs"><%=part.getPartDescription() %></font>
 			</th>
 			<%for(int i=0;i<scalarName.length;i++){ %>
 			<th class="scalar_colume" height="150"><span><small><%=scalarName[i] %></small></span></th>

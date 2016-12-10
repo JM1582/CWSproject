@@ -3,7 +3,7 @@ import java.util.*;
 
 public class FormTemplate {
 	//attributes
-	protected int templateId;
+	protected int templateId=-1;
 	protected String templateName;
 	protected Map partsMap;
 	

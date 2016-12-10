@@ -139,8 +139,8 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 <div style="background:white; ">
 <table border="1" width="100%">
 	<tr >
-		<td class="tr1_td1"><font><strong>Domain</strong></font></td>
-		<td class="tr1_td2"><font><strong>Current Score</strong></font></td>
+		<td class="tr1_td2"><font><strong>Domain</strong></font></td>
+		<td class="tr1_td3"><font><strong>Current Score</strong></font></td>
 		<td class="tr1_td3"><font><strong>Future Score</strong></font></td>
 		<td class="tr1_td4"><font><strong>Intervention</strong></font></td>
 		<td class="tr1_td5"><font><strong>Responsibility</strong></font></td>
@@ -220,7 +220,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	}
 }
 %>
-</table>
+</table></div>
 <input type="button" onclick="location.href='add_action_entry_servlet'" value="+">
 </form>
 

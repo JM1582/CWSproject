@@ -16,11 +16,10 @@ public class LoginServlet extends HttpServlet{
 		
 		HttpSession session = request.getSession();
 		UserSQL userSQL = new UserSQL();
-		/*
+		
 		try {
 			userSQL.connet();
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
@@ -28,9 +27,9 @@ public class LoginServlet extends HttpServlet{
 			out.println("location='login_page.jsp';");
 			out.println("</script>");
 			return;
-		}*/
-		User user = userSQL.fakeUserLogin(new User(userName, passWord));
-		//userSQL.disconnect();
+		}
+		User user = userSQL.userLogin(new User(userName, passWord));
+		userSQL.disconnect();
 		if (user != null){
 			if(user.getType()==UserType.ADMIN){
 				PrintWriter out = response.getWriter();

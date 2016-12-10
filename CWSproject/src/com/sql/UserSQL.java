@@ -51,25 +51,30 @@ public class UserSQL extends DataBase{
 	}
 	
 	public User getUser(int userId){
-		try{
+		try {
 			st = conn.createStatement();
-			String strSQL = "select * from user where userId='"+userId+"'";
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from user where userId='"+userId+"'";
+		try{
 			ResultSet rs = st.executeQuery(strSQL);
-			rs.next();
-			User user = new User(rs.getString("userName"), rs.getString("passWord"));
-			user.setUserId(rs.getInt("userId"));
-			user.setType(UserType.values()[rs.getInt("type")]);
-			user.setTitle(rs.getString("title"));
-			user.setFirstName(rs.getString("firstName"));
-			user.setLastName(rs.getString("lastName"));
-			user.setFacility(rs.getString("facility"));
-			user.setEmail(rs.getString("email"));
-			return  user;
+			if(rs.next()){
+				User user = new User(rs.getString("userName"), rs.getString("passWord"));
+				user.setUserId(rs.getInt("userId"));
+				user.setType(UserType.values()[rs.getInt("type")]);
+				user.setTitle(rs.getString("title"));
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
+				user.setFacility(rs.getString("facility"));
+				user.setEmail(rs.getString("email"));
+				return  user;
+			}
 		}catch (Exception e){
 			System.out.println("Database query fail.");
 			System.out.println(e.getMessage());
-			return null;
 		}
+		return null;
 	}
 	
 	public User getUserByUserName(String userName){
@@ -98,7 +103,6 @@ public class UserSQL extends DataBase{
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		String strSQL = "select * from user where userName='"+user.getUserName()+"' and passWord='"+user.getPassWord()+"'";
@@ -114,22 +118,18 @@ public class UserSQL extends DataBase{
 				rsUser.setFacility(rs.getString("facility"));
 				rsUser.setEmail(rs.getString("email"));
 				return  rsUser;
-			} else {
-				return null;
 			}
 		}catch (Exception e){
 			System.out.println("Query fail: "+strSQL);
 			System.out.println(e.getMessage());
-			return null;
 		}
+		return null;
 	}
 	
 	
 	public User getUserSQL(User user){
 		try {
-			System.out.println("Database connection.");
 			this.connet();
-			System.out.println("Database connection done.");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Database connection1 fail.");
 			System.out.println(e.getMessage());
@@ -144,7 +144,8 @@ public class UserSQL extends DataBase{
 		
 		return rs_user;
 	}
-
+	
+	// need to be removed
 	public User fakeUserLogin(User user) {
 		FakeSQL fakeSQL = new FakeSQL();
 		User rsUser = fakeSQL.getUser(user.getUserName());
