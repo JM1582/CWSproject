@@ -220,9 +220,9 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	}
 }
 %>
-</table></div>
+</table>
 <input type="button" onclick="location.href='add_action_entry_servlet'" value="+">
-</form>
+</form></div>
 
 </td>
 <td></td>

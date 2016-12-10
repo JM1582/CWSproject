@@ -70,7 +70,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 <tr>
 <td valign="top" width="20%" >
 <!-- navigation bar -->
-<div id="nav">
+<div id="nav" style="position=fixed;">
 <br><br><br>
 <ul>
   <li><a class="active" href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>"><font size=5 style="line-height:60px">SUMMARY VIEW</font></a></li>
