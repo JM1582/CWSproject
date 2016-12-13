@@ -3,21 +3,21 @@ import java.util.*;
 
 
 public class PatientInfo {
-	private int patientId;
+	private int patientInfoId;
 	private String CWSNumber;
 	private int icon;
 	private CareProvider MRP;
 	private FormTemplate formTemplate;
-	private Map careProviderMap;
-	private Map documentMap;
-	private Map actionPlanMap;
+	private Map<String, CareProvider> careProviderMap;
+	private Map<Integer, Document> documentMap;
+	private Map<Integer, ActionPlan> actionPlanMap;
 	
 	public PatientInfo(String CWSNumber, int icon) {
 		this.CWSNumber = CWSNumber;
 		this.icon = icon;
-		this.careProviderMap = new HashMap();
-		this.documentMap = new HashMap();
-		this.actionPlanMap = new HashMap();
+		this.careProviderMap = new HashMap<String, CareProvider>();
+		this.documentMap = new HashMap<Integer, Document>();
+		this.actionPlanMap = new HashMap<Integer, ActionPlan>();
 	}
 	
 	//set and get-------------------------------------------!!!
@@ -35,12 +35,12 @@ public class PatientInfo {
 	public void setIcon(int newIcon){
 		this.icon = newIcon;
 	}
-	//patientId;
+	//patientInfoId;
 	public int getPatientId(){
-		return patientId;
+		return patientInfoId;
 	}
 	public void setPatientId(int newPaitentId){
-		this.patientId = newPaitentId;
+		this.patientInfoId = newPaitentId;
 	}	
 	//MRP
 	public CareProvider getMRP(){
@@ -66,10 +66,10 @@ public class PatientInfo {
 			}
 		}
 	}
-	public Map getCareProviderMap(){
+	public Map<String, CareProvider> getCareProviderMap(){
 		return this.careProviderMap;
 	}
-	public void setCareProviderMap(Map careProviderMap){
+	public void setCareProviderMap(Map<String, CareProvider> careProviderMap){
 		this.careProviderMap = careProviderMap;
 	}
 	public void addCareProvider(CareProvider careProvider) {
@@ -79,10 +79,10 @@ public class PatientInfo {
 		careProviderMap.remove(careProvider.getUserName());
 	}
 	//documentMap add and remove
-	public Map getDocumentMap(){
+	public Map<Integer, Document> getDocumentMap(){
 		return this.documentMap;
 	}
-	public void setDocumentMap(Map documentMap){
+	public void setDocumentMap(Map<Integer, Document> documentMap){
 		this.documentMap = documentMap;
 	}
 	public void addDocument(Document document) {
@@ -92,10 +92,10 @@ public class PatientInfo {
 		careProviderMap.remove(document.getDocumentId());
 	}
 	//actionPlanMap add and remove
-	public Map getActionPlanMap(){
+	public Map<Integer, ActionPlan> getActionPlanMap(){
 		return this.actionPlanMap;
 	}
-	public void setActionPlanMap(Map actionPlanMap){
+	public void setActionPlanMap(Map<Integer, ActionPlan> actionPlanMap){
 		this.actionPlanMap = actionPlanMap;
 	}
 	public void addActionPlan(ActionPlan actionPlan) {

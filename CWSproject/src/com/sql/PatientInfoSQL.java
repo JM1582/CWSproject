@@ -27,43 +27,23 @@ public class PatientInfoSQL extends DataBase{
 		
 	}
 	
-	public void createPatientInfo(PatientInfo patientInfo){
+	public boolean isExist(PatientInfo patientInfo){
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "insert into patientInfo values("
-				+ "null,"
-				+ "'"+patientInfo.getCWSNumber()+"', "
-				+ Integer.toString(patientInfo.getIcon())+", "
-				//+ Integer.toString(patientInfo.getMRP().getUserId())+", "
-				+ Integer.toString(patientInfo.getFormTemplate().getTemplateId())+" "
-				+ ")";
+		String strSQL = "select * from patientInfo where CWSNumber='"+patientInfo.getCWSNumber()+"'";
 		try{
-			st.executeUpdate(strSQL);
+			ResultSet rs = st.executeQuery(strSQL);
+			if(rs.next()){
+				return true;
+			}
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
 		}
-		patientInfo.setPatientId(this.getPatientIdByCWSNumber(patientInfo.getCWSNumber()));
-		Map careProviderMap = patientInfo.getCareProviderMap();
-		
-		//!!!!!!!
-		strSQL = "insert into user_PatientInfo values("
-				+ Integer.toString(patientInfo.getCareProviderMap())+","
-				+ Integer.toString(patientInfo.getPatientId())+","
-				+ "'"+patientInfo.getCWSNumber()+"', "
-				+ Integer.toString(patientInfo.getIcon())+", "
-				//+ Integer.toString(patientInfo.getMRP().getUserId())+", "
-				+ Integer.toString(patientInfo.getFormTemplate().getTemplateId())+" "
-				+ ")";
-		try{
-			st.executeUpdate(strSQL);
-		} catch (Exception e){
-			System.out.println("Fail: "+strSQL);
-			e.printStackTrace();
-		}
+		return false;
 	}
 	
 	public void setPatientInfo(PatientInfo patientInfo){
@@ -72,35 +52,96 @@ public class PatientInfoSQL extends DataBase{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "update patientInfo set "
-				+ "patientId="+Integer.toString(patientInfo.getPatientId())+","
-				+ "CWSNumber='"+patientInfo.getCWSNumber()+"',"
-				+ "icon="+Integer.toString(patientInfo.getIcon())+","
-				//+ "MRP='"+Integer.toString(patientInfo.getMRP().getUserId())+"',"
-				+ "formTemplateId="+patientInfo.getFormTemplate().getTemplateId()+" "
-				+ "where patientId="+Integer.toString(patientInfo.getPatientId());
+		String strSQL = null;
+		if(this.isExist(patientInfo)){
+			patientInfo.setPatientId(this.getPatientIdByCWSNumber(patientInfo.getCWSNumber()));
+			strSQL = "update patientInfo set "
+					+ "patientInfoId="+Integer.toString(patientInfo.getPatientId())+","
+					+ "CWSNumber='"+patientInfo.getCWSNumber()+"',"
+					+ "icon="+Integer.toString(patientInfo.getIcon())+","
+					//+ "MRP='"+Integer.toString(patientInfo.getMRP().getUserId())+"',"
+					+ "formTemplateId="+patientInfo.getFormTemplate().getTemplateId()+" "
+					+ "where patientInfoId="+Integer.toString(patientInfo.getPatientId());
+		} else {
+			strSQL = "insert into patientInfo values("
+					+ "null,"
+					+ "'"+patientInfo.getCWSNumber()+"', "
+					+ Integer.toString(patientInfo.getIcon())+", "
+					//+ Integer.toString(patientInfo.getMRP().getUserId())+", "
+					+ Integer.toString(patientInfo.getFormTemplate().getTemplateId())+" "
+					+ ")";
+		}
 		try{
 			st.executeUpdate(strSQL);
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
 		}
+		this.setCareProviderMap(patientInfo);
 	}
 	
-	public PatientInfo getPatientInfo(int patientId){
+	public void setCareProviderMap(PatientInfo patientInfo){
+		this.clearCareProviderForPatientInfo(patientInfo);
+		Map careProviderMap = patientInfo.getCareProviderMap();
+		Iterator careProviderIt = careProviderMap.keySet().iterator();
+		while(careProviderIt.hasNext()){
+			String userName = (String) careProviderIt.next();
+			CareProvider tmpCareProvider = (CareProvider) careProviderMap.get(userName);
+			String strSQL = "insert into user_PatientInfo values("
+					+ Integer.toString(tmpCareProvider.getUserId())+", "
+					+ "'"+tmpCareProvider.getUserName()+"', "
+					+ Integer.toString(patientInfo.getPatientId())+","
+					+ "'"+patientInfo.getCWSNumber()+"' )";
+			try{
+				st.executeUpdate(strSQL);
+			} catch (Exception e){
+				System.out.println("Fail: "+strSQL);
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public PatientInfo getCareProviderMap(PatientInfo patientInfo) {
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from document where patientId='"+patientId+"'";
+		String strSQL = "select * from user_patientInfo where CWSNumber='"+patientInfo.getCWSNumber()+"'";
+		try {
+			ResultSet rs = st.executeQuery(strSQL);
+			UserSQL userSQL = new UserSQL();
+			try {
+				userSQL.connet();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			while(rs.next()){
+				CareProvider careProvider = userSQL.getUserByUserName(rs.getString("userName")).toCareProvider();
+				patientInfo.addCareProvider(careProvider);
+			}
+			userSQL.disconnect();
+		} catch (SQLException e) {
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+		return patientInfo;
+	}
+	
+	public PatientInfo getPatientInfo(int patientInfoId){
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from patientInfo where patientInfoId='"+patientInfoId+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
 				String CWSNumber = rs.getString("CWSNumber");
 				
-				PatientInfo patientInfo = new PatientInfo(rs.getString("CWSNumber"), rs.getInt("icon"));
-				patientInfo.setPatientId(rs.getInt("patientId"));
+				PatientInfo patientInfo = new PatientInfo(CWSNumber, rs.getInt("icon"));
+				patientInfo.setPatientId(rs.getInt("patientInfoId"));
 				
 				FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
 				formTemplateSQL.connet();
@@ -111,7 +152,8 @@ public class PatientInfoSQL extends DataBase{
 				UserSQL userSQL = new UserSQL();
 				userSQL.connet();
 				//CareProvider MRP = userSQL.getUser(rs.getInt("MRP")).toCareProvider();
-				Map careProviderMap = this.getCareProviderMap(int patientId);
+				patientInfo = this.getCareProviderMap(patientInfo);
+				userSQL.disconnect();
 				
 				DocumentSQL documentSQL = new DocumentSQL();
 				documentSQL.connet();
@@ -130,7 +172,7 @@ public class PatientInfoSQL extends DataBase{
 		}
 		return null;
 	}
-	
+
 	public PatientInfo getPatientInfoByCWSNumber(String CWSNumber){
 		try {
 			st = conn.createStatement();
@@ -142,7 +184,7 @@ public class PatientInfoSQL extends DataBase{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
 				PatientInfo patientInfo = new PatientInfo(rs.getString("CWSNumber"), rs.getInt("icon"));
-				patientInfo.setPatientId(rs.getInt("patientId"));
+				patientInfo.setPatientId(rs.getInt("patientInfoId"));
 				
 				// get patient MRP from database
 				//UserSQL userSQL = new UserSQL();
@@ -228,6 +270,21 @@ public class PatientInfoSQL extends DataBase{
 		patientInfo.addActionPlan(actionPlan);
 		
 		return patientInfo;
+	}
+	
+	public void clearCareProviderForPatientInfo(PatientInfo patientInfo){
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String strSQL = "delete form user_patientInfo where CWSNumber='"+patientInfo.getCWSNumber()+"'";
+		try {
+			st.executeQuery(strSQL);
+		} catch (SQLException e) {
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
 	}
 	
 	// need to be removed

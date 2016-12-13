@@ -50,12 +50,12 @@ public class DataBase {
 			e1.printStackTrace();
 		}
 		strSQL = "create table IF NOT EXISTS patientInfo("
-				+ "patientId int not null auto_increment,"
+				+ "patientInfoId int not null auto_increment,"
 				+ "CWSNumber varchar(20) not null,"
 				+ "icon int not null,"
 				//+ "MRP int,"
 				+ "formTemplateId int,"
-				+ "primary key (patientId),"
+				+ "primary key (patientInfoId),"
 				+ "unique key (CWSNumber) )";
 		try {
 			st.executeUpdate(strSQL);
@@ -183,7 +183,7 @@ public class DataBase {
 		strSQL = "create table IF NOT EXISTS user_patientInfo("
 				+ "userId int not null, "
 				+ "userName varchar(20) not null, "
-				+ "patientId int not null "
+				+ "patientInfoId int not null "
 				+ "CWSNumber varchar(20) not null )";
 		try {
 			st.executeUpdate(strSQL);
@@ -193,7 +193,7 @@ public class DataBase {
 		}
 		/* the document table already include CWSNumber
 		strSQL = "create table IF NOT EXISTS patientInfo_document("//Á¬½Ó patientInfo and document
-				+ "patientId int not null,"
+				+ "patientInfoId int not null,"
 				+ "documentId int not null )";
 		try {
 			st.executeUpdate(strSQL);
@@ -204,7 +204,7 @@ public class DataBase {
 		*/
 		/* the actionPlan table already include CWSNumber
 		strSQL = "create table IF NOT EXISTS patientInfo_actionPlan("
-				+ "patientId int not null,"
+				+ "patientInfoId int not null,"
 				+ "actionPlanId int not null )";
 		try {
 			st.executeUpdate(strSQL);
