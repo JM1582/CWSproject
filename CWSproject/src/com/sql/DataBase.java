@@ -180,15 +180,18 @@ public class DataBase {
 		
 
 		//relationship of tables-连接user and patientInfo
-		strSQL = "create table IF NOT EXISTS user_PatientInfo("
-				+ "userId int not null,"
-				+ "patientId int not null )";
+		strSQL = "create table IF NOT EXISTS user_patientInfo("
+				+ "userId int not null, "
+				+ "userName varchar(20) not null, "
+				+ "patientId int not null "
+				+ "CWSNumber varchar(20) not null )";
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
 		}
+		/* the document table already include CWSNumber
 		strSQL = "create table IF NOT EXISTS patientInfo_document("//连接 patientInfo and document
 				+ "patientId int not null,"
 				+ "documentId int not null )";
@@ -198,6 +201,8 @@ public class DataBase {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
 		}
+		*/
+		/* the actionPlan table already include CWSNumber
 		strSQL = "create table IF NOT EXISTS patientInfo_actionPlan("
 				+ "patientId int not null,"
 				+ "actionPlanId int not null )";
@@ -207,6 +212,7 @@ public class DataBase {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
 		}
+		*/
 		strSQL = "create table IF NOT EXISTS actionPlan_actionEntry("
 				+ "actionPlanId int not null,"
 				+ "actionEntryId int not null )";

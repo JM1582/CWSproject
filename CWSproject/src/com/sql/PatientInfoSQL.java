@@ -6,6 +6,27 @@ import java.util.*;
 import com.model.*;
 
 public class PatientInfoSQL extends DataBase{
+	public int getPatientIdByCWSNumber(String CWSNumber){
+		int patientInfoId = -1;
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from patientInfo where CWSNumber='"+CWSNumber+"'";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			if(rs.next()){
+				patientInfoId = rs.getInt("patientInfoId");
+			}
+		}catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+		return patientInfoId;
+		
+	}
+	
 	public void createPatientInfo(PatientInfo patientInfo){
 		try {
 			st = conn.createStatement();
@@ -14,6 +35,24 @@ public class PatientInfoSQL extends DataBase{
 		}
 		String strSQL = "insert into patientInfo values("
 				+ "null,"
+				+ "'"+patientInfo.getCWSNumber()+"', "
+				+ Integer.toString(patientInfo.getIcon())+", "
+				//+ Integer.toString(patientInfo.getMRP().getUserId())+", "
+				+ Integer.toString(patientInfo.getFormTemplate().getTemplateId())+" "
+				+ ")";
+		try{
+			st.executeUpdate(strSQL);
+		} catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+		patientInfo.setPatientId(this.getPatientIdByCWSNumber(patientInfo.getCWSNumber()));
+		Map careProviderMap = patientInfo.getCareProviderMap();
+		
+		//!!!!!!!
+		strSQL = "insert into user_PatientInfo values("
+				+ Integer.toString(patientInfo.getCareProviderMap())+","
+				+ Integer.toString(patientInfo.getPatientId())+","
 				+ "'"+patientInfo.getCWSNumber()+"', "
 				+ Integer.toString(patientInfo.getIcon())+", "
 				//+ Integer.toString(patientInfo.getMRP().getUserId())+", "
@@ -49,31 +88,47 @@ public class PatientInfoSQL extends DataBase{
 	}
 	
 	public PatientInfo getPatientInfo(int patientId){
-		try{
+		try {
 			st = conn.createStatement();
-			String strSQL = "select * from document where patientId='"+patientId+"'";
-			ResultSet rs = st.executeQuery(strSQL);
-			rs.next();
-			FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
-			formTemplateSQL.connet();
-			FormTemplate formTemplate = formTemplateSQL.getFormTemplate(rs.getInt("forTemplateId"));
-			
-			UserSQL userSQL = new UserSQL();
-			userSQL.connet();
-			CareProvider MRP = userSQL.getUser(rs.getInt("MRP")).toCareProvider();
-
-			PatientInfo patientInfo = new PatientInfo(rs.getString("CWSNumber"), rs.getInt("icon"));
-			patientInfo.setPatientId(rs.getInt("patientId"));
-			patientInfo.setMRP(MRP);
-			patientInfo.setFormTemplate(formTemplate);
-			System.out.println("Get patientInfo query success.");
-			
-			return  patientInfo;
-		}catch (Exception e){
-			System.out.println("Get patientInfo query fail.");
-			e.printStackTrace();
-			return null;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
+		String strSQL = "select * from document where patientId='"+patientId+"'";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			if(rs.next()){
+				String CWSNumber = rs.getString("CWSNumber");
+				
+				PatientInfo patientInfo = new PatientInfo(rs.getString("CWSNumber"), rs.getInt("icon"));
+				patientInfo.setPatientId(rs.getInt("patientId"));
+				
+				FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
+				formTemplateSQL.connet();
+				FormTemplate formTemplate = formTemplateSQL.getFormTemplate(rs.getInt("forTemplateId"));
+				formTemplateSQL.disconnect();
+				patientInfo.setFormTemplate(formTemplate);
+				
+				UserSQL userSQL = new UserSQL();
+				userSQL.connet();
+				//CareProvider MRP = userSQL.getUser(rs.getInt("MRP")).toCareProvider();
+				Map careProviderMap = this.getCareProviderMap(int patientId);
+				
+				DocumentSQL documentSQL = new DocumentSQL();
+				documentSQL.connet();
+				patientInfo.setDocumentMap(documentSQL.getDocumentByCWSNumber(CWSNumber));
+
+				patientInfo.setMRP(MRP);
+				patientInfo.setFormTemplate(formTemplate);
+				System.out.println("Get patientInfo query success.");
+				
+				return  patientInfo;
+				
+			}
+		}catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public PatientInfo getPatientInfoByCWSNumber(String CWSNumber){
