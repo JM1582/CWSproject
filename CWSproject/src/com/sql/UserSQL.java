@@ -8,31 +8,34 @@ import com.model.*;
 
 
 public class UserSQL extends DataBase{
-	
-	public void createUser(User user){//save user data
-		try{
+	public boolean isExist(User user){
+		try {
 			st = conn.createStatement();
-			st.executeUpdate("insert into user values("
-					+ "null,"
-					+ "'"+user.getUserName()+"',"
-					+ "'"+user.getPassWord()+"',"
-					+ Integer.toString((Integer) user.getType().ordinal())+","
-					+ "'"+user.getTitle()+"',"
-					+ "'"+user.getFirstName()+"',"
-					+ "'"+user.getLastName()+"',"
-					+ "'"+user.getFacility()+"',"
-					+ "'"+user.getEmail()+"' )");
-			System.out.println("Add user success.");
-		} catch (Exception e){
-			System.out.println("Add user fail.");
-			System.out.println(e.getMessage());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
+		String strSQL = "select * from document where userName='"+user.getUserName()+"'";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			if(rs.next()){
+				return true;
+			}
+		} catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	public void setUser(User user){//save user data
-		try{
+		try {
 			st = conn.createStatement();
-			String strSQL = "update user set "
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = null;
+		if(this.isExist(user)){
+			strSQL = "update user set "
 					+ "userName='"+user.getUserName()+"',  "
 					+ "passWord='"+user.getPassWord()+"', "
 					+ "type="+Integer.toString((Integer) user.getType().ordinal())+", "
@@ -42,11 +45,23 @@ public class UserSQL extends DataBase{
 					+ "facility='"+user.getFacility()+"', "
 					+ "email='"+user.getEmail()+"' "
 					+ "where userId="+Integer.toString(user.getUserId());
+		} else {
+			strSQL = "insert into user values("
+					+ "null,"
+					+ "'"+user.getUserName()+"',"
+					+ "'"+user.getPassWord()+"',"
+					+ Integer.toString((Integer) user.getType().ordinal())+","
+					+ "'"+user.getTitle()+"',"
+					+ "'"+user.getFirstName()+"',"
+					+ "'"+user.getLastName()+"',"
+					+ "'"+user.getFacility()+"',"
+					+ "'"+user.getEmail()+"' )";
+		}
+		try{
 			st.executeUpdate(strSQL);
-			System.out.println("Update user success.");
 		} catch (Exception e){
-			System.out.println("Update user fail.");
-			System.out.println(e.getMessage());
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
 		}
 	}
 	
@@ -71,62 +86,41 @@ public class UserSQL extends DataBase{
 				return  user;
 			}
 		}catch (Exception e){
-			System.out.println("Database query fail.");
-			System.out.println(e.getMessage());
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
 		}
 		return null;
 	}
 	
 	public User getUserByUserName(String userName){
-		try{
-			st = conn.createStatement();
-			String strSQL = "select * from user where userName='"+userName+"'";
-			ResultSet rs = st.executeQuery(strSQL);
-			rs.next();
-			User user = new User(rs.getString("userName"), rs.getString("passWord"));
-			user.setUserId(rs.getInt("userId"));
-			user.setType(UserType.values()[rs.getInt("type")]);
-			user.setTitle(rs.getString("title"));
-			user.setFirstName(rs.getString("firstName"));
-			user.setLastName(rs.getString("lastName"));
-			user.setFacility(rs.getString("facility"));
-			user.setEmail(rs.getString("email"));
-			return  user;
-		}catch (Exception e){
-			System.out.println("Database query fail.");
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
-
-	public User userLogin(User user){
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from user where userName='"+user.getUserName()+"' and passWord='"+user.getPassWord()+"'";
+		String strSQL = "select * from user where userName='"+userName+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
-				User rsUser = new User(rs.getString("userName"), rs.getString("passWord"));
-				rsUser.setUserId(rs.getInt("userId"));
-				rsUser.setType(UserType.values()[rs.getInt("type")]);
-				rsUser.setTitle(rs.getString("title"));
-				rsUser.setFirstName(rs.getString("firstName"));
-				rsUser.setLastName(rs.getString("lastName"));
-				rsUser.setFacility(rs.getString("facility"));
-				rsUser.setEmail(rs.getString("email"));
-				return  rsUser;
+				User user = this.getUser(rs.getInt("userId"));
+				return user;
 			}
 		}catch (Exception e){
-			System.out.println("Query fail: "+strSQL);
-			System.out.println(e.getMessage());
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public User userLogin(User user){
+		User rsUser = this.getUser(user.getUserId());
+		if(rsUser.getPassWord().equals(user.getPassWord())){
+			return rsUser;
 		}
 		return null;
 	}
 	
-	
+	// need to be removed
 	public User getUserSQL(User user){
 		try {
 			this.connet();

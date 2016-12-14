@@ -280,7 +280,7 @@ public class PatientInfoSQL extends DataBase{
 		}
 		String strSQL = "delete form user_patientInfo where CWSNumber='"+patientInfo.getCWSNumber()+"'";
 		try {
-			st.executeQuery(strSQL);
+			st.executeUpdate(strSQL);
 		} catch (SQLException e) {
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();

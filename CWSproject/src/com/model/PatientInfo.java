@@ -57,15 +57,6 @@ public class PatientInfo {
 		this.formTemplate = formTemplate;
 	}
 	//CareProviders, using Map
-	public void getCareProviders() {
-		if (this.careProviderMap != null){
-			Iterator it = careProviderMap.keySet().iterator();
-			while (it.hasNext()){
-				int careProviderKey = (int)it.next();
-				CareProvider careProvider = (CareProvider)careProviderMap.get(careProviderKey);
-			}
-		}
-	}
 	public Map<String, CareProvider> getCareProviderMap(){
 		return this.careProviderMap;
 	}
