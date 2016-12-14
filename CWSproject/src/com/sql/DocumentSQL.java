@@ -108,12 +108,12 @@ public class DocumentSQL extends DataBase{
 				Document document = this.getDocument(rs.getInt("documentId"));
 				documentMap.put(document.getDocumentId(), document);
 			}
-			return  documentMap;
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
 			return null;
 		}
+		return documentMap;
 	}
 
 	public Document getDocumentByName (String documentName){

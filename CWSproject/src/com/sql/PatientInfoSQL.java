@@ -127,6 +127,31 @@ public class PatientInfoSQL extends DataBase{
 		}
 		return patientInfo;
 	}
+
+	public PatientInfo getDocumentMap(PatientInfo patientInfo){
+		DocumentSQL documentSQL = new DocumentSQL();
+		try {
+			documentSQL.connet();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		patientInfo.setDocumentMap(documentSQL.getDocumentByCWSNumber(patientInfo.getCWSNumber()));
+		documentSQL.disconnect();
+		return patientInfo;
+	}
+
+	public PatientInfo getFormTemplate(PatientInfo patientInfo, int formTemplateId){
+		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
+		try {
+			formTemplateSQL.connet();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		FormTemplate formTemplate = formTemplateSQL.getFormTemplate(formTemplateId);
+		formTemplateSQL.disconnect();
+		patientInfo.setFormTemplate(formTemplate);
+		return patientInfo;
+	}
 	
 	public PatientInfo getPatientInfo(int patientInfoId){
 		try {
@@ -134,7 +159,7 @@ public class PatientInfoSQL extends DataBase{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from patientInfo where patientInfoId='"+patientInfoId+"'";
+		String strSQL = "select * from patientInfo where patientInfoId="+patientInfoId;
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
@@ -143,28 +168,18 @@ public class PatientInfoSQL extends DataBase{
 				PatientInfo patientInfo = new PatientInfo(CWSNumber, rs.getInt("icon"));
 				patientInfo.setPatientId(rs.getInt("patientInfoId"));
 				
-				FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
-				formTemplateSQL.connet();
-				FormTemplate formTemplate = formTemplateSQL.getFormTemplate(rs.getInt("forTemplateId"));
-				formTemplateSQL.disconnect();
-				patientInfo.setFormTemplate(formTemplate);
+				patientInfo = this.getFormTemplate(patientInfo, rs.getInt("formTemplateId"));
 				
-				UserSQL userSQL = new UserSQL();
-				userSQL.connet();
-				//CareProvider MRP = userSQL.getUser(rs.getInt("MRP")).toCareProvider();
 				patientInfo = this.getCareProviderMap(patientInfo);
-				userSQL.disconnect();
+				//UserSQL userSQL = new UserSQL();
+				//userSQL.connet();
+				//CareProvider MRP = userSQL.getUser(rs.getInt("MRP")).toCareProvider();
+				//userSQL.disconnect();
+				//patientInfo.setMRP(MRP);
 				
-				DocumentSQL documentSQL = new DocumentSQL();
-				documentSQL.connet();
-				patientInfo.setDocumentMap(documentSQL.getDocumentByCWSNumber(CWSNumber));
-
-				patientInfo.setMRP(MRP);
-				patientInfo.setFormTemplate(formTemplate);
-				System.out.println("Get patientInfo query success.");
+				patientInfo = this.getDocumentMap(patientInfo);
 				
 				return  patientInfo;
-				
 			}
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
@@ -183,22 +198,7 @@ public class PatientInfoSQL extends DataBase{
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
-				PatientInfo patientInfo = new PatientInfo(rs.getString("CWSNumber"), rs.getInt("icon"));
-				patientInfo.setPatientId(rs.getInt("patientInfoId"));
-				
-				// get patient MRP from database
-				//UserSQL userSQL = new UserSQL();
-				//userSQL.connet();
-				//CareProvider MRP = userSQL.getUser(rs.getInt("MRP")).toCareProvider();
-				//userSQL.disconnect();
-				//patientInfo.setMRP(MRP);
-				
-				//get formTemplate form database
-				FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
-				formTemplateSQL.connet();
-				FormTemplate formTemplate = formTemplateSQL.getFormTemplate(rs.getInt("formTemplateId"));
-				formTemplateSQL.disconnect();
-				patientInfo.setFormTemplate(formTemplate);
+				PatientInfo patientInfo = this.getPatientInfo(rs.getInt("patientInfoId"));
 
 				return  patientInfo;
 			}
