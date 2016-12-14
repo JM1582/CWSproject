@@ -46,7 +46,7 @@ public class PatientInfoSQL extends DataBase{
 		return false;
 	}
 	
-	public void setPatientInfo(PatientInfo patientInfo){
+	public PatientInfo setPatientInfo(PatientInfo patientInfo){
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
@@ -54,13 +54,12 @@ public class PatientInfoSQL extends DataBase{
 		}
 		String strSQL = null;
 		if(this.isExist(patientInfo)){
-			patientInfo.setPatientId(this.getPatientIdByCWSNumber(patientInfo.getCWSNumber()));
 			strSQL = "update patientInfo set "
 					+ "patientInfoId="+Integer.toString(patientInfo.getPatientId())+","
 					+ "CWSNumber='"+patientInfo.getCWSNumber()+"',"
 					+ "icon="+Integer.toString(patientInfo.getIcon())+","
 					//+ "MRP='"+Integer.toString(patientInfo.getMRP().getUserId())+"',"
-					+ "formTemplateId="+patientInfo.getFormTemplate().getTemplateId()+" "
+					+ "formTemplateId="+patientInfo.getFormTemplate().getId()+" "
 					+ "where patientInfoId="+Integer.toString(patientInfo.getPatientId());
 		} else {
 			strSQL = "insert into patientInfo values("
@@ -68,7 +67,7 @@ public class PatientInfoSQL extends DataBase{
 					+ "'"+patientInfo.getCWSNumber()+"', "
 					+ Integer.toString(patientInfo.getIcon())+", "
 					//+ Integer.toString(patientInfo.getMRP().getUserId())+", "
-					+ Integer.toString(patientInfo.getFormTemplate().getTemplateId())+" "
+					+ Integer.toString(patientInfo.getFormTemplate().getId())+" "
 					+ ")";
 		}
 		try{
@@ -78,6 +77,8 @@ public class PatientInfoSQL extends DataBase{
 			e.printStackTrace();
 		}
 		this.setCareProviderMap(patientInfo);
+		patientInfo.setPatientId(this.getPatientIdByCWSNumber(patientInfo.getCWSNumber()));
+		return patientInfo;
 	}
 	
 	public void setCareProviderMap(PatientInfo patientInfo){
@@ -88,7 +89,7 @@ public class PatientInfoSQL extends DataBase{
 			String userName = (String) careProviderIt.next();
 			CareProvider tmpCareProvider = (CareProvider) careProviderMap.get(userName);
 			String strSQL = "insert into user_PatientInfo values("
-					+ Integer.toString(tmpCareProvider.getUserId())+", "
+					+ Integer.toString(tmpCareProvider.getId())+", "
 					+ "'"+tmpCareProvider.getUserName()+"', "
 					+ Integer.toString(patientInfo.getPatientId())+","
 					+ "'"+patientInfo.getCWSNumber()+"' )";
@@ -278,7 +279,7 @@ public class PatientInfoSQL extends DataBase{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String strSQL = "delete form user_patientInfo where CWSNumber='"+patientInfo.getCWSNumber()+"'";
+		String strSQL = "delete from user_patientInfo where CWSNumber='"+patientInfo.getCWSNumber()+"'";
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e) {

@@ -12,7 +12,7 @@ public class DataBase {
 		Class.forName("com.mysql.jdbc.Driver");
 		String url = "jdbc:mysql://localhost:3306/CWSproject"; //接口3306，明确database的location
 		String user = "root";
-		String password = "abcd1234";
+		String password = "liusheng95";
 		try {
 			conn = DriverManager.getConnection(url,user,password);
 		} catch (Exception e) {
@@ -116,7 +116,7 @@ public class DataBase {
 				+ "authorId int not null,"
 				+ "CWSNumber varchar(20) not null,"
 				+ "sign int not null,"
-				+ "primary key (documentID) )";
+				+ "primary key (documentId) )";
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e1) {
@@ -193,7 +193,7 @@ public class DataBase {
 		strSQL = "create table IF NOT EXISTS user_patientInfo("
 				+ "userId int not null, "
 				+ "userName varchar(20) not null, "
-				+ "patientInfoId int not null "
+				+ "patientInfoId int not null, "
 				+ "CWSNumber varchar(20) not null )";
 		try {
 			st.executeUpdate(strSQL);
@@ -321,13 +321,4 @@ public class DataBase {
 		}
 		return -1;
 	}
-	
-	public int getGeneratedId(String strSQL){
-		try {
-			PreparedStatement preparedStatement = conn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}  
-	}
-	
 }

@@ -30,9 +30,9 @@ public class SaveDocumentServlet extends HttpServlet {
 		CareProvider careProvider = (CareProvider) session.getAttribute("user");
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 		Document document = (Document) session.getAttribute("document");
-		if(document.getDocumentId()==-1){
+		if(document.getId()==-1){
 			DocumentSQL documentSQL = new DocumentSQL();
-			document.setDocumentId(documentSQL.fakeGetNewDocumentId());
+			document.setId(documentSQL.fakeGetNewDocumentId());
 		}
 		
 		if(!careProvider.getUserName().equals(document.getAuthor().getUserName())){

@@ -22,10 +22,10 @@ public class User {
 	}
 	//functions
 	//userId
-	public int getUserId(){
+	public int getId(){
 		return this.userId;
 	}
-	public void setUserId(int userId){
+	public void setId(int userId){
 		this.userId = userId;
 	}
 	//userName
@@ -87,7 +87,7 @@ public class User {
 	
 	public CareProvider toCareProvider(){
 		CareProvider careProvider = new CareProvider(this.userName, this.passWord);
-		careProvider.setUserId(this.userId);
+		careProvider.setId(this.userId);
 		careProvider.setType(this.type);
 		careProvider.setTitle(this.title);
 		careProvider.setFirstName(this.firstName);
@@ -101,7 +101,7 @@ public class User {
 	
 	public Admin toAdmin(){
 		Admin admin = new Admin(this.userName, this.passWord);
-		admin.setUserId(this.userId);
+		admin.setId(this.userId);
 		admin.setType(this.type);
 		admin.setTitle(this.title);
 		admin.setFirstName(this.firstName);

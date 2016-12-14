@@ -33,7 +33,7 @@ public class FormTemplateSQL extends DataBase{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from formTemplate where formTemplateName='"+formTemplate.getTemplateName()+"'";
+		String strSQL = "select * from formTemplate where formTemplateName='"+formTemplate.getName()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
@@ -68,7 +68,7 @@ public class FormTemplateSQL extends DataBase{
 		
 	}
 	
-	public void setFormTemplate(FormTemplate formTemplate){
+	public FormTemplate setFormTemplate(FormTemplate formTemplate){
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
@@ -76,16 +76,16 @@ public class FormTemplateSQL extends DataBase{
 		}
 		String strSQL = null;
 		if(this.isExist(formTemplate)){
-			formTemplate.setTemplateId(this.getFormTemplateIdByFormTemplateName(formTemplate.getTemplateName()));
+			formTemplate.setId(this.getFormTemplateIdByFormTemplateName(formTemplate.getName()));
 			strSQL = "update formTemplate set "
-					+ "formTemplateId="+Integer.toString(formTemplate.getTemplateId())+","
-					+ "formTemplateName='"+formTemplate.getTemplateName()+"' "
-					+ "where formTemplateId="+Integer.toString(formTemplate.getTemplateId());
+					+ "formTemplateId="+Integer.toString(formTemplate.getId())+","
+					+ "formTemplateName='"+formTemplate.getName()+"' "
+					+ "where formTemplateId="+Integer.toString(formTemplate.getId());
 			
 		} else {
 			strSQL = "insert into formTemplate values("
 					+ "null,"
-					+ "'"+formTemplate.getTemplateName()+"')";
+					+ "'"+formTemplate.getName()+"')";
 		}
 		
 		try{
@@ -119,7 +119,7 @@ public class FormTemplateSQL extends DataBase{
 							+ "'"+domain.getDomainId()+"',"
 							+ "'"+subSet.getSubSetId()+"',"
 							+ "'"+part.getPartId()+"',"
-							+ ""+formTemplate.getTemplateId()+")";
+							+ ""+formTemplate.getId()+")";
 					try{
 						st.executeUpdate(strSQL);
 					} catch (Exception e){
@@ -129,6 +129,8 @@ public class FormTemplateSQL extends DataBase{
 				}
 			}
 		}
+		formTemplate.setId(this.getFormTemplateIdByFormTemplateName(formTemplate.getName()));
+		return formTemplate;
 	}
 	
 	public FormTemplate getFormTemplate(int formTemplateId){
@@ -150,7 +152,7 @@ public class FormTemplateSQL extends DataBase{
 		try {
 			if(rs.next()){ 
 				formTemplate= new FormTemplate(rs.getString("formTemplateName"));
-				formTemplate.setTemplateId(rs.getInt("formTemplateId"));
+				formTemplate.setId(rs.getInt("formTemplateId"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -415,7 +417,7 @@ public class FormTemplateSQL extends DataBase{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from domain where subSetId='"+domain.getDomainId()+"'";
+		String strSQL = "select * from domain where domainId='"+domain.getDomainId()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
@@ -475,7 +477,7 @@ public class FormTemplateSQL extends DataBase{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String strSQL = "delete form formTemplate_domain where formTemplateId="+formTemplate.getTemplateId()+"";
+		String strSQL = "delete from formTemplate_domain where formTemplateId="+formTemplate.getId()+"";
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e) {

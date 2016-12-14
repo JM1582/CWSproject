@@ -35,7 +35,7 @@ public class UserSQL extends DataBase{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from document where userName='"+user.getUserName()+"'";
+		String strSQL = "select * from user where userName='"+user.getUserName()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
@@ -48,7 +48,7 @@ public class UserSQL extends DataBase{
 		return false;
 	}
 	
-	public void setUser(User user){//save user data
+	public User setUser(User user){//save user data
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
@@ -56,7 +56,7 @@ public class UserSQL extends DataBase{
 		}
 		String strSQL = null;
 		if(this.isExist(user)){
-			user.setUserId(this.getUserIdByUserName(user.getUserName()));
+			user.setId(this.getUserIdByUserName(user.getUserName()));
 			strSQL = "update user set "
 					+ "userName='"+user.getUserName()+"',  "
 					+ "passWord='"+user.getPassWord()+"', "
@@ -66,7 +66,7 @@ public class UserSQL extends DataBase{
 					+ "lastName='"+user.getLastName()+"', "
 					+ "facility='"+user.getFacility()+"', "
 					+ "email='"+user.getEmail()+"' "
-					+ "where userId="+Integer.toString(user.getUserId());
+					+ "where userId="+Integer.toString(user.getId());
 		} else {
 			strSQL = "insert into user values("
 					+ "null,"
@@ -85,6 +85,8 @@ public class UserSQL extends DataBase{
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
 		}
+		user.setId(this.getUserIdByUserName(user.getUserName()));
+		return user;
 	}
 	
 	public User getUser(int userId){
@@ -98,7 +100,7 @@ public class UserSQL extends DataBase{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
 				User user = new User(rs.getString("userName"), rs.getString("passWord"));
-				user.setUserId(rs.getInt("userId"));
+				user.setId(rs.getInt("userId"));
 				user.setType(UserType.values()[rs.getInt("type")]);
 				user.setTitle(rs.getString("title"));
 				user.setFirstName(rs.getString("firstName"));
@@ -135,7 +137,7 @@ public class UserSQL extends DataBase{
 	}
 
 	public User userLogin(User user){
-		User rsUser = this.getUser(user.getUserId());
+		User rsUser = this.getUser(user.getId());
 		if(rsUser.getPassWord().equals(user.getPassWord())){
 			return rsUser;
 		}

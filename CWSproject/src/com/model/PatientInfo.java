@@ -77,10 +77,10 @@ public class PatientInfo {
 		this.documentMap = documentMap;
 	}
 	public void addDocument(Document document) {
-		documentMap.put(document.getDocumentId(), document);
+		documentMap.put(document.getId(), document);
 	}
 	public void removeDocument(Document document) {
-		careProviderMap.remove(document.getDocumentId());
+		careProviderMap.remove(document.getId());
 	}
 	//actionPlanMap add and remove
 	public Map<Integer, ActionPlan> getActionPlanMap(){

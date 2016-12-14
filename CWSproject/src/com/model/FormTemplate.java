@@ -13,17 +13,17 @@ public class FormTemplate {
 		this.partsMap = new HashMap();
 	}
 	
-	public String getTemplateName(){
+	public String getName(){
 		return this.templateName;
 	}
-	public void setTemplateName(String templateName){
+	public void setName(String templateName){
 		this.templateName = templateName;
 	}
 
-	public int getTemplateId(){
+	public int getId(){
 		return this.templateId;
 	}
-	public void setTemplateId(int templateId){
+	public void setId(int templateId){
 		this.templateId = templateId;
 	}
 	

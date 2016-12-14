@@ -82,7 +82,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 		int documentId = (Integer)it.next();
 		Document tmpDocument = (Document)documentMap.get(documentId);
 		if (tmpDocument != null) { %>
-	<li><a href="edit_document_servlet?documentId=<%=String.valueOf(tmpDocument.getDocumentId()) %>"><small>
+	<li><a href="edit_document_servlet?documentId=<%=String.valueOf(tmpDocument.getId())%>"><small>
 		<%=tmpDocument.getDateOnly() %><br>
 		<%=tmpDocument.getAuthor().getFirstName() %> <%=tmpDocument.getAuthor().getLastName() %><br>
 		<%=tmpDocument.getAuthor().getTitle() %>

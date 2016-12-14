@@ -7,9 +7,7 @@ import com.model.*;
 public class MainMySQL {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException{
 		UserSQL userSQL = new UserSQL();
-		if(!userSQL.connet()){ 
-			return;
-		}
+		userSQL.connet();
 		userSQL.factoryReset();
 		
 		CareProvider careProvider = new CareProvider( "Tom", "abcd1234");
@@ -20,8 +18,8 @@ public class MainMySQL {
 		careProvider.setLastName("Smith");
 		careProvider.setTitle("MD Psychiatrist");
 		
-		userSQL.setUser(careProvider);
-		userSQL.setUser(careProvider);//save in database
+		careProvider = userSQL.setUser(careProvider).toCareProvider();
+		careProvider = userSQL.setUser(careProvider).toCareProvider();//save in database
 		
 		careProvider = new CareProvider( "John", "abcd1234");
 		careProvider.setType(UserType.CAREPROVIDER);
@@ -30,9 +28,9 @@ public class MainMySQL {
 		careProvider.setFirstName("John");
 		careProvider.setLastName("Dow");
 		careProvider.setTitle("Nurse");
-		
-		userSQL.createUser(careProvider);
-		userSQL.setUser(careProvider);
+
+		careProvider = userSQL.setUser(careProvider).toCareProvider();
+		careProvider = userSQL.setUser(careProvider).toCareProvider();
 		
 
 		Admin admin = new Admin( "admin", "admin");
@@ -42,8 +40,9 @@ public class MainMySQL {
 		admin.setFirstName("Admin");
 		admin.setLastName("Admin");
 		admin.setTitle("Admin");
-		userSQL.createUser(admin);
-		userSQL.setUser(admin);
+		
+		admin = userSQL.setUser(admin).toAdmin();
+		admin = userSQL.setUser(admin).toAdmin();
 		
 		//========================================================
 		
@@ -57,9 +56,8 @@ public class MainMySQL {
 		
 		FormTemplateSQL formTemplateSQL= new FormTemplateSQL();
 		formTemplateSQL.connet();
-		formTemplateSQL.createFormTemplate(formTemplate);
-		formTemplate.setTemplateId(formTemplateSQL.searchFormTemplateId(formTemplate.getTemplateName()));
-		formTemplateSQL.setFormTemplate(formTemplate);
+		formTemplate = formTemplateSQL.setFormTemplate(formTemplate);
+		formTemplate = formTemplateSQL.setFormTemplate(formTemplate);
 		
 		//========================================================
 
@@ -77,14 +75,27 @@ public class MainMySQL {
 		
 		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
 		patientInfoSQL.connet();
-		patientInfoSQL.createPatientInfo(patientInfo);
-		patientInfoSQL.setPatientInfo(patientInfo);
+		patientInfo = patientInfoSQL.setPatientInfo(patientInfo);
+		patientInfo = patientInfoSQL.setPatientInfo(patientInfo);
+		
+		//========================================================
+		
+		Document document = new Document(formTemplate, careProvider, patientInfo.getCWSNumber());
+		document.setVersion(1);
+		document.setDateToday();
+		DocumentSQL documentSQL = new DocumentSQL();
+		documentSQL.connet();
+		document = documentSQL.setDocument(document);
+		document = documentSQL.setDocument(document);
 		
 		//========================================================
 		
 		userSQL.disconnect();
 		formTemplateSQL.disconnect();
 		patientInfoSQL.disconnect();
+		documentSQL.disconnect();
+		
+		//========================================================
 		
 		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), careProvider);
 		ActionEntry actionEntry = new ActionEntry("0");
@@ -112,8 +123,6 @@ public class MainMySQL {
 		
 		patientInfo.addActionPlan(actionPlan);
 		
-		userSQL.disconnect();
-		formTemplateSQL.disconnect();
 		
 	}
 }

@@ -45,10 +45,10 @@ public class Document{
 		this.version = newVersion;
 	}
 	//name;Name
-	public String getDocumentName(){
+	public String getName(){
 		return this.documentName;
 	}
-	public void setDocumentName(String newName){
+	public void setName(String newName){
 		this.documentName = newName;
 	}
 	//CWSNumber
@@ -104,10 +104,10 @@ public class Document{
 		this.author = newAuthor;
 	}
 	//document id
-	public int getDocumentId() {
+	public int getId() {
 		return this.documentId;
 	}
-	public void setDocumentId(int documentId){
+	public void setId(int documentId){
 		this.documentId = documentId;
 	}
 	//valueMap

@@ -100,7 +100,7 @@ PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 		<td align="center"><%=document.getAuthor().getFirstName() %> <%=document.getAuthor().getLastName() %></td>
 		<td align="center"><%=document.getDate() %></td>
 		<!-- <td align="center">Version <%=document.getVersion() %></td> -->
-		<td align="center"><a href="edit_document_servlet?documentId=<%=String.valueOf(document.getDocumentId()) %>">View</a></td>
+		<td align="center"><a href="edit_document_servlet?documentId=<%=String.valueOf(document.getId())%>">View</a></td>
 	</tr>
 	<% } } } %>
 </table>
