@@ -6,10 +6,10 @@ import java.util.*;
 public class Document{
 	//attributes
 	private int documentId=-1;
-	private FormTemplate formTemplate;
-	private int version;
 	private int serialNumber;
+	private FormTemplate formTemplate;
 	private String documentName;
+	private int version;
 	private String description;
 	private String date;
 	private CareProvider author;
@@ -128,5 +128,11 @@ public class Document{
 	}
 	public void setSign(boolean sign){
 		this.sign = sign;
+	}
+	public String getDescription(){
+		return this.description;
+	}
+	public void setDescription(String description){
+		this.description = description;
 	}
 }

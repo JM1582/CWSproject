@@ -122,6 +122,16 @@ public class DataBase {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
+		strSQL = "create table IF NOT EXISTS domainValue("
+				+ "documentId int not null, "
+				+ "domainId varchar(20) not null, "
+				+ "value1 varchar(5), "
+				+ "value2 varchar(5))";
+		try {
+			st.executeUpdate(strSQL);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		strSQL = "create table IF NOT EXISTS actionPlan("
 				+ "actionPlanId int not null auto_increment,"
 				+ "CWSNumber varchar(20) not null,"
