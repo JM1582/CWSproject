@@ -142,6 +142,26 @@ public class UserSQL extends DataBase{
 		return null;
 	}
 	
+	public void removeUser(User user){
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "delete from user where userName='"+user.getUserName()+"'";
+		try {
+			st.executeUpdate(strSQL);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		strSQL = "delete form user_patientInfo where userName='"+user.getUserName()+"'";
+		try {
+			st.executeUpdate(strSQL);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// need to be removed
 	public User getUserSQL(User user){
 		try {
@@ -160,6 +180,7 @@ public class UserSQL extends DataBase{
 		
 		return rs_user;
 	}
+	
 	
 	// need to be removed
 	public User fakeUserLogin(User user) {

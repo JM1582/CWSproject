@@ -34,7 +34,7 @@ public class DocumentSQL extends DataBase{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from document where documentName='"+document.getDocumentName()+"'";
+		String strSQL = "select * from document where documentId="+document.getDocumentId()+"";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
@@ -47,16 +47,24 @@ public class DocumentSQL extends DataBase{
 		return false;
 	}
 	
-	public void setDocument(Document document){//save user data
+	public Document setDocument(Document document){//save user data
+		String strSQL = null;
+		if(this.isExist(document)){
+			this.updateDocument(document);
+		} else {
+			document = this.insertDocument(document);
+		}
+		this.setDomainValue(document);
+		return document;
+	}
+	
+	public void updateDocument(Document document){
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = null;
-		if(this.isExist(document)){
-			document.setDocumentId(this.getDocumentIdByDocumentName(document.getDocumentName()));
-			strSQL = "update user set "
+		String strSQL = "update user set "
 					+ "documentId="+Integer.toString(document.getDocumentId())+","
 					+ "serialNumber="+document.getSerialNumber()+","
 					+ "formTemplateid="+document.getFormTemplate().getTemplateId()+","
@@ -68,8 +76,16 @@ public class DocumentSQL extends DataBase{
 					+ "CWSNumber='"+document.getCWSNumber()+"',"
 					+ "sign="+document.getSign()+" "
 					+ "where documentId="+Integer.toString(document.getDocumentId());
-		} else {
-			strSQL = "insert into document values("
+		try{
+			st.executeUpdate(strSQL);
+		} catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+	}
+	
+	public Document insertDocument(Document document){
+		String strSQL = "insert into document values("
 					+ "null,"
 					+ ""+document.getSerialNumber()+","
 					+ ""+document.getFormTemplate().getTemplateId()+","
@@ -80,17 +96,31 @@ public class DocumentSQL extends DataBase{
 					+ "'"+document.getAuthor().getUserId()+"',"
 					+ "'"+document.getCWSNumber()+"',"
 					+ ""+document.getSign()+")";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = (PreparedStatement) this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 		try{
-			st.executeUpdate(strSQL);
+			pstmt.executeUpdate(strSQL);
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
 		}
-		this.setDomainValue(document);
+		try {
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()){
+				document.setDocumentId(rs.getInt(1));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return document;
 	}
 	
-	private void setDomainValue(Document document) {
+	public void setDomainValue(Document document) {
 		this.clearDomainValue(document);
 		Map<String, String[]> domainValueMap = document.getDomainValueMap();
 		Iterator domainValueIt = domainValueMap.keySet().iterator();

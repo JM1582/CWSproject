@@ -483,4 +483,8 @@ public class FormTemplateSQL extends DataBase{
 			e.printStackTrace();
 		}
 	}
+	
+	public void removeFormTemplate(FormTemplate formTemplate){
+		
+	}
 }

@@ -20,7 +20,7 @@ public class MainMySQL {
 		careProvider.setLastName("Smith");
 		careProvider.setTitle("MD Psychiatrist");
 		
-		userSQL.createUser(careProvider);
+		userSQL.setUser(careProvider);
 		userSQL.setUser(careProvider);//save in database
 		
 		careProvider = new CareProvider( "John", "abcd1234");

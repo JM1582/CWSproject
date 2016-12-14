@@ -286,14 +286,12 @@ public class DataBase {
 		try {
 			md = conn.getMetaData();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		ResultSet rs = null;
 		try {
 			rs = md.getTables(null, null, "%", null);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
@@ -301,9 +299,35 @@ public class DataBase {
 				this.dropTalbe(rs.getString(3));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public int lastInsertId(){
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String strSQL = "select last_insert_id()";
+		try {
+			ResultSet rs  = st.executeQuery(strSQL);
+			if(rs.next()){
+				return rs.getInt("last_insert_id()");
+			}
+		} catch (SQLException e) {
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public int getGeneratedId(String strSQL){
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}  
 	}
 	
 }
