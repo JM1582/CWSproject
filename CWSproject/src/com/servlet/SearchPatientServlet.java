@@ -24,7 +24,7 @@ public class SearchPatientServlet extends HttpServlet{
 		
 		PatientInfoSQL patientInforSQL = new PatientInfoSQL();
 		try {
-			patientInforSQL.connet();
+			patientInforSQL.connect();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			PrintWriter out = response.getWriter();

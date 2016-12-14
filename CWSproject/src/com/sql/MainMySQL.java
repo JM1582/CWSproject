@@ -7,7 +7,7 @@ import com.model.*;
 public class MainMySQL {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException{
 		UserSQL userSQL = new UserSQL();
-		userSQL.connet();
+		userSQL.connect();
 		userSQL.factoryReset();
 		
 		CareProvider careProvider = new CareProvider( "Tom", "abcd1234");
@@ -55,7 +55,7 @@ public class MainMySQL {
 		formTemplate.addPart(part3);
 		
 		FormTemplateSQL formTemplateSQL= new FormTemplateSQL();
-		formTemplateSQL.connet();
+		formTemplateSQL.connect();
 		formTemplate = formTemplateSQL.setFormTemplate(formTemplate);
 		formTemplate = formTemplateSQL.setFormTemplate(formTemplate);
 		
@@ -74,7 +74,7 @@ public class MainMySQL {
 		patientInfo.setFormTemplate(formTemplate);
 		
 		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
-		patientInfoSQL.connet();
+		patientInfoSQL.connect();
 		patientInfo = patientInfoSQL.setPatientInfo(patientInfo);
 		patientInfo = patientInfoSQL.setPatientInfo(patientInfo);
 		
@@ -84,44 +84,60 @@ public class MainMySQL {
 		document.setVersion(1);
 		document.setDateToday();
 		DocumentSQL documentSQL = new DocumentSQL();
-		documentSQL.connet();
+		documentSQL.connect();
 		document = documentSQL.setDocument(document);
 		document = documentSQL.setDocument(document);
 		
+		//========================================================
+		
+		ActionPlanSQL actionPlanSQL = new ActionPlanSQL();
+		actionPlanSQL.connect();
+		
+		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), careProvider);
+		ActionEntry actionEntry = new ActionEntry(0);
+		Domain domain = formTemplateSQL.getDomain("b110");
+		actionEntry.setDomain(domain);
+		actionEntry.setCscore("3");
+		actionEntry.setFscore("1");
+		
+		Action action = new Action(0);
+		careProvider = userSQL.getUserByUserName("Tom").toCareProvider();
+		action.setCareProvider(careProvider);
+		action.setIntervention("Measurement");
+		action = actionPlanSQL.setAction(action);
+		action = actionPlanSQL.setAction(action);
+		
+		actionEntry.addAction(action);
+		
+		action = new Action(0);
+		careProvider = userSQL.getUserByUserName("John").toCareProvider();
+		action.setCareProvider(careProvider);
+		action.setIntervention("Test");
+		action = actionPlanSQL.setAction(action);
+		action = actionPlanSQL.setAction(action);
+		
+		actionEntry.addAction(action);
+		
+		actionPlanSQL.setActionEntry(actionEntry);
+		
+		actionPlan.addActionEntry(actionEntry);
+		actionPlan.setDateToday();
+		actionPlan = actionPlanSQL.setActionPlan(actionPlan);
+		actionPlan = actionPlanSQL.setActionPlan(actionPlan);
+
+		actionPlan = actionPlanSQL.getAcionPlan(actionPlan.getId());
+		
+		patientInfo.addActionPlan(actionPlan);
+
 		//========================================================
 		
 		userSQL.disconnect();
 		formTemplateSQL.disconnect();
 		patientInfoSQL.disconnect();
 		documentSQL.disconnect();
+		actionPlanSQL.disconnect();
 		
 		//========================================================
-		
-		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), careProvider);
-		ActionEntry actionEntry = new ActionEntry(0);
-		Domain domain = new Domain("b110", "Consciousness");
-		actionEntry.setDomain(domain);
-		actionEntry.setCscore("3");
-		actionEntry.setFscore("1");
-		Action action = new Action(0);
-		action.setCareProvider(careProvider);
-		action.setIntervention("Measurement");
-		actionEntry.addAction(action);
-
-		careProvider = new CareProvider( "John", "abcd1234");
-		careProvider.setEmail("johnd123@gmail.com");
-		careProvider.setFirstName("John");
-		careProvider.setLastName("Doe");
-		patientInfo.addCareProvider(careProvider);
-		
-		action = new Action(1);
-		action.setCareProvider(careProvider);
-		action.setIntervention("Test");
-		actionEntry.addAction(action);
-		
-		actionPlan.addActionEntry(actionEntry);
-		
-		patientInfo.addActionPlan(actionPlan);
 		
 		
 	}

@@ -8,7 +8,7 @@ public class DataBase {
 	Connection conn = null;
 	Statement st = null;
 	
-	public boolean connet() throws SQLException, java.lang.ClassNotFoundException{
+	public boolean connect() throws SQLException, java.lang.ClassNotFoundException{
 		Class.forName("com.mysql.jdbc.Driver");
 		String url = "jdbc:mysql://localhost:3306/CWSproject"; //接口3306，明确database的location
 		String user = "root";
@@ -137,7 +137,7 @@ public class DataBase {
 				+ "CWSNumber varchar(20) not null, "
 				+ "authorId int not null, "
 				+ "date varchar(20) not null, "
-				+ "sign in not null, "
+				+ "sign int not null, "
 				+ "primary key (actionPlanId) )";
 		try {
 			st.executeUpdate(strSQL);

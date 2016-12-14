@@ -167,7 +167,7 @@ public class UserSQL extends DataBase{
 	// need to be removed
 	public User getUserSQL(User user){
 		try {
-			this.connet();
+			this.connect();
 		} catch (ClassNotFoundException e) {
 			System.out.println("Database connection1 fail.");
 			System.out.println(e.getMessage());

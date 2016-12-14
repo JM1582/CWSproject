@@ -66,7 +66,7 @@ public class ActionPlanSQL extends DataBase {
 		
 	}
 
-	private Action setAction(Action action) {
+	public Action setAction(Action action) {
 		if(this.isExistAction(action)){
 			this.updateAction(action);
 		} else {
@@ -76,12 +76,12 @@ public class ActionPlanSQL extends DataBase {
 	}
 
 	public void updateAction(Action action){
-		String strSQL = "update actionEntry set "
+		String strSQL = "update action set "
 					+ "actionId="+action.getId()+", "
 					+ "intervention='"+action.getIntervention()+"', "
 					+ "careProviderId="+action.getCareProvider().getId()+", "
 					+ "comment='"+action.getComment()+"' "
-					+ "where action='"+action.getId()+"'";
+					+ "where actionId='"+action.getId()+"'";
 		try{
 			st.executeUpdate(strSQL);
 		} catch (Exception e){
@@ -91,7 +91,7 @@ public class ActionPlanSQL extends DataBase {
 	}
 	
 	public Action insertAction(Action action){
-		String strSQL = "insert into actionEntry("
+		String strSQL = "insert into action("
 				+ "actionId,"
 				+ "intervention,"
 				+ "careProviderId,"
@@ -293,6 +293,29 @@ public class ActionPlanSQL extends DataBase {
 		}
 	}
 	
+	public Map getActionPlanByCWSNumber(String CWSNumber){
+		Map<Integer, ActionPlan> actionPlanMap = new HashMap<Integer, ActionPlan>();
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from actionPlan where CWSNumber='"+CWSNumber+"'";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			while(rs.next()){
+				ActionPlan actionPlan = this.getAcionPlan(rs.getInt("actionPlanId"));
+				actionPlanMap.put(actionPlan.getId(), actionPlan);
+			}
+		}catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+			return null;
+		}
+		return actionPlanMap;
+		
+	}
+	
 	public ActionPlan getAcionPlan(int actionPlanId){
 		try {
 			st = conn.createStatement();
@@ -304,10 +327,12 @@ public class ActionPlanSQL extends DataBase {
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
 				UserSQL userSQL = new UserSQL();
+				userSQL.connect();
 				CareProvider careProvider = userSQL.getUser(rs.getInt("authorId")).toCareProvider();
 				userSQL.disconnect();
 					
 				ActionPlan actionPlan = new ActionPlan(rs.getString("CWSNumber"), careProvider);
+				actionPlan.setId(actionPlanId);
 				actionPlan.setDate(rs.getString("date"));
 				actionPlan.setSign(rs.getBoolean("sign"));
 				
@@ -346,7 +371,7 @@ public class ActionPlanSQL extends DataBase {
 		return null;
 	}
 
-	private ActionEntry getActionEntry(int actionEntryId, int actionPlanId) {
+	public ActionEntry getActionEntry(int actionEntryId, int actionPlanId) {
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
@@ -358,7 +383,7 @@ public class ActionPlanSQL extends DataBase {
 			if(rs.next()){
 				ActionEntry actionEntry = new ActionEntry(actionEntryId);
 				FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
-				formTemplateSQL.connet();
+				formTemplateSQL.connect();
 				Domain domain = formTemplateSQL.getDomain(rs.getString("domainId"));
 				formTemplateSQL.disconnect();
 				actionEntry.setDomain(domain);
@@ -402,7 +427,7 @@ public class ActionPlanSQL extends DataBase {
 		return null;
 	}
 
-	private Action getAction(int actionId) {
+	public Action getAction(int actionId) {
 		try {
 			st = conn.createStatement();
 		} catch (SQLException e1) {
@@ -416,7 +441,7 @@ public class ActionPlanSQL extends DataBase {
 				action.setIntervention(rs.getString("intervention"));
 				
 				UserSQL userSQL = new UserSQL();
-				userSQL.connet();
+				userSQL.connect();
 				CareProvider careProvider = userSQL.getUser(rs.getInt("careProviderId")).toCareProvider();
 				userSQL.disconnect();
 				

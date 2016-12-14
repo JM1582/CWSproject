@@ -171,7 +171,7 @@ public class DocumentSQL extends DataBase{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
 				FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
-				formTemplateSQL.connet();
+				formTemplateSQL.connect();
 				FormTemplate formTemplate = formTemplateSQL.getFormTemplate(rs.getInt("forTemplateId"));
 				formTemplateSQL.disconnect();
 				

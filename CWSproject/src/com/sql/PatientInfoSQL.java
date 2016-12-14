@@ -113,7 +113,7 @@ public class PatientInfoSQL extends DataBase{
 			ResultSet rs = st.executeQuery(strSQL);
 			UserSQL userSQL = new UserSQL();
 			try {
-				userSQL.connet();
+				userSQL.connect();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -132,7 +132,7 @@ public class PatientInfoSQL extends DataBase{
 	public PatientInfo getDocumentMap(PatientInfo patientInfo){
 		DocumentSQL documentSQL = new DocumentSQL();
 		try {
-			documentSQL.connet();
+			documentSQL.connect();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -144,7 +144,7 @@ public class PatientInfoSQL extends DataBase{
 	public PatientInfo getFormTemplate(PatientInfo patientInfo, int formTemplateId){
 		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
 		try {
-			formTemplateSQL.connet();
+			formTemplateSQL.connect();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -217,7 +217,7 @@ public class PatientInfoSQL extends DataBase{
 		}
 		UserSQL userSQL = new UserSQL();
 		try {
-			userSQL.connet();
+			userSQL.connect();
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

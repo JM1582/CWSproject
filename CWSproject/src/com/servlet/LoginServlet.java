@@ -18,7 +18,7 @@ public class LoginServlet extends HttpServlet{
 		UserSQL userSQL = new UserSQL();
 		
 		try {
-			userSQL.connet();
+			userSQL.connect();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			PrintWriter out = response.getWriter();
