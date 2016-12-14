@@ -179,8 +179,8 @@ public class DataBase {
 		strSQL = "create table IF NOT EXISTS domainValue("
 				+ "documentId int not null,"
 				+ "domainId varchar(20) not null,"
-				+ "domainValue1 varchar(5),"
-				+ "domainValue2 varchar(5) )";
+				+ "domainValue0 varchar(5),"
+				+ "domainValue1 varchar(5) )";
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e1) {

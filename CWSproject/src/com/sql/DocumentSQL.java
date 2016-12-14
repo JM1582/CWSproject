@@ -114,7 +114,6 @@ public class DocumentSQL extends DataBase{
 				e.printStackTrace();
 			}
 		}
-		
 	}
 
 	public Document getDocument(int documentId){
@@ -164,7 +163,11 @@ public class DocumentSQL extends DataBase{
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			while(rs.next()){
-				
+				String domainId = rs.getString("domainId");
+				String domainValue[] = new String[2];
+				domainValue[0] = rs.getString("domainValue0");
+				domainValue[1] = rs.getString("domainValue1");
+				document.addDomainValue(domainId, domainValue);
 			}
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
