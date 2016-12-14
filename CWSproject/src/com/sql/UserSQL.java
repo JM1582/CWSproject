@@ -8,6 +8,27 @@ import com.model.*;
 
 
 public class UserSQL extends DataBase{
+	public int getUserIdByUserName(String userName){
+		int userId = -1;
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String strSQL = "select * from user where userName='"+userName+"'";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			if(rs.next()){
+				userId = rs.getInt("userId");
+			}
+		}catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+		}
+		return userId;
+		
+	}
+	
 	public boolean isExist(User user){
 		try {
 			st = conn.createStatement();
@@ -35,6 +56,7 @@ public class UserSQL extends DataBase{
 		}
 		String strSQL = null;
 		if(this.isExist(user)){
+			user.setUserId(this.getUserIdByUserName(user.getUserName()));
 			strSQL = "update user set "
 					+ "userName='"+user.getUserName()+"',  "
 					+ "passWord='"+user.getPassWord()+"', "
