@@ -10,18 +10,18 @@ public class ActionPlan {
 	private CareProvider author;
 	private String date;
 	private boolean sign=false;
-	private Map<String, ActionEntry> actionEntryMap;
+	private Map<Integer, ActionEntry> actionEntryMap;
 	
 	public ActionPlan(String CWSNumber, CareProvider author){
 		this.CWSNumber = CWSNumber;
 		this.author = author;
-		this.actionEntryMap = new HashMap<String, ActionEntry>();
+		this.actionEntryMap = new HashMap<Integer, ActionEntry>();
 	}
 	
-	public int getActionPlanId(){
+	public int getId(){
 		return this.actionPlanId;
 	}
-	public void setActionPlanId(int actionPlanId){
+	public void setId(int actionPlanId){
 		this.actionPlanId = actionPlanId;
 	}
 
@@ -32,17 +32,17 @@ public class ActionPlan {
 		this.CWSNumber = CWSNumber;
 	}
 
-	public Map<String, ActionEntry> getActionEntryMap(){
+	public Map<Integer, ActionEntry> getActionEntryMap(){
 		return this.actionEntryMap;
 	}
-	public void setActionEntryMap(Map<String, ActionEntry> actionEntryMap){
+	public void setActionEntryMap(Map<Integer, ActionEntry> actionEntryMap){
 		this.actionEntryMap = actionEntryMap;
 	}
 	public void addActionEntry(ActionEntry actionEntry){
-		this.actionEntryMap.put(actionEntry.getActionEntryId(), actionEntry);
+		this.actionEntryMap.put(actionEntry.getId(), actionEntry);
 	}
 	public void removeActionEntry(ActionEntry actionEntry){
-		this.actionEntryMap.remove(actionEntry.getActionEntryId());
+		this.actionEntryMap.remove(actionEntry.getId());
 	}
 	
 	public String getDate(){

@@ -109,7 +109,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
-	<li><a <%if (actionPlanId==actionPlan.getActionPlanId()){ %>class="active"<%} %> href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
+	<li><a <%if (actionPlanId==actionPlan.getId()){%>class="active"<%}%> href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getId())%>"><small>
 		<%=tmpActionPlan.getDateOnly() %><br>
 		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
 		<%=tmpActionPlan.getAuthor().getTitle() %>
@@ -162,44 +162,64 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	<tr><!--  -->
 	<%if(firstLine){ %>
 		<!-- selecting domain name -->
-		<td height="60px"><select style="height:50px;width:auto;" name="domain_<%=actionEntry.getActionEntryId() %>">
-		<%if(actionEntry.getDomain()==null){ %>
+		<td height="60px"><select style="height:50px;width:auto;" name="domain_<%=actionEntry.getId()%>">
+		<%
+			if(actionEntry.getDomain()==null){
+		%>
 			<option selected></option>
-		<%} %>
-		<%Iterator allDomainIt = allDomainMap.keySet().iterator();
-		while(allDomainIt.hasNext()){
+		<%
+			}
+		%>
+		<%
+			Iterator allDomainIt = allDomainMap.keySet().iterator();
+				while(allDomainIt.hasNext()){
 			String tmpDomainId = (String) allDomainIt.next();
-			Domain tempDomain = (Domain) allDomainMap.get(tmpDomainId); %>
-			<option <%if(actionEntry.getDomain()!=null){ if(tmpDomainId.equals(actionEntry.getDomain().getDomainId())){ %>selected<%} } %> value="<%=tmpDomainId %>">
-				<%=tempDomain.getDomainName() %>
+			Domain tempDomain = (Domain) allDomainMap.get(tmpDomainId);
+		%>
+			<option <%if(actionEntry.getDomain()!=null){ if(tmpDomainId.equals(actionEntry.getDomain().getId())){%>selected<%} }%> value="<%=tmpDomainId%>">
+				<%=tempDomain.getName()%>
 			</option>
-		<%} %>
+		<%
+			}
+		%>
 		</select></td>
 	<!--current score and future score has default value -->
-		<td><input type="text" name="cScore_<%=actionEntry.getActionEntryId() %>" 
-		<%if(actionEntry.getCscore()!=null){ %>value="<%=actionEntry.getCscore() %>"<%} %>style="height:50px;" ></td>
-		<td><input type="text" name="fScore_<%=actionEntry.getActionEntryId() %>" 
-		<%if(actionEntry.getFscore()!=null){ %>value="<%=actionEntry.getFscore() %>"<%} %> style="height:50px;"></td>
+		<td><input type="text" name="cScore_<%=actionEntry.getId()%>" 
+		<%if(actionEntry.getCscore()!=null){%>value="<%=actionEntry.getCscore()%>"<%}%>style="height:50px;" ></td>
+		<td><input type="text" name="fScore_<%=actionEntry.getId()%>" 
+		<%if(actionEntry.getFscore()!=null){%>value="<%=actionEntry.getFscore()%>"<%}%> style="height:50px;"></td>
 	<!-- 
-		<td><input type="text" name="cScore_<%=actionEntry.getActionEntryId() %>" value=  ""></td>
-		<td><input type="text" name="fScore_<%=actionEntry.getActionEntryId() %>" value= "" ></td>
+		<td><input type="text" name="cScore_<%=actionEntry.getId()%>" value=  ""></td>
+		<td><input type="text" name="fScore_<%=actionEntry.getId()%>" value= "" ></td>
 	-->
-	<%} else{ %>
+	<%
+		} else{
+	%>
 		<!-- not the firstline of action entry -->
 		<td colspan="3"></td>
-	<%} 
-	firstLine = false; %>
-		<td><select style="height:50px;"name="intervention_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
+	<%
+		} 
+		firstLine = false;
+	%>
+		<td><select style="height:50px;"name="intervention_<%=actionEntry.getId()%>_<%=action.getId()%>">
 			<!-- need to add intervention list -->
-			<%if(action.getIntervention()==null){ %>
+			<%
+				if(action.getIntervention()==null){
+			%>
 			<option selected></option>
-			<%} else { %>
-			<option value="<%=action.getIntervention() %>"><%=action.getIntervention() %></option>
-			<%} %>
+			<%
+				} else {
+			%>
+			<option value="<%=action.getIntervention()%>"><%=action.getIntervention()%></option>
+			<%
+				}
+			%>
 		</select></td>
-		<%Map careProviderMap = patientInfo.getCareProviderMap();
-		if(careProviderMap != null) { %>
-		<td><select style="height:50px;"name="responsibility_<%=actionEntry.getActionEntryId() %>_<%=action.getActionId() %>">
+		<%
+			Map careProviderMap = patientInfo.getCareProviderMap();
+				if(careProviderMap != null) {
+		%>
+		<td><select style="height:50px;"name="responsibility_<%=actionEntry.getId()%>_<%=action.getId()%>">
 			<%if(action.getCareProvider()==null){ %>
 				<option selected></option>
 			<%} %>

@@ -4,9 +4,9 @@ import java.util.*;
 public class Part3 extends OnePart{
 	
 	public Part3() {
-		this.setPartId("defaultPart3");
-		this.setPartName("ENVIRONMENT");
-		this.setPartDescription("Make up the physical,social and attitudinal environment in which people live and conduct their lives");
+		this.setId("defaultPart3");
+		this.setName("ENVIRONMENT");
+		this.setDescription("Make up the physical,social and attitudinal environment in which people live and conduct their lives");
 		this.setScalarName(new String[]{"Complete barrier", "Severe barrier", "Moderate barrier", "Mild barrier", 
 				"No barrier/facilitator", "Mild facilitator", "Moderate facilitator", "Substancial facilitator", "Complete facilitator",
                 "Not applicable"}); 

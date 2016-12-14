@@ -70,23 +70,23 @@ public class AddActionEntryServlet extends HttpServlet {
 			out.println("location='action_plan_page.jsp';");
 			out.println("</script>");
 		} else{
-			Map actionEntryMap = actionPlan.getActionEntryMap();
-			String actionEntryId=null;
+			Map<Integer, ActionEntry> actionEntryMap = actionPlan.getActionEntryMap();
+			int actionEntryId;
 			do{
 				DocumentSQL documentSQL = new DocumentSQL();
-				actionEntryId = Integer.toString(documentSQL.fakeGetNewDocumentId());
+				actionEntryId = documentSQL.fakeGetNewDocumentId();
 			}while(actionEntryMap.containsKey(actionEntryId));
 			ActionEntry actionEntry = new ActionEntry(actionEntryId);
-			Map actionMap = actionEntry.getActionMap();
-			Map careProviderMap = patientInfo.getCareProviderMap();
+			Map<Integer, Action> actionMap = actionEntry.getActionMap();
+			Map<String, CareProvider> careProviderMap = patientInfo.getCareProviderMap();
 			if(careProviderMap!=null){
-				Iterator careProviderIt = careProviderMap.keySet().iterator();
+				Iterator<String> careProviderIt = careProviderMap.keySet().iterator();
 				while(careProviderIt.hasNext()){
 					String userName = (String) careProviderIt.next();
-					String actionId = null;
+					int actionId;
 					do{
 						DocumentSQL documentSQL = new DocumentSQL();
-						actionId = Integer.toString(documentSQL.fakeGetNewDocumentId());
+						actionId = documentSQL.fakeGetNewDocumentId();
 					}while(actionMap.containsKey(actionId));
 					Action action = new Action(actionId);
 					actionEntry.addAction(action);

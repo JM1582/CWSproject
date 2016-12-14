@@ -133,8 +133,11 @@ public class DataBase {
 			e1.printStackTrace();
 		}
 		strSQL = "create table IF NOT EXISTS actionPlan("
-				+ "actionPlanId int not null auto_increment,"
-				+ "CWSNumber varchar(20) not null,"
+				+ "actionPlanId int not null auto_increment, "
+				+ "CWSNumber varchar(20) not null, "
+				+ "authorId int not null, "
+				+ "date varchar(20) not null, "
+				+ "sign in not null, "
 				+ "primary key (actionPlanId) )";
 		try {
 			st.executeUpdate(strSQL);
@@ -145,8 +148,8 @@ public class DataBase {
 		strSQL = "create table IF NOT EXISTS actionEntry("
 				+ "actionEntryId int not null auto_increment,"
 				+ "domainId varchar(20) not null,"
-				+ "cScore int,"
-				+ "fScore int,"
+				+ "cScore varchar(5),"
+				+ "fScore varchar(5),"
 				+ "primary key (actionEntryId) )";
 		try {
 			st.executeUpdate(strSQL);
@@ -223,17 +226,9 @@ public class DataBase {
 			e1.printStackTrace();
 		}
 		*/
-		strSQL = "create table IF NOT EXISTS actionPlan_actionEntry("
-				+ "actionPlanId int not null,"
-				+ "actionEntryId int not null )";
-		try {
-			st.executeUpdate(strSQL);
-		} catch (SQLException e1) {
-			System.out.println("Fail: "+strSQL);
-			e1.printStackTrace();
-		}
-		strSQL = "create table IF NOT EXISTS actionEntry_action("
-				+ "actionEntryId int not null,"
+		strSQL = "create table IF NOT EXISTS actionPlan_action( "
+				+ "actionPlanId int not null, "
+				+ "actionEntryId int not null, "
 				+ "actionId int not null )";
 		try {
 			st.executeUpdate(strSQL);

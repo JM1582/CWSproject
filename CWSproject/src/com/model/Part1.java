@@ -4,9 +4,9 @@ import java.util.*;
 public class Part1 extends OnePart{
 	
 	public Part1() {
-		this.setPartId("defaultPart1");
-		this.setPartName("BODY FUNCTIONS");
-		this.setPartDescription("Physiological functions of body systems (including psychological functions)");
+		this.setId("defaultPart1");
+		this.setName("BODY FUNCTIONS");
+		this.setDescription("Physiological functions of body systems (including psychological functions)");
 		this.setScalarName(new String[]{ "Complete Impairment","Severe Impairment","Moderate Impairment","Mild Impairment", "No Problem", "Not applicable"}); 
 		this.setScalarValue(new String[][]{{"4","3","2","1","0","9"}});
 		

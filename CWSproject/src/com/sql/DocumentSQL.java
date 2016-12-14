@@ -85,17 +85,6 @@ public class DocumentSQL extends DataBase{
 	}
 	
 	public Document insertDocument(Document document){
-		String strSQL1 = "insert into document values("
-					+ "null,"
-					+ ""+document.getSerialNumber()+","
-					+ ""+document.getFormTemplate().getId()+","
-					+ "'"+document.getName()+"',"
-					+ ""+document.getVersion()+","
-					+ "'"+document.getDescription()+"',"
-					+ "'"+document.getDate()+"',"
-					+ "'"+document.getAuthor().getId()+"',"
-					+ "'"+document.getCWSNumber()+"',"
-					+ ""+document.getSign()+")";
 		String strSQL = "insert into document("
 				+ "serialNumber,"
 				+ "formTemplateId,"
@@ -109,7 +98,6 @@ public class DocumentSQL extends DataBase{
 				+ "values(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement st = null;
 		try {
-			//Statement st = conn.createStatement();
 			st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -123,7 +111,7 @@ public class DocumentSQL extends DataBase{
 			st.setString(6, document.getDate());
 			st.setInt(7, document.getAuthor().getId());
 			st.setString(8, document.getCWSNumber());
-			st.setInt(9, (document.getSign()? 1: 0));
+			st.setBoolean(9, document.getSign());
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}

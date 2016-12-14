@@ -61,21 +61,21 @@ public class FakeSQL {
 		patientInfo.setFormTemplate(this.getFormTemplate());
 
 		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), this.getUser("Tom").toCareProvider());
-		actionPlan.setActionPlanId(0);
+		actionPlan.setId(0);
 		actionPlan.setDateToday();
-		ActionEntry actionEntry = new ActionEntry("0");
+		ActionEntry actionEntry = new ActionEntry(0);
 		Domain domain = new Domain("b110", "Consciousness");
 		actionEntry.setDomain(domain);
 		actionEntry.setCscore("3");
 		actionEntry.setFscore("1");
 		
-		Action action = new Action("0");
+		Action action = new Action(0);
 		action.setCareProvider(this.getUser("Tom").toCareProvider());
 		action.setIntervention("Measurement");
 		actionEntry.addAction(action);
 		
 		patientInfo.addCareProvider(this.getUser("John").toCareProvider());
-		action = new Action("1");
+		action = new Action(1);
 		action.setCareProvider(this.getUser("John").toCareProvider());
 		action.setIntervention("Test");
 		actionEntry.addAction(action);

@@ -1,12 +1,12 @@
 package com.model;
 
 public class Action {
-	private String actionId;
+	private int actionId;
 	private String intervention;
 	private CareProvider careProvider;
 	private String comment;
 
-	public Action(String actionId){
+	public Action(int actionId){
 	//----------------------------------???创建时？constructor，必须属性？
 		this.actionId = actionId;
 		this.intervention = new String();
@@ -15,10 +15,10 @@ public class Action {
 	
 	//set and get
 	//id
-	public String getActionId(){
+	public int getId(){
 		return this.actionId;
 	}
-	public void setActionId(String actionId){
+	public void setId(int actionId){
 		this.actionId = actionId;
 	}
 	//intervention

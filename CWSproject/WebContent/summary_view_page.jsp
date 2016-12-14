@@ -101,7 +101,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
-	<li><a href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
+	<li><a href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getId())%>"><small>
 		<%=tmpActionPlan.getDateOnly() %>:<br>
 		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
 		<%=tmpActionPlan.getAuthor().getTitle() %>
@@ -137,7 +137,7 @@ if(partMap != null){
 <table  width="100%" border="1px" cellspacing="0px"  >
 	<!-- parts -->
 	<%if(part.hasDomainValueWithSummaryMap(summaryMap)){ %>
-	<tr><td colspan="<%=scalarValueNum+2 %>" ><h3><font class="input_part"><%=part.getPartName() %></font></h3></td></tr>
+	<tr><td colspan="<%=scalarValueNum+2 %>" ><h3><font class="input_part"><%=part.getName()%></font></h3></td></tr>
 	<%} %>
 <%			TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 			if(subSetMap != null){
@@ -148,7 +148,7 @@ if(partMap != null){
 					if(subSet != null){ %>
 	<!-- subsets -->
 	<%if(subSet.hasDomainValueWithSummaryMap(summaryMap)){ %>
-	<tr><td colspan="<%=scalarValueNum+2 %>" ><h4><font class="input_subpart">&emsp;<%=subSet.getSubSetName() %></font></h4></td></tr>
+	<tr><td colspan="<%=scalarValueNum+2 %>" ><h4><font class="input_subpart">&emsp;<%=subSet.getName()%></font></h4></td></tr>
 	<%} %>
 <%						TreeMap domainMap = new TreeMap(subSet.getDomainMap());
 						if(domainMap != null){
@@ -159,7 +159,7 @@ if(partMap != null){
 								if(domain != null){ %>
 	<!-- domain -->
 	<%if(domain.hasDomainValueWithSummaryMap(summaryMap)){ %>
-	<tr><td colspan="<%=scalarValueNum+2 %>"><font class="input_domain"><strong>&emsp;&emsp;<%=domain.getDomainName() %></strong></font></td></tr>
+	<tr><td colspan="<%=scalarValueNum+2 %>"><font class="input_domain"><strong>&emsp;&emsp;<%=domain.getName()%></strong></font></td></tr>
 	<%Iterator summaryIt = summaryMap.keySet().iterator(); 
 	while(summaryIt.hasNext()){
 		String userName = (String) summaryIt.next();

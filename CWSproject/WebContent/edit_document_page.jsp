@@ -133,7 +133,7 @@ if (document.getSign()){
 		int actionPlanId = (Integer) it.next();
 		ActionPlan tmpActionPlan = (ActionPlan)actionPlanMap.get(actionPlanId);
 		if (tmpActionPlan != null) { %>
-	<li><a href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getActionPlanId()) %>"><small>
+	<li><a href="edit_action_plan_servlet?actionPlanId=<%=Integer.toString(tmpActionPlan.getId())%>"><small>
 		<%=tmpActionPlan.getDateOnly() %>:<br>
 		<%=tmpActionPlan.getAuthor().getFirstName() %> <%=tmpActionPlan.getAuthor().getLastName() %><br>
 		<%=tmpActionPlan.getAuthor().getTitle() %>
@@ -195,31 +195,43 @@ if (partMap != null) {
 %>
 
 <!-- the table to hold 1 part -->
-<table  class="disabled_border" id="part_<%=part.getPartId() %>" cellspacing="0" cellpadding="0"><!-- change table format -->
+<table  class="disabled_border" id="part_<%=part.getId()%>" cellspacing="0" cellpadding="0"><!-- change table format -->
 	
 	<!-- the table to hold 1 part title -->
-	<tr><td><table class="thin_border" id="partTitle_<%=part.getPartId() %>">
+	<tr><td><table class="thin_border" id="partTitle_<%=part.getId()%>">
 		<tr ><!-- The first row to show the part name and scalarName -->
 			<th>
-				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getPartId() %>')" src="collapse.png" width="15" height="15" border="0">
-				<font align="left" class="input_part">&emsp;<%=part.getPartName() %></font><br><br><font class="input_partDs"><%=part.getPartDescription() %></font>
+				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getId()%>')" src="collapse.png" width="15" height="15" border="0">
+				<font align="left" class="input_part">&emsp;<%=part.getName()%></font><br><br><font class="input_partDs"><%=part.getDescription()%></font>
 			</th>
-			<%for(int i=0;i<scalarName.length;i++){ %>
-			<th class="scalar_colume" height="150"><span><small><%=scalarName[i] %></small></span></th>
-			<%} %>
+			<%
+				for(int i=0;i<scalarName.length;i++){
+			%>
+			<th class="scalar_colume" height="150"><span><small><%=scalarName[i]%></small></span></th>
+			<%
+				}
+			%>
 		</tr>
-		<%for(int i=0;i<scalarValue.length;i++){ %>
+		<%
+			for(int i=0;i<scalarValue.length;i++){
+		%>
 		<tr><!-- The second or third row to show the scalar -->
 			<td></td>
-			<%for(int j=0;j<scalarValue[0].length;j++){ %>
-			<td class="scalar_colume" align="center"><%=scalarValue[i][j] %></td>
-			<%} %>
+			<%
+				for(int j=0;j<scalarValue[0].length;j++){
+			%>
+			<td class="scalar_colume" align="center"><%=scalarValue[i][j]%></td>
+			<%
+				}
+			%>
 		</tr>
-		<%} %>
+		<%
+			}
+		%>
 	</table></td></tr>
 	
 	<!-- the table to hold 1 part content -->
-	<tr><td><table class="collapse_table" id="partContent_<%=part.getPartId() %>" cellspacing="0" cellpadding="0">
+	<tr><td><table class="collapse_table" id="partContent_<%=part.getId()%>" cellspacing="0" cellpadding="0">
 	<%TreeMap subSetMap = new TreeMap(part.getSubSetMap());
 	if(subSetMap != null){
 		Iterator subSetIt = subSetMap.keySet().iterator();
@@ -229,19 +241,19 @@ if (partMap != null) {
 			if(subSet != null){%>
 		
 		<!-- the table to hold 1 subset -->
-		<tr><td><table class="disabled_border" id="subSet_<%=subSet.getSubSetId() %>" cellspacing="0" cellpadding="0">
+		<tr><td><table class="disabled_border" id="subSet_<%=subSet.getId()%>" cellspacing="0" cellpadding="0">
 			
 			<!-- the table to hold subset title -->
-			<tr><td><table class="thin_border" id="subSetTitle_<%=subSet.getSubSetId() %>">
+			<tr><td><table class="thin_border" id="subSetTitle_<%=subSet.getId()%>">
 				<!-- The row to show subset title -->
 				<tr><td with="100%">
-					<img id="collapse_icon" align="left" onclick="collapse('subSetContent_<%=subSet.getSubSetId() %>')" src="collapse.png" width="15" height="15" >
-					<font class="input_subpart">&emsp;<%=subSet.getSubSetName() %></font>
+					<img id="collapse_icon" align="left" onclick="collapse('subSetContent_<%=subSet.getId()%>')" src="collapse.png" width="15" height="15" >
+					<font class="input_subpart">&emsp;<%=subSet.getName()%></font>
 				</td></tr>
 			</table></td></tr>
 			
 			<!-- the table to hold subset content -->
-			<tr><td><table class="collapse_table" id="subSetContent_<%=subSet.getSubSetId() %>" cellspacing="0" cellpadding="0">
+			<tr><td><table class="collapse_table" id="subSetContent_<%=subSet.getId()%>" cellspacing="0" cellpadding="0">
 			<%TreeMap domainMap = new TreeMap(subSet.getDomainMap());
 			if(domainMap != null){
 				Iterator domainIt = domainMap.keySet().iterator();
@@ -251,35 +263,53 @@ if (partMap != null) {
 					if(domain != null){ %>
 				
 				<!-- the table to hold domain -->
-				<tr><td><table class="thin_border" id="domain_<%=domain.getDomainId() %>">
+				<tr><td><table class="thin_border" id="domain_<%=domain.getId()%>">
 
-<%					String domainValue[] = null;
-					if(domainValueMap.containsKey(domain.getDomainId())){
-						domainValue = (String[])domainValueMap.get(domain.getDomainId());
-					}
-					for(int i=0;i<scalarValue.length;i++){ %>
+<%
+	String domainValue[] = null;
+			if(domainValueMap.containsKey(domain.getId())){
+				domainValue = (String[])domainValueMap.get(domain.getId());
+			}
+			for(int i=0;i<scalarValue.length;i++){
+%>
 					<tr>
-						<%if(i==0){ %>
-							<!-- <td rowspan="<%=scalarValue.length %>" width="5%"><%=domain.getDomainId() %></td> -->
-							<td rowspan="<%=scalarValue.length %>" ><font class="input_domain">&emsp;&emsp;&emsp;<%=domain.getDomainName() %></font></td>
-						<%} %>
+						<%
+							if(i==0){
+						%>
+							<!-- <td rowspan="<%=scalarValue.length%>" width="5%"><%=domain.getId()%></td> -->
+							<td rowspan="<%=scalarValue.length%>" ><font class="input_domain">&emsp;&emsp;&emsp;<%=domain.getName()%></font></td>
+						<%
+							}
+						%>
 					
 					<!-- label for scalar if scalar has 2 values -->
-						<%if(scalarValueAmount==2){
-							if(i==0){ %>
+						<%
+							if(scalarValueAmount==2){
+											if(i==0){
+						%>
 						<td class="width_for_2" >Capacity</td>
-						<%	} else if(i==1){ %>
+						<%
+							} else if(i==1){
+						%>
 						<td class="width_for_2" >Performance</td>
-						<%	}
-						} %>
+						<%
+							}
+										}
+						%>
 					
-						<%for(int j=0;j<scalarValue[i].length;j++){  %>
+						<%
+												for(int j=0;j<scalarValue[i].length;j++){
+											%>
 						<td class="scalar_colume">
-							<%if(domainValue!=null){ %>
-							<input type="radio" name="<%=domain.getDomainId()+'_'+Integer.toString(i) %>" value="<%=scalarValue[i][j] %>"/
-							<%if(domainValue[i]!=null){ if(domainValue[i].equals(scalarValue[i][j])){  %>checked<%} } %> <%if(editDisabled){ %>disabled=disabled<%} %>>
-							<%}else{ %>
-							<input type="radio" name="<%=domain.getDomainId()+'_'+Integer.toString(i) %>" value="<%=scalarValue[i][j] %>"/
+							<%
+								if(domainValue!=null){
+							%>
+							<input type="radio" name="<%=domain.getId()+'_'+Integer.toString(i)%>" value="<%=scalarValue[i][j]%>"/
+							<%if(domainValue[i]!=null){ if(domainValue[i].equals(scalarValue[i][j])){%>checked<%} }%> <%if(editDisabled){%>disabled=disabled<%}%>>
+							<%
+								}else{
+							%>
+							<input type="radio" name="<%=domain.getId()+'_'+Integer.toString(i)%>" value="<%=scalarValue[i][j] %>"/
 							<%if(editDisabled){ %>disabled=disabled<%} %>>
 							<%} %>
 						</td>

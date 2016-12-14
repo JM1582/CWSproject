@@ -17,17 +17,17 @@ public class Domain {
 	}
 	//functions
 	//domainId
-	public String getDomainId() {
+	public String getId() {
 		return this.domainId;
 	}
-	public void setDomainId(String newDomainId){
+	public void setId(String newDomainId){
 		this.domainId = newDomainId;
 	}
 	//domainName
-	public String getDomainName(){
+	public String getName(){
 		return this.domainName;
 	}	
-	public void setDomainName(String newDomainName){
+	public void setName(String newDomainName){
 		this.domainName = newDomainName;
 	}
 	//score

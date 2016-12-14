@@ -90,9 +90,9 @@ public class PatientInfo {
 		this.actionPlanMap = actionPlanMap;
 	}
 	public void addActionPlan(ActionPlan actionPlan) {
-		actionPlanMap.put(actionPlan.getActionPlanId(), actionPlan);
+		actionPlanMap.put(actionPlan.getId(), actionPlan);
 	}
 	public void removeActionPlan(ActionPlan actionPlan) {
-		actionPlanMap.remove(actionPlan.getActionPlanId());
+		actionPlanMap.remove(actionPlan.getId());
 	}
 }

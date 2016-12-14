@@ -13,18 +13,18 @@ public class SubSet {
 		this.domainMap = new HashMap();
 	}
 	//sebSetId
-	public String getSubSetId(){
+	public String getId(){
 		return this.subSetId;
 	}
-	public void setSubSetId(String subSetId){
+	public void setId(String subSetId){
 		this.subSetId = subSetId;
 	}
 	
 	//subSetName
-	public String getSubSetName(){
+	public String getName(){
 		return this.subSetName;
 	}
-	public void setSubSetName(String newSubSetName){
+	public void setName(String newSubSetName){
 		this.subSetName = newSubSetName;
 	}
 	
@@ -35,10 +35,10 @@ public class SubSet {
 		this.domainMap = domainMap;
 	}
 	public void addDomain(Domain domain){
-		this.domainMap.put(domain.getDomainId(), domain);
+		this.domainMap.put(domain.getId(), domain);
 	}
 	public void removeDomain(Domain domain){
-		this.domainMap.remove(domain.getDomainId());
+		this.domainMap.remove(domain.getId());
 	}
 	
 	public boolean isContainDomain(String domainId){

@@ -42,9 +42,9 @@ public class SaveActionPlanServlet extends HttpServlet {
 		Map allDomainMap = formTemplate.getAllDomainMap();
 		
 		ActionPlan actionPlan = (ActionPlan) session.getAttribute("actionPlan");
-		if(actionPlan.getActionPlanId()==-1){
+		if(actionPlan.getId()==-1){
 			DocumentSQL documentSQL = new DocumentSQL();
-			actionPlan.setActionPlanId(documentSQL.fakeGetNewDocumentId());
+			actionPlan.setId(documentSQL.fakeGetNewDocumentId());
 		}
 
 		if(!careProvider.getUserName().equals(actionPlan.getAuthor().getUserName())){
@@ -76,8 +76,8 @@ public class SaveActionPlanServlet extends HttpServlet {
 						while(actionIt.hasNext()){
 							String actionId = (String) actionIt.next();
 							Action action = (Action) actionMap.get(actionId);
-							action.setIntervention(request.getParameter("intervention_"+actionEntry.getActionEntryId()+"_"+action.getActionId()));
-							String userName = request.getParameter("responsibility_"+actionEntry.getActionEntryId()+"_"+action.getActionId());
+							action.setIntervention(request.getParameter("intervention_"+actionEntry.getId()+"_"+action.getId()));
+							String userName = request.getParameter("responsibility_"+actionEntry.getId()+"_"+action.getId());
 							if(userName!=null && !userName.equals("")){
 								FakeSQL fakeSQL = new FakeSQL();
 								CareProvider tmpCareProvidre = fakeSQL.getUser(userName).toCareProvider();

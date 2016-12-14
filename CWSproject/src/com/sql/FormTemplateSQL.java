@@ -116,9 +116,9 @@ public class FormTemplateSQL extends DataBase{
 					Domain domain = (Domain) domainMap.get(domainId);
 					this.setDomain(domain);
 					strSQL = "insert into formTemplate_domain values("
-							+ "'"+domain.getDomainId()+"',"
-							+ "'"+subSet.getSubSetId()+"',"
-							+ "'"+part.getPartId()+"',"
+							+ "'"+domain.getId()+"',"
+							+ "'"+subSet.getId()+"',"
+							+ "'"+part.getId()+"',"
 							+ ""+formTemplate.getId()+")";
 					try{
 						st.executeUpdate(strSQL);
@@ -292,7 +292,7 @@ public class FormTemplateSQL extends DataBase{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from onePart where partId='"+part.getPartId()+"'";
+		String strSQL = "select * from onePart where partId='"+part.getId()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
@@ -317,9 +317,9 @@ public class FormTemplateSQL extends DataBase{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
 				OnePart part = new OnePart();
-				part.setPartId(partId);
-				part.setPartName(rs.getString("partName"));
-				part.setPartDescription(rs.getString("partDescription"));
+				part.setId(partId);
+				part.setName(rs.getString("partName"));
+				part.setDescription(rs.getString("partDescription"));
 				return part;
 			}
 		}catch (Exception e){
@@ -333,15 +333,15 @@ public class FormTemplateSQL extends DataBase{
 		String strSQL = null;
 		if(this.isExistOnePart(part)){
 			strSQL = "update onePart set "
-					+ "partId='"+part.getPartId()+"', "
-					+ "partName='"+part.getPartName()+"', "
-					+ "partDescription='"+part.getPartDescription()+"' "
-					+ "where partId='"+part.getPartId()+"'";
+					+ "partId='"+part.getId()+"', "
+					+ "partName='"+part.getName()+"', "
+					+ "partDescription='"+part.getDescription()+"' "
+					+ "where partId='"+part.getId()+"'";
 		} else {
 			strSQL = "insert into onePart values("
-					+ "'"+part.getPartId()+"', "
-					+ "'"+part.getPartName()+"', "
-					+ "'"+part.getPartDescription()+"')";
+					+ "'"+part.getId()+"', "
+					+ "'"+part.getName()+"', "
+					+ "'"+part.getDescription()+"')";
 		}
 		try{
 			st.executeUpdate(strSQL);
@@ -357,7 +357,7 @@ public class FormTemplateSQL extends DataBase{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from subSet where subSetId='"+subSet.getSubSetId()+"'";
+		String strSQL = "select * from subSet where subSetId='"+subSet.getId()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
@@ -395,13 +395,13 @@ public class FormTemplateSQL extends DataBase{
 		String strSQL = null;
 		if(this.isExistSubSet(subSet)){
 			strSQL = "update subSet set "
-					+ "subSetId='"+subSet.getSubSetId()+"', "
-					+ "subSetName='"+subSet.getSubSetName()+"' "
-					+ "where subSetId='"+subSet.getSubSetId()+"'";
+					+ "subSetId='"+subSet.getId()+"', "
+					+ "subSetName='"+subSet.getName()+"' "
+					+ "where subSetId='"+subSet.getId()+"'";
 		} else {
 			strSQL = "insert into subSet values("
-					+ "'"+subSet.getSubSetId()+"', "
-					+ "'"+subSet.getSubSetName()+"' )";
+					+ "'"+subSet.getId()+"', "
+					+ "'"+subSet.getName()+"' )";
 		}
 		try{
 			st.executeUpdate(strSQL);
@@ -417,7 +417,7 @@ public class FormTemplateSQL extends DataBase{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		String strSQL = "select * from domain where domainId='"+domain.getDomainId()+"'";
+		String strSQL = "select * from domain where domainId='"+domain.getId()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
@@ -455,13 +455,13 @@ public class FormTemplateSQL extends DataBase{
 		String strSQL = null;
 		if(this.isExistDomain(domain)){
 			strSQL = "update domain set "
-					+ "domainId='"+domain.getDomainId()+"', "
-					+ "domainName='"+domain.getDomainName()+"' "
-					+ "where domainId='"+domain.getDomainId()+"'";
+					+ "domainId='"+domain.getId()+"', "
+					+ "domainName='"+domain.getName()+"' "
+					+ "where domainId='"+domain.getId()+"'";
 		} else {
 			strSQL = "insert into domain values("
-					+ "'"+domain.getDomainId()+"', "
-					+ "'"+domain.getDomainName()+"' )";
+					+ "'"+domain.getId()+"', "
+					+ "'"+domain.getName()+"' )";
 		}
 		try{
 			st.executeUpdate(strSQL);

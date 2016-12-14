@@ -2,22 +2,22 @@ package com.model;
 import java.util.*;
 
 public class ActionEntry {
-	private String actionEntryId;
+	private int actionEntryId;
 	private Domain domain;
 	private String cScore;
 	private String fScore;
-	private Map<String, Action> actionMap;
+	private Map<Integer, Action> actionMap;
 	//constructor
-	public ActionEntry(String actionEntryId){
+	public ActionEntry(int actionEntryId){
 		this.actionEntryId = actionEntryId;
-		this.actionMap = new HashMap<String, Action>();
+		this.actionMap = new HashMap<Integer, Action>();
 	}
 	//set and get
 	//actionEntryId
-	public String getActionEntryId(){
+	public int getId(){
 		return this.actionEntryId;
 	}
-	public void setActionEntryId(String actionEntryId){
+	public void setId(int actionEntryId){
 		this.actionEntryId = actionEntryId;
 	}
 	//domain
@@ -43,19 +43,19 @@ public class ActionEntry {
 	}
 	//ActionMap---------------------------------------------------------------?????
 	
-	public Map<String, Action> getActionMap() {
+	public Map<Integer, Action> getActionMap() {
 		return this.actionMap;
 	}
-	public void setActionMap(Map<String, Action> actionMap) {
+	public void setActionMap(Map<Integer, Action> actionMap) {
 		this.actionMap = actionMap;
 	}
 	//addAction function
 	public void addAction(Action action){
-		this.actionMap.put(action.getActionId(), action);
+		this.actionMap.put(action.getId(), action);
 	}
 	//removeAction
 	public void removeAction(Action action) {
-		actionMap.remove(action.getActionId());
+		actionMap.remove(action.getId());
 	}
 
 }

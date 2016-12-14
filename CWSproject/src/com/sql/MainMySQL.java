@@ -98,12 +98,12 @@ public class MainMySQL {
 		//========================================================
 		
 		ActionPlan actionPlan = new ActionPlan(patientInfo.getCWSNumber(), careProvider);
-		ActionEntry actionEntry = new ActionEntry("0");
+		ActionEntry actionEntry = new ActionEntry(0);
 		Domain domain = new Domain("b110", "Consciousness");
 		actionEntry.setDomain(domain);
 		actionEntry.setCscore("3");
 		actionEntry.setFscore("1");
-		Action action = new Action("0");
+		Action action = new Action(0);
 		action.setCareProvider(careProvider);
 		action.setIntervention("Measurement");
 		actionEntry.addAction(action);
@@ -114,7 +114,7 @@ public class MainMySQL {
 		careProvider.setLastName("Doe");
 		patientInfo.addCareProvider(careProvider);
 		
-		action = new Action("1");
+		action = new Action(1);
 		action.setCareProvider(careProvider);
 		action.setIntervention("Test");
 		actionEntry.addAction(action);

@@ -35,10 +35,10 @@ public class FormTemplate {
 		return this.partsMap;
 	}
 	public void addPart(OnePart part){
-		this.partsMap.put(part.getPartId(), part);
+		this.partsMap.put(part.getId(), part);
 	}
 	public void removePart(OnePart part){
-		this.partsMap.remove(part.getPartId());
+		this.partsMap.remove(part.getId());
 	}
 	
 	public Map getAllDomainMap(){

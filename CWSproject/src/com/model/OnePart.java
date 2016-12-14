@@ -16,24 +16,24 @@ public class OnePart {
 		this.subSetMap = new HashMap();
 	}
 	
-	public String getPartId(){
+	public String getId(){
 		return this.partId;
 	}
-	public void setPartId(String partId){
+	public void setId(String partId){
 		this.partId = partId;
 	}
 
-	public String getPartName(){
+	public String getName(){
 		return this.partName;
 	}
-	public void setPartName(String partName){
+	public void setName(String partName){
 		this.partName = partName;
 	}
 
-	public String getPartDescription(){
+	public String getDescription(){
 		return this.partDescription;
 	}
-	public void setPartDescription(String partDescription){
+	public void setDescription(String partDescription){
 		this.partDescription = partDescription;
 	}
 
@@ -61,10 +61,10 @@ public class OnePart {
 		return this.subSetMap;
 	}
 	public void addSubSet(SubSet subSet){
-		this.subSetMap.put(subSet.getSubSetId(), subSet);
+		this.subSetMap.put(subSet.getId(), subSet);
 	}
 	public void removeSubSet(SubSet subSet){
-		this.subSetMap.remove(subSet.getSubSetId());
+		this.subSetMap.remove(subSet.getId());
 	}
 	
 	public boolean isContainDomain(String domainId){
