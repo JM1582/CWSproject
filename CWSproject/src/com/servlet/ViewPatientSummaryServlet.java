@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
 
@@ -26,8 +27,20 @@ public class ViewPatientSummaryServlet extends HttpServlet{
 		//!!!need to be changed
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 		if(patientInfo==null){
-			PatientInfoSQL patientInforSQL = new PatientInfoSQL();
-			patientInfo = patientInforSQL.fakeSearchPatient(CWSNumber);
+			PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
+			try {
+				patientInfoSQL.connect();
+				patientInfo = patientInfoSQL.getPatientInfoByCWSNumber(CWSNumber);
+				patientInfoSQL.disconnect();
+			} catch (Exception e) {
+				e.printStackTrace();
+				PrintWriter out = response.getWriter();
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Database connection failed, please retry.');");
+				out.println("location='login_page.jsp';");
+				out.println("</script>");
+				return;
+			}
 		}
 		
 		if (patientInfo != null) {

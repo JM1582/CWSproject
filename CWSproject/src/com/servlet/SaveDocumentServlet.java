@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.*;
@@ -30,10 +31,6 @@ public class SaveDocumentServlet extends HttpServlet {
 		CareProvider careProvider = (CareProvider) session.getAttribute("user");
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 		Document document = (Document) session.getAttribute("document");
-		if(document.getId()==-1){
-			DocumentSQL documentSQL = new DocumentSQL();
-			document.setId(documentSQL.fakeGetNewDocumentId());
-		}
 		
 		if(!careProvider.getUserName().equals(document.getAuthor().getUserName())){
 			PrintWriter out = response.getWriter();
@@ -41,6 +38,7 @@ public class SaveDocumentServlet extends HttpServlet {
 			out.println("alert('You can not save, because you are not the author of this document.');");
 			out.println("location='edit_document_page.jsp';");
 			out.println("</script>");
+			return;
 		} else {
 			if(document.getSign()){
 				PrintWriter out = response.getWriter();
@@ -48,6 +46,7 @@ public class SaveDocumentServlet extends HttpServlet {
 				out.println("alert('Document already signed, can not be edit.');");
 				out.println("location='edit_document_page.jsp';");
 				out.println("</script>");
+				return;
 			} else {
 				document.setDateToday();
 				document.setAuthor(careProvider);
@@ -82,34 +81,36 @@ public class SaveDocumentServlet extends HttpServlet {
 					}
 				}
 				if(request.getParameter("sign") != null){
-					if(document.getSign()){
-						PrintWriter out = response.getWriter();
-						out.println("<script type=\"text/javascript\">");
-						out.println("alert('Document already signed.');");
-						out.println("location='edit_document_page.jsp';");
-						out.println("</script>");
-						
-					} else {
-						document.setSign(true);
-						
-						session.setAttribute("document", document);
-						PrintWriter out = response.getWriter();
-						out.println("<script type=\"text/javascript\">");
-						out.println("alert('Document signed by "+careProvider.getTitle()+" "+careProvider.getFirstName()+" "+careProvider.getLastName()+"');");
-						out.println("location='edit_document_page.jsp';");
-						out.println("</script>");
-					}
-				} else {
+					document.setSign(true);
+				}
+
+				DocumentSQL documentSQL = new DocumentSQL();
+				try {
+					documentSQL.connect();
+					documentSQL.setDocument(document);
+				} catch (Exception e) {
+					e.printStackTrace();
 					PrintWriter out = response.getWriter();
 					out.println("<script type=\"text/javascript\">");
-					out.println("alert('Document Saved.');");
+					out.println("alert('Document save failed!');");
 					out.println("location='edit_document_page.jsp';");
 					out.println("</script>");
+					return;
 				}
+
+				PrintWriter out = response.getWriter();
+				out.println("<script type=\"text/javascript\">");
+				if(document.getSign()){
+					out.println("alert('Document signed by "+careProvider.getTitle()+" "+careProvider.getFirstName()+" "+careProvider.getLastName()+"');");
+				} else {
+					out.println("alert('Document Saved.');");
+				}
+				out.println("location='edit_document_page.jsp';");
+				out.println("</script>");
+				
 				patientInfo.addDocument(document);
 				session.setAttribute("document", document);
 				session.setAttribute("patientInfo", patientInfo);
-	
 				
 				//RequestDispatcher requestDispatcher = request.getRequestDispatcher("edit_document_page.jsp");
 				//requestDispatcher.forward(request, response);

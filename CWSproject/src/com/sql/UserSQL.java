@@ -122,7 +122,7 @@ public class UserSQL extends DataBase{
 	}
 
 	public User userLogin(User user) throws Exception{
-		User rsUser = this.getUser(user.getId());
+		User rsUser = this.getUserByUserName(user.getUserName());
 		if(rsUser.getPassWord().equals(user.getPassWord())){
 			return rsUser;
 		}

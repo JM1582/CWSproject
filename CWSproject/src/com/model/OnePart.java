@@ -8,12 +8,12 @@ public class OnePart {
 	protected String partDescription;
 	protected String scalarName[];
 	protected String scalarValue[][];
-	protected Map subSetMap = new HashMap();
+	protected Map<String, SubSet> subSetMap = new HashMap<String, SubSet>();
 	
 	public void Part(String partId, String partName){
 		this.partId = partId;
 		this.partName = partName;
-		this.subSetMap = new HashMap();
+		this.subSetMap = new HashMap<String, SubSet>();
 	}
 	
 	public String getId(){
@@ -54,10 +54,10 @@ public class OnePart {
 	}
 	
 	//subSet map
-	public void setSubSetMap(Map subSetMap) {
+	public void setSubSetMap(Map<String, SubSet> subSetMap) {
 		this.subSetMap = subSetMap;
 	}
-	public Map getSubSetMap() {
+	public Map<String, SubSet> getSubSetMap() {
 		return this.subSetMap;
 	}
 	public void addSubSet(SubSet subSet){
@@ -68,7 +68,7 @@ public class OnePart {
 	}
 	
 	public boolean isContainDomain(String domainId){
-		Iterator subSetIt = this.subSetMap.keySet().iterator();
+		Iterator<String> subSetIt = this.subSetMap.keySet().iterator();
 		while(subSetIt.hasNext()){
 			String subSetId = (String) subSetIt.next();
 			SubSet subSet = (SubSet) this.subSetMap.get(subSetId);
@@ -79,7 +79,7 @@ public class OnePart {
 		return false;
 	}
 	public boolean hasDomainValue(Map domainValueMap){
-		Iterator subSetIt = this.subSetMap.keySet().iterator();
+		Iterator<String> subSetIt = this.subSetMap.keySet().iterator();
 		while(subSetIt.hasNext()){
 			String subSetId = (String) subSetIt.next();
 			SubSet subSet = (SubSet) this.subSetMap.get(subSetId);
@@ -90,7 +90,7 @@ public class OnePart {
 		return false;
 	}
 	public boolean hasDomainValueWithSummaryMap(Map summaryMap){
-		Iterator subSetIt = this.subSetMap.keySet().iterator();
+		Iterator<String> subSetIt = this.subSetMap.keySet().iterator();
 		while(subSetIt.hasNext()){
 			String subSetId = (String) subSetIt.next();
 			SubSet subSet = (SubSet) this.subSetMap.get(subSetId);

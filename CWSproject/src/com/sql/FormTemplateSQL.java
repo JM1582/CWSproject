@@ -289,6 +289,7 @@ public class FormTemplateSQL extends DataBase{
 				part.setId(partId);
 				part.setName(rs.getString("partName"));
 				part.setDescription(rs.getString("partDescription"));
+				part = this.getPartScalar(part);
 				return part;
 			}
 		}catch (Exception e){
@@ -299,6 +300,37 @@ public class FormTemplateSQL extends DataBase{
 		return null;
 	}
 	
+	private OnePart getPartScalar(OnePart part) throws Exception {
+		st = conn.createStatement();
+		String strSQL = "select * from partScalar where partId='"+part.getId()+"'";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			int size = 0;
+			if (rs.last()) {
+				size = rs.getRow();
+				rs.beforeFirst();
+			}
+			
+			String scalarName[] = new String[size];
+			String scalarValue[][] = new String[2][size];
+			int count = 0;
+			
+			while(rs.next()){
+				scalarName[count]=rs.getString("scalarName");
+				scalarValue[0][count]=rs.getString("scalarValue1");
+				scalarValue[1][count]=rs.getString("scalarValue1");
+				count++;
+			}
+			part.setScalarName(scalarName);
+			part.setScalarValue(scalarValue);
+		}catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+			throw e;
+		}
+		return part;
+	}
+
 	public void setPart(OnePart part) throws Exception{
 		String strSQL = null;
 		if(this.isExistOnePart(part)){
@@ -320,8 +352,51 @@ public class FormTemplateSQL extends DataBase{
 			e.printStackTrace();
 			throw e;
 		}
+		this.setPartScalar(part);
 	}
 	
+	private void setPartScalar(OnePart part) throws SQLException {
+		this.clearPartScalar(part);
+		
+		Statement st = conn.createStatement();
+		for(int i=0;i<part.getScalarName().length;i++){
+			String strSQL = null;
+			if(part.getScalarValue().length==1){
+				strSQL = "insert into partScalar values("
+						+ "'"+part.getId()+"', "
+						+ "'"+part.getScalarName()[i]+"', "
+						+ "'"+part.getScalarValue()[0][i]+"', "
+						+ "null )";
+				
+			} else if(part.getScalarValue().length==2) {
+				strSQL = "insert into partScalar values("
+						+ "'"+part.getId()+"', "
+						+ "'"+part.getScalarName()[i]+"', "
+						+ "'"+part.getScalarValue()[0][i]+"', "
+						+ "'"+part.getScalarValue()[1][i]+"' )";
+			}
+			try{
+				st.executeUpdate(strSQL);
+			} catch (Exception e){
+				System.out.println("Fail: "+strSQL);
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+
+	private void clearPartScalar(OnePart part) throws SQLException {
+		st = conn.createStatement();
+		String strSQL = "delete from partScalar where partId='"+part.getId()+"'";
+		try {
+			st.executeUpdate(strSQL);
+		} catch (SQLException e) {
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
 	public boolean isExistSubSet(SubSet subSet) throws Exception{
 		st = conn.createStatement();
 		String strSQL = "select * from subSet where subSetId='"+subSet.getId()+"'";
@@ -336,7 +411,6 @@ public class FormTemplateSQL extends DataBase{
 			throw e;
 		}
 		return false;
-		
 	}
 	
 	public SubSet getSubSet(String subSetId) throws Exception{

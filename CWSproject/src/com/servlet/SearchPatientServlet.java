@@ -21,11 +21,14 @@ public class SearchPatientServlet extends HttpServlet{
 			requestDispatcher.forward(request, response);
 			return;
 		}
-		
-		PatientInfoSQL patientInforSQL = new PatientInfoSQL();
+
+		PatientInfo patientInfo = null;
+		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
 		try {
-			patientInforSQL.connect();
-		} catch (ClassNotFoundException | SQLException e) {
+			patientInfoSQL.connect();
+			patientInfo = patientInfoSQL.getPatientInfoByCWSNumber(CWSNumber);
+			patientInfoSQL.disconnect();
+		} catch (Exception e) {
 			e.printStackTrace();
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
@@ -33,17 +36,6 @@ public class SearchPatientServlet extends HttpServlet{
 			out.println("location='login_page.jsp';");
 			out.println("</script>");
 			return;
-		}
-		PatientInfo patientInfo = null;
-		try {
-			patientInfo = patientInforSQL.getPatientInfoByCWSNumber(CWSNumber);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		try {
-			patientInforSQL.disconnect();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		if (patientInfo != null){
 			session.setAttribute("patientInfo", patientInfo);

@@ -153,6 +153,8 @@ public class PatientInfoSQL extends DataBase{
 				
 				patientInfo = this.getDocumentMap(patientInfo);
 				
+				patientInfo = this.getActionPlanMap(patientInfo);
+				
 				return  patientInfo;
 			}
 		}catch (Exception e){
@@ -161,6 +163,14 @@ public class PatientInfoSQL extends DataBase{
 			throw e;
 		}
 		return null;
+	}
+
+	private PatientInfo getActionPlanMap(PatientInfo patientInfo) throws Exception {
+		ActionPlanSQL actionPlanSQL = new ActionPlanSQL();
+		actionPlanSQL.connect();
+		patientInfo.setActionPlanMap(actionPlanSQL.getActionPlanByCWSNumber(patientInfo.getCWSNumber()));
+		actionPlanSQL.disconnect();
+		return patientInfo;
 	}
 
 	public PatientInfo getPatientInfoByCWSNumber(String CWSNumber) throws Exception{

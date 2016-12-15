@@ -175,8 +175,8 @@ public class DataBase {
 			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS partScalar("
-				+ "partId int not null,"
-				+ "scalarName varchar(20) not null,"
+				+ "partId varchar(20) not null,"
+				+ "scalarName varchar(40) not null,"
 				+ "scalarValue1 varchar(5),"
 				+ "scalarValue2 varchar(5) )";
 		try {

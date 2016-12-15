@@ -42,23 +42,21 @@ public class SaveActionPlanServlet extends HttpServlet {
 		Map allDomainMap = formTemplate.getAllDomainMap();
 		
 		ActionPlan actionPlan = (ActionPlan) session.getAttribute("actionPlan");
-		if(actionPlan.getId()==-1){
-			DocumentSQL documentSQL = new DocumentSQL();
-			actionPlan.setId(documentSQL.fakeGetNewDocumentId());
-		}
-
+		
 		if(!careProvider.getUserName().equals(actionPlan.getAuthor().getUserName())){
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('You can not save, because you are not the author of this action plan.');");
 			out.println("location='action_plan_page.jsp';");
 			out.println("</script>");
+			return;
 		} else if(actionPlan.getSign()){
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('Action plan already signed, can not be edit.');");
 			out.println("location='action_plan_page.jsp';");
 			out.println("</script>");
+			return;
 		} else{
 			Map actionEntryMap = actionPlan.getActionEntryMap();
 			if(actionEntryMap!=null){
@@ -87,33 +85,37 @@ public class SaveActionPlanServlet extends HttpServlet {
 					}
 				}
 			}
-			patientInfo.addActionPlan(actionPlan);
 		}
 		if(request.getParameter("sign") != null){
-			if(actionPlan.getSign()){
-				PrintWriter out = response.getWriter();
-				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Action Plan already signed.');");
-				out.println("location='action_plan_page.jsp';");
-				out.println("</script>");
-				
-			} else {
-				actionPlan.setSign(true);
-				
-				session.setAttribute("document", actionPlan);
-				PrintWriter out = response.getWriter();
-				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Action plan signed by "+careProvider.getTitle()+" "+careProvider.getFirstName()+" "+careProvider.getLastName()+"');");
-				out.println("location='action_plan_page.jsp';");
-				out.println("</script>");
-			}
-		} else {
+			actionPlan.setSign(true);
+		} 
+		
+		ActionPlanSQL actionPlanSQL = new ActionPlanSQL();
+		try {
+			actionPlanSQL.connect();
+			actionPlan = actionPlanSQL.setActionPlan(actionPlan);
+			actionPlanSQL.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Action plan Saved.');");
+			out.println("alert('Action Plan save failed!');");
 			out.println("location='action_plan_page.jsp';");
 			out.println("</script>");
+			return;
 		}
+		patientInfo.addActionPlan(actionPlan);
+		
+		PrintWriter out = response.getWriter();
+		out.println("<script type=\"text/javascript\">");
+		if(actionPlan.getSign()){
+			out.println("alert('Action plan signed by "+careProvider.getTitle()+" "+careProvider.getFirstName()+" "+careProvider.getLastName()+"');");
+		} else {
+			out.println("alert('Action plan Saved.');");
+		}
+		out.println("location='action_plan_page.jsp';");
+		out.println("</script>");
+		
 		
 		session.setAttribute("patientInfo", patientInfo);
 		session.setAttribute("actionPlan", actionPlan);

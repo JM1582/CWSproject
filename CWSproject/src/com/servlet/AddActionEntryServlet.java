@@ -71,11 +71,10 @@ public class AddActionEntryServlet extends HttpServlet {
 			out.println("</script>");
 		} else{
 			Map<Integer, ActionEntry> actionEntryMap = actionPlan.getActionEntryMap();
-			int actionEntryId;
-			do{
-				DocumentSQL documentSQL = new DocumentSQL();
-				actionEntryId = documentSQL.fakeGetNewDocumentId();
-			}while(actionEntryMap.containsKey(actionEntryId));
+			int actionEntryId = -1;
+			while(actionEntryMap.containsKey(actionEntryId)){
+				actionEntryId+=-1;
+			}
 			ActionEntry actionEntry = new ActionEntry(actionEntryId);
 			Map<Integer, Action> actionMap = actionEntry.getActionMap();
 			Map<String, CareProvider> careProviderMap = patientInfo.getCareProviderMap();

@@ -5,12 +5,12 @@ public class FormTemplate {
 	//attributes
 	protected int templateId=-1;
 	protected String templateName;
-	protected Map partsMap;
+	protected Map<String, OnePart> partsMap;
 	
 	//constructor
 	public FormTemplate(String templateName){
 		this.templateName = templateName;
-		this.partsMap = new HashMap();
+		this.partsMap = new HashMap<String, OnePart>();
 	}
 	
 	public String getName(){
@@ -28,10 +28,10 @@ public class FormTemplate {
 	}
 	
 	//subSet map
-	public void setPartsMap(Map partsMap) {
+	public void setPartsMap(Map<String, OnePart> partsMap) {
 		this.partsMap = partsMap;
 	}
-	public Map getPartsMap() {
+	public Map<String, OnePart> getPartsMap() {
 		return this.partsMap;
 	}
 	public void addPart(OnePart part){
@@ -41,13 +41,13 @@ public class FormTemplate {
 		this.partsMap.remove(part.getId());
 	}
 	
-	public Map getAllDomainMap(){
-		Map allDomainMap = new HashMap();
-		Map partsMap = this.getPartsMap();
-		Iterator partIt = partsMap.keySet().iterator();
+	public Map<String, Domain> getAllDomainMap(){
+		Map<String, Domain> allDomainMap = new HashMap<String, Domain>();
+		Map<String, OnePart> partsMap = this.getPartsMap();
+		Iterator<String> partIt = partsMap.keySet().iterator();
 		while(partIt.hasNext()){
-			String partId = (String) partIt.next();
-			OnePart part = (OnePart) partsMap.get(partId);
+			String partId = partIt.next();
+			OnePart part = partsMap.get(partId);
 			Map subSetMap = part.getSubSetMap();
 			Iterator subSetIt = subSetMap.keySet().iterator();
 			while(subSetIt.hasNext()){
