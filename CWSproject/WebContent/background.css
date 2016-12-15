@@ -91,11 +91,28 @@
  	   margin-top:10px;
 }
 
+.nav_bar{
+	position:fixed;
+	float:left;
+	width: 270px;
+} 
+
+.body_header{
+	position:fixed;
+	background:#e5e8d4;
+	width:100%;
+	margin-left:334px;
+	margin-bottom:0px;
+	box-shadow:2px 5px 10px #6f8788;
+} 
+
 .body_div{
 	padding:0;
 	margin:0;
-	width:100%;
-    top:140px; 
+	/*width:100%;*/
+    margin-top:150px; 
+    margin-left: 334px;
+    background: white;
 }
 
 

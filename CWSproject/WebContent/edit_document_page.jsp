@@ -38,13 +38,6 @@ th span {
 	width: 10%;
 }
 
-.body_div{
-	padding:0;
-	margin:0;
-	width:100%;
-    margin-top:150px; 
-}
-
 </style>
 
 </head>

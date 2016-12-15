@@ -17,38 +17,36 @@
 <script type="text/javascript" src="collapse.js" ></script>
 
 </head>
-
-<body class="grayblue">
-<!-- banner 
-
-<div class = "green1">
-<h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
-</div>
-<!-- banner end -->
-<div align="right" class="banner2" >
-<div class="hidden_above60" ><br>
-	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
-	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
-</div></div>
-
-	<%
-	CareProvider careProvider = (CareProvider)session.getAttribute("user");
-	if(careProvider == null){ %>
-		<script language="javascript" type="text/javascript">
-			window.location.href='logout_servlet';
-		</script>
-	<%return;
-	} %>
-
-<%
+<!-- login verification, should always be in beginning -->
+<%CareProvider careProvider = (CareProvider)session.getAttribute("user");
+if(careProvider == null){ %>
+	<script language="javascript" type="text/javascript">
+		window.location.href='logout_servlet';
+	</script>
+<%return;
+}
 PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 if (patientInfo == null) {
 }
 Map documentMap = patientInfo.getDocumentMap();
 Map actionPlanMap = patientInfo.getActionPlanMap();
 Map summaryMap = (Map)session.getAttribute("summaryMap");
-FormTemplate formTemplate = patientInfo.getFormTemplate();
- %>
+FormTemplate formTemplate = patientInfo.getFormTemplate(); %>
+
+<body class="grayblue">
+<!-- banner 
+<div class = "green1">
+<h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
+</div>
+<!-- banner end -->
+
+<!-- banner -->
+<div id="banner" align="right" class="banner2" >
+<br>
+	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
+	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
+</div>
+
  <!-- 
  <div class="header">
  <span>
@@ -57,21 +55,16 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
  <font >&nbsp;<strong><%=patientInfo.getCWSNumber() %></strong></font>
  </span>
  </div> -->
- <!-- cws number and icon -->
-<div>
-<div class="header">
+ 
+ <!-- patientInfo: cws number and icon -->
+<div id="patient_info" class="header">
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
 	<strong><%=patientInfo.getCWSNumber() %></strong></p>
 </div>
-<br><br><br><br><br><br><br>
-</div>
 
-<table >
-<tr>
-<td valign="top" width="20%" >
+
 <!-- navigation bar -->
-<div id="nav" style="position=fixed;">
-<br><br><br>
+<div id="nav" class="nav_bar">
 <ul>
   <li><a class="active" href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>"><font size=5 style="line-height:60px">SUMMARY VIEW</font></a></li>
   <li><a id="provider_input" onclick="expand('document_list')"><font size=5 style="line-height:60px">PROVIDER INPUT</font></a>
@@ -114,15 +107,14 @@ FormTemplate formTemplate = patientInfo.getFormTemplate();
 </ul>
 </div>
 
-</td>
-<!-- summary form -->
-<td valign="top" width="85%"  >
-<div style="background:white; ">
-<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:0px;margin-bottom:px;box-shadow:2px 5px 10px #6f8788;" >
+<!-- summary body header -->
+<div class="body_header">
 <p><h2 class="table_header"> &nbsp; Collaborative Summary</h2><p>
-</div><br><br><br><br><br>
-<%
-if (summaryMap.size()==0){ %>
+</div>
+
+<!-- summary form -->
+<div id="summary_body" class="body_div">
+<%if (summaryMap.size()==0){ %>
 <p style="font-family:Arial; font-size:30px"> &emsp; Patient record empty, please to go "Provider Input" to create a new document!</p>
 <%	} else {
 TreeMap partMap = new TreeMap(formTemplate.getPartsMap());
@@ -198,9 +190,6 @@ if(partMap != null){
 } %>
 
 </div>
-</td>
-<td></td>
-</tr></table>
 
 </body>
 </html>
