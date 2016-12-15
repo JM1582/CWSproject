@@ -6,13 +6,9 @@ import java.util.*;
 import com.model.*;
 
 public class FormTemplateSQL extends DataBase{
-	public int getFormTemplateIdByFormTemplateName(String formTemplateName){
+	public int getFormTemplateIdByFormTemplateName(String formTemplateName) throws Exception{
 		int formTemplateId = -1;
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = conn.createStatement();
 		String strSQL = "select * from formTemplate where formTemplateName='"+formTemplateName+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -22,17 +18,14 @@ public class FormTemplateSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return formTemplateId;
 		
 	}
 	
-	public boolean isExist(FormTemplate formTemplate){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExist(FormTemplate formTemplate) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from formTemplate where formTemplateName='"+formTemplate.getName()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -42,18 +35,14 @@ public class FormTemplateSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 	}
 	
 	//need to be removed
-	public int searchFormTemplateId(String formTemplateName){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			return -1;
-		}
+	public int searchFormTemplateId(String formTemplateName) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from formTemplate where formTemplateName='"+formTemplateName+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -63,17 +52,14 @@ public class FormTemplateSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return -1;
 		
 	}
 	
-	public FormTemplate setFormTemplate(FormTemplate formTemplate){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public FormTemplate setFormTemplate(FormTemplate formTemplate) throws Exception{
+		st = conn.createStatement();
 		String strSQL = null;
 		if(this.isExist(formTemplate)){
 			formTemplate.setId(this.getFormTemplateIdByFormTemplateName(formTemplate.getName()));
@@ -93,6 +79,7 @@ public class FormTemplateSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		
 		this.clearFormTemplateDomain(formTemplate);
@@ -125,6 +112,7 @@ public class FormTemplateSQL extends DataBase{
 					} catch (Exception e){
 						System.out.println("Fail: "+strSQL);
 						e.printStackTrace();
+						throw e;
 					}
 				}
 			}
@@ -133,12 +121,8 @@ public class FormTemplateSQL extends DataBase{
 		return formTemplate;
 	}
 	
-	public FormTemplate getFormTemplate(int formTemplateId){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public FormTemplate getFormTemplate(int formTemplateId) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from formTemplate where formTemplateId="+Integer.toString(formTemplateId);
 		ResultSet rs = null;
 		try{
@@ -146,7 +130,7 @@ public class FormTemplateSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
-			return null;
+			throw e;
 		}
 		FormTemplate formTemplate = null;
 		try {
@@ -156,18 +140,15 @@ public class FormTemplateSQL extends DataBase{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		
 		formTemplate.setPartsMap(this.getPartMap(formTemplateId));
 		return formTemplate;
 	}
 
-	public FormTemplate getFormTemplateByName(String formTemplateName){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public FormTemplate getFormTemplateByName(String formTemplateName) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from formTemplate where formTemplateName='"+formTemplateName+"'";
 		ResultSet rs = null;
 		try{
@@ -175,7 +156,7 @@ public class FormTemplateSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
-			return null;
+			throw e;
 		}
 		FormTemplate formTemplate = null;
 		try {
@@ -184,24 +165,23 @@ public class FormTemplateSQL extends DataBase{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		
 		return formTemplate;
 	}
 	
-	public Map<String, OnePart> getPartMap(int formTemplateId){
+	public Map<String, OnePart> getPartMap(int formTemplateId) throws Exception{
 		Map<String, OnePart> partMap = new HashMap<String, OnePart>();
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = conn.createStatement();
 		String strSQL = "select * from formTemplate_domain where formTemplateId="+Integer.toString(formTemplateId);
 		ResultSet rs = null;
 		try {
 			rs = st.executeQuery(strSQL);
 		} catch (SQLException e1) {
+			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		try{
 			while(rs.next()){
@@ -212,21 +192,17 @@ public class FormTemplateSQL extends DataBase{
 					partMap.put(partId, part);
 				}
 			}
-			return partMap;
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
-		return null;
+		return partMap;
 	}
 	
-	private Map<String, SubSet> getSubSetMap(String partId, int formTemplateId) {
+	private Map<String, SubSet> getSubSetMap(String partId, int formTemplateId) throws Exception {
 		Map<String, SubSet> subSetMap = new HashMap<String, SubSet>();
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = conn.createStatement();
 		String strSQL = "select * from formTemplate_domain where "
 				+ "formTemplateId="+Integer.toString(formTemplateId)+" and "
 				+ "partId='"+partId+"'";
@@ -234,7 +210,9 @@ public class FormTemplateSQL extends DataBase{
 		try {
 			rs = st.executeQuery(strSQL);
 		} catch (SQLException e1) {
+			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		try{
 			while(rs.next()){
@@ -245,21 +223,17 @@ public class FormTemplateSQL extends DataBase{
 					subSetMap.put(subSetId, subSet);
 				}
 			}
-			return subSetMap;
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
-		return null;
+		return subSetMap;
 	}
 
-	private Map<String, Domain> getDomainMap(String subSetId, String partId, int formTemplateId) {
+	private Map<String, Domain> getDomainMap(String subSetId, String partId, int formTemplateId) throws Exception {
 		Map<String, Domain> domaintMap = new HashMap<String, Domain>();
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = conn.createStatement();
 		String strSQL = "select * from formTemplate_domain where "
 				+ "formTemplateId="+Integer.toString(formTemplateId)+" and "
 				+ "partId='"+partId+"' and "
@@ -268,7 +242,9 @@ public class FormTemplateSQL extends DataBase{
 		try {
 			rs = st.executeQuery(strSQL);
 		} catch (SQLException e1) {
+			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		try{
 			while(rs.next()){
@@ -278,20 +254,16 @@ public class FormTemplateSQL extends DataBase{
 					domaintMap.put(domainId, domain);
 				}
 			}
-			return domaintMap;
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
-		return null;
+		return domaintMap;
 	}
 	
-	public boolean isExistOnePart(OnePart part){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExistOnePart(OnePart part) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from onePart where partId='"+part.getId()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -301,17 +273,14 @@ public class FormTemplateSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 		
 	}
 	
-	public OnePart getPart(String partId){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public OnePart getPart(String partId) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from onePart where partId='"+partId+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -325,11 +294,12 @@ public class FormTemplateSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 	
-	public void setPart(OnePart part){
+	public void setPart(OnePart part) throws Exception{
 		String strSQL = null;
 		if(this.isExistOnePart(part)){
 			strSQL = "update onePart set "
@@ -348,15 +318,12 @@ public class FormTemplateSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public boolean isExistSubSet(SubSet subSet){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExistSubSet(SubSet subSet) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from subSet where subSetId='"+subSet.getId()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -366,17 +333,14 @@ public class FormTemplateSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 		
 	}
 	
-	public SubSet getSubSet(String subSetId){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public SubSet getSubSet(String subSetId) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from subSet where subSetId='"+subSetId+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -387,11 +351,12 @@ public class FormTemplateSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 	
-	public void setSubSet(SubSet subSet){
+	public void setSubSet(SubSet subSet) throws Exception{
 		String strSQL = null;
 		if(this.isExistSubSet(subSet)){
 			strSQL = "update subSet set "
@@ -408,15 +373,12 @@ public class FormTemplateSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public boolean isExistDomain(Domain domain){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExistDomain(Domain domain) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from domain where domainId='"+domain.getId()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -426,17 +388,14 @@ public class FormTemplateSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 		
 	}
 	
-	public Domain getDomain(String domainId){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public Domain getDomain(String domainId) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from domain where domainId='"+domainId+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -447,11 +406,12 @@ public class FormTemplateSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 	
-	public void setDomain(Domain domain){
+	public void setDomain(Domain domain) throws Exception{
 		String strSQL = null;
 		if(this.isExistDomain(domain)){
 			strSQL = "update domain set "
@@ -468,21 +428,19 @@ public class FormTemplateSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
-	public void clearFormTemplateDomain(FormTemplate formTemplate){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public void clearFormTemplateDomain(FormTemplate formTemplate) throws SQLException{
+		st = conn.createStatement();
 		String strSQL = "delete from formTemplate_domain where formTemplateId="+formTemplate.getId()+"";
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e) {
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	

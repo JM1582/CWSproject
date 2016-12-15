@@ -7,13 +7,9 @@ import java.util.concurrent.*;
 import com.model.*;
 
 public class DocumentSQL extends DataBase{
-	public int getDocumentIdByDocumentName(String documentName){
+	public int getDocumentIdByDocumentName(String documentName) throws Exception{
 		int documentId = -1;
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = conn.createStatement();
 		String strSQL = "select * from document where documentName='"+documentName+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -23,17 +19,14 @@ public class DocumentSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return documentId;
 		
 	}
 	
-	public boolean isExist(Document document){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExist(Document document) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from document where documentId="+document.getId()+"";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -43,12 +36,12 @@ public class DocumentSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 	}
 	
-	public Document setDocument(Document document){//save user data
-		String strSQL = null;
+	public Document setDocument(Document document) throws Exception{//save user data
 		if(this.isExist(document)){
 			this.updateDocument(document);
 		} else {
@@ -58,12 +51,8 @@ public class DocumentSQL extends DataBase{
 		return document;
 	}
 	
-	public void updateDocument(Document document){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public void updateDocument(Document document) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "update document set "
 					+ "documentId="+Integer.toString(document.getId())+","
 					+ "serialNumber="+document.getSerialNumber()+","
@@ -81,10 +70,11 @@ public class DocumentSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public Document insertDocument(Document document){
+	public Document insertDocument(Document document) throws Exception{
 		String strSQL = "insert into document("
 				+ "serialNumber,"
 				+ "formTemplateId,"
@@ -97,30 +87,25 @@ public class DocumentSQL extends DataBase{
 				+ "sign) "
 				+ "values(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement st = null;
-		try {
-			st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			st.setInt(1, document.getSerialNumber());
-			st.setInt(2, document.getFormTemplate().getId());
-			st.setString(3, document.getName());
-			st.setInt(4, document.getVersion());
-			st.setString(5, document.getDescription());
-			st.setString(6, document.getDate());
-			st.setInt(7, document.getAuthor().getId());
-			st.setString(8, document.getCWSNumber());
-			st.setBoolean(9, document.getSign());
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
+		
+		st.setInt(1, document.getSerialNumber());
+		st.setInt(2, document.getFormTemplate().getId());
+		st.setString(3, document.getName());
+		st.setInt(4, document.getVersion());
+		st.setString(5, document.getDescription());
+		st.setString(6, document.getDate());
+		st.setInt(7, document.getAuthor().getId());
+		st.setString(8, document.getCWSNumber());
+		st.setBoolean(9, document.getSign());
+		
 		
 		try{
 			st.executeUpdate();
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		try {
 			ResultSet rs = st.getGeneratedKeys();
@@ -130,14 +115,15 @@ public class DocumentSQL extends DataBase{
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		return document;
 	}
 	
-	public void setDomainValue(Document document) {
+	public void setDomainValue(Document document) throws SQLException {
 		this.clearDomainValue(document);
 		Map<String, String[]> domainValueMap = document.getDomainValueMap();
-		Iterator domainValueIt = domainValueMap.keySet().iterator();
+		Iterator<String> domainValueIt = domainValueMap.keySet().iterator();
 		while(domainValueIt.hasNext()){
 			String domainId = (String) domainValueIt.next();
 			String[] domainValue = domainValueMap.get(domainId);
@@ -146,26 +132,19 @@ public class DocumentSQL extends DataBase{
 					+ domainId+", "
 					+ domainValue[0]+", "
 					+ domainValue[1]+")";
-			try {
-				st = conn.createStatement();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			st = conn.createStatement();
 			try {
 				st.executeUpdate(strSQL);
 			} catch (SQLException e) {
 				System.out.println("Fail: "+strSQL);
 				e.printStackTrace();
+				throw e;
 			}
 		}
 	}
 
-	public Document getDocument(int documentId){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public Document getDocument(int documentId) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from document where documentId="+Integer.toString(documentId);
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -193,16 +172,13 @@ public class DocumentSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 	
-	private Document getDomainValueMap(Document document) {
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	private Document getDomainValueMap(Document document) throws Exception {
+		st = conn.createStatement();
 		String strSQL = "select * from domainValue where documentId="+Integer.toString(document.getId());
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -216,17 +192,14 @@ public class DocumentSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 
-	public Map getDocumentByCWSNumber(String CWSNumber){
+	public Map getDocumentByCWSNumber(String CWSNumber) throws Exception{
 		Map<Integer, Document> documentMap = new HashMap<Integer, Document>();
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = conn.createStatement();
 		String strSQL = "select * from document where CWSNumber='"+CWSNumber+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -237,17 +210,13 @@ public class DocumentSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
-			return null;
+			throw e;
 		}
 		return documentMap;
 	}
 
-	public Document getDocumentByName (String documentName){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public Document getDocumentByName (String documentName) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from document where documentName='"+documentName+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -258,22 +227,20 @@ public class DocumentSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 
-	public void clearDomainValue(Document document){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public void clearDomainValue(Document document) throws SQLException{
+		st = conn.createStatement();
 		String strSQL = "delete from domainValue where documentId="+document.getId();
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e) {
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	

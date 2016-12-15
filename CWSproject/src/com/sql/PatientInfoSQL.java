@@ -6,13 +6,9 @@ import java.util.*;
 import com.model.*;
 
 public class PatientInfoSQL extends DataBase{
-	public int getPatientIdByCWSNumber(String CWSNumber){
+	public int getPatientIdByCWSNumber(String CWSNumber) throws Exception{
 		int patientInfoId = -1;
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = conn.createStatement();
 		String strSQL = "select * from patientInfo where CWSNumber='"+CWSNumber+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -22,17 +18,14 @@ public class PatientInfoSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return patientInfoId;
 		
 	}
 	
-	public boolean isExist(PatientInfo patientInfo){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExist(PatientInfo patientInfo) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from patientInfo where CWSNumber='"+patientInfo.getCWSNumber()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -42,16 +35,13 @@ public class PatientInfoSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 	}
 	
-	public PatientInfo setPatientInfo(PatientInfo patientInfo){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public PatientInfo setPatientInfo(PatientInfo patientInfo) throws Exception{
+		st = conn.createStatement();
 		String strSQL = null;
 		if(this.isExist(patientInfo)){
 			strSQL = "update patientInfo set "
@@ -75,16 +65,17 @@ public class PatientInfoSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		this.setCareProviderMap(patientInfo);
 		patientInfo.setPatientId(this.getPatientIdByCWSNumber(patientInfo.getCWSNumber()));
 		return patientInfo;
 	}
 	
-	public void setCareProviderMap(PatientInfo patientInfo){
+	public void setCareProviderMap(PatientInfo patientInfo) throws Exception{
 		this.clearCareProviderForPatientInfo(patientInfo);
-		Map careProviderMap = patientInfo.getCareProviderMap();
-		Iterator careProviderIt = careProviderMap.keySet().iterator();
+		Map<String, CareProvider> careProviderMap = patientInfo.getCareProviderMap();
+		Iterator<String> careProviderIt = careProviderMap.keySet().iterator();
 		while(careProviderIt.hasNext()){
 			String userName = (String) careProviderIt.next();
 			CareProvider tmpCareProvider = (CareProvider) careProviderMap.get(userName);
@@ -98,25 +89,18 @@ public class PatientInfoSQL extends DataBase{
 			} catch (Exception e){
 				System.out.println("Fail: "+strSQL);
 				e.printStackTrace();
+				throw e;
 			}
 		}
 	}
 	
-	public PatientInfo getCareProviderMap(PatientInfo patientInfo) {
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public PatientInfo getCareProviderMap(PatientInfo patientInfo) throws Exception {
+		st = conn.createStatement();
 		String strSQL = "select * from user_patientInfo where CWSNumber='"+patientInfo.getCWSNumber()+"'";
 		try {
 			ResultSet rs = st.executeQuery(strSQL);
 			UserSQL userSQL = new UserSQL();
-			try {
-				userSQL.connect();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+			userSQL.connect();
 			while(rs.next()){
 				CareProvider careProvider = userSQL.getUserByUserName(rs.getString("userName")).toCareProvider();
 				patientInfo.addCareProvider(careProvider);
@@ -125,41 +109,30 @@ public class PatientInfoSQL extends DataBase{
 		} catch (SQLException e) {
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return patientInfo;
 	}
 
-	public PatientInfo getDocumentMap(PatientInfo patientInfo){
+	public PatientInfo getDocumentMap(PatientInfo patientInfo) throws Exception{
 		DocumentSQL documentSQL = new DocumentSQL();
-		try {
-			documentSQL.connect();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		documentSQL.connect();
 		patientInfo.setDocumentMap(documentSQL.getDocumentByCWSNumber(patientInfo.getCWSNumber()));
 		documentSQL.disconnect();
 		return patientInfo;
 	}
 
-	public PatientInfo getFormTemplate(PatientInfo patientInfo, int formTemplateId){
+	public PatientInfo getFormTemplate(PatientInfo patientInfo, int formTemplateId) throws Exception{
 		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
-		try {
-			formTemplateSQL.connect();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		formTemplateSQL.connect();
 		FormTemplate formTemplate = formTemplateSQL.getFormTemplate(formTemplateId);
 		formTemplateSQL.disconnect();
 		patientInfo.setFormTemplate(formTemplate);
 		return patientInfo;
 	}
 	
-	public PatientInfo getPatientInfo(int patientInfoId){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public PatientInfo getPatientInfo(int patientInfoId) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from patientInfo where patientInfoId="+patientInfoId;
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -185,16 +158,13 @@ public class PatientInfoSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 
-	public PatientInfo getPatientInfoByCWSNumber(String CWSNumber){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public PatientInfo getPatientInfoByCWSNumber(String CWSNumber) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from patientInfo where CWSNumber='"+CWSNumber+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -206,22 +176,18 @@ public class PatientInfoSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Get patientInfo query fail.");
 			e.printStackTrace();
+			throw e;
 		}
 		return  null;
 	}
 	
 	//need to be changed or removed
-	public PatientInfo searchPatient(String CWSNumber) {
+	public PatientInfo searchPatient(String CWSNumber) throws Exception {
 		if(CWSNumber==null){
 			return null;
 		}
 		UserSQL userSQL = new UserSQL();
-		try {
-			userSQL.connect();
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		userSQL.connect();
 		
 		
 		//========================================================
@@ -273,18 +239,15 @@ public class PatientInfoSQL extends DataBase{
 		return patientInfo;
 	}
 	
-	public void clearCareProviderForPatientInfo(PatientInfo patientInfo){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public void clearCareProviderForPatientInfo(PatientInfo patientInfo) throws SQLException{
+		st = conn.createStatement();
 		String strSQL = "delete from user_patientInfo where CWSNumber='"+patientInfo.getCWSNumber()+"'";
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e) {
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	

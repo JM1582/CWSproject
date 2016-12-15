@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.*;
+import java.text.ParseException;
 import java.util.*;
 
 import javax.servlet.*;
@@ -42,8 +43,12 @@ public class ViewPatientSummaryServlet extends HttpServlet{
 				if(documentFromSummary == null){
 					summaryMap.put(userName, documentFromPatientInfo);
 				} else {
-					if(documentFromPatientInfo.laterThan(documentFromSummary)){
-						summaryMap.put(userName, documentFromPatientInfo);
+					try {
+						if(documentFromPatientInfo.laterThan(documentFromSummary)){
+							summaryMap.put(userName, documentFromPatientInfo);
+						}
+					} catch (ParseException e) {
+						e.printStackTrace();
 					}
 				}
 			}

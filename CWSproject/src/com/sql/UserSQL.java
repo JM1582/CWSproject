@@ -8,13 +8,9 @@ import com.model.*;
 
 
 public class UserSQL extends DataBase{
-	public int getUserIdByUserName(String userName){
+	public int getUserIdByUserName(String userName) throws Exception{
 		int userId = -1;
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = conn.createStatement();
 		String strSQL = "select * from user where userName='"+userName+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -24,17 +20,14 @@ public class UserSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return userId;
 		
 	}
 	
-	public boolean isExist(User user){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExist(User user) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from user where userName='"+user.getUserName()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -44,16 +37,13 @@ public class UserSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 	}
 	
-	public User setUser(User user){//save user data
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public User setUser(User user) throws Exception{//save user data
+		st = conn.createStatement();
 		String strSQL = null;
 		if(this.isExist(user)){
 			user.setId(this.getUserIdByUserName(user.getUserName()));
@@ -84,17 +74,14 @@ public class UserSQL extends DataBase{
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		user.setId(this.getUserIdByUserName(user.getUserName()));
 		return user;
 	}
 	
-	public User getUser(int userId){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public User getUser(int userId) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from user where userId='"+userId+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -112,16 +99,13 @@ public class UserSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 	
-	public User getUserByUserName(String userName){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public User getUserByUserName(String userName) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from user where userName='"+userName+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -132,11 +116,12 @@ public class UserSQL extends DataBase{
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 
-	public User userLogin(User user){
+	public User userLogin(User user) throws Exception{
 		User rsUser = this.getUser(user.getId());
 		if(rsUser.getPassWord().equals(user.getPassWord())){
 			return rsUser;
@@ -144,38 +129,38 @@ public class UserSQL extends DataBase{
 		return null;
 	}
 	
-	public void removeUser(User user){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public void removeUser(User user) throws SQLException{
+		st = conn.createStatement();
 		String strSQL = "delete from user where userName='"+user.getUserName()+"'";
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		strSQL = "delete form user_patientInfo where userName='"+user.getUserName()+"'";
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
 	// need to be removed
-	public User getUserSQL(User user){
+	public User getUserSQL(User user) throws Exception{
 		try {
 			this.connect();
 		} catch (ClassNotFoundException e) {
 			System.out.println("Database connection1 fail.");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			throw e;
 		} catch (SQLException e) {
 			System.out.println("Database connection2 fail.");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			throw e;
 		}
 		
 		User rs_user = this.getUserByUserName(user.getUserName());

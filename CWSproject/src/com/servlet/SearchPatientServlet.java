@@ -34,8 +34,17 @@ public class SearchPatientServlet extends HttpServlet{
 			out.println("</script>");
 			return;
 		}
-		PatientInfo patientInfo = patientInforSQL.getPatientInfoByCWSNumber(CWSNumber);
-		patientInforSQL.disconnect();
+		PatientInfo patientInfo = null;
+		try {
+			patientInfo = patientInforSQL.getPatientInfoByCWSNumber(CWSNumber);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		try {
+			patientInforSQL.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (patientInfo != null){
 			session.setAttribute("patientInfo", patientInfo);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("view_patient_summary_servlet?CWSNumber="+patientInfo.getCWSNumber());

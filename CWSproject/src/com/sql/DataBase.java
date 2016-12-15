@@ -18,18 +18,13 @@ public class DataBase {
 		} catch (Exception e) {
 			System.out.println("Database connection fail.");
 			e.printStackTrace();
-			return false;
+			throw e;
 		}
 		return true;
 	}
 	
-	public void factoryReset() {//初始化
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}//建立对话
+	public void factoryReset() throws SQLException {//初始化
+		st = conn.createStatement();//建立对话
 		this.dropAllTable();
 		String strSQL = "create table IF NOT EXISTS user("//+连接string
 				+ "userId int not null auto_increment,"
@@ -48,6 +43,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS patientInfo("
 				+ "patientInfoId int not null auto_increment,"
@@ -62,6 +58,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS formTemplate("
 				+ "formTemplateId int not null auto_increment,"
@@ -73,6 +70,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS onePart("
 				+ "partId varchar(20) not null,"
@@ -84,6 +82,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS subSet("
 				+ "subSetId varchar(20) not null,"
@@ -94,6 +93,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS domain("
 				+ "domainId varchar(20) not null,"
@@ -104,6 +104,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS document("
 				+ "documentId int not null auto_increment,"
@@ -121,6 +122,7 @@ public class DataBase {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS domainValue("
 				+ "documentId int not null, "
@@ -131,6 +133,7 @@ public class DataBase {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS actionPlan("
 				+ "actionPlanId int not null auto_increment, "
@@ -144,6 +147,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS actionEntry("
 				+ "actionEntryId int not null auto_increment,"
@@ -155,6 +159,7 @@ public class DataBase {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS action("
 				+ "actionId int not null auto_increment,"
@@ -167,6 +172,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS partScalar("
 				+ "partId int not null,"
@@ -178,6 +184,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS domainValue("
 				+ "documentId int not null,"
@@ -189,6 +196,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		
 
@@ -203,6 +211,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		/* the document table already include CWSNumber
 		strSQL = "create table IF NOT EXISTS patientInfo_document("//连接 patientInfo and document
@@ -213,6 +222,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		*/
 		/* the actionPlan table already include CWSNumber
@@ -224,6 +234,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		*/
 		strSQL = "create table IF NOT EXISTS actionPlan_action( "
@@ -235,6 +246,7 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 		strSQL = "create table IF NOT EXISTS formTemplate_domain("
 				+ "domainId varchar(20) not null,"
@@ -246,26 +258,23 @@ public class DataBase {
 		} catch (SQLException e1) {
 			System.out.println("Fail: "+strSQL);
 			e1.printStackTrace();
+			throw e1;
 		}
 	}
 	
-	public void disconnect(){
+	public void disconnect() throws Exception{
 		try{
 			st.close();
 			conn.close();
 		} catch (Exception e) {
 			System.out.println("Database closing fail.");
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public void dropTalbe(String tableName){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void dropTalbe(String tableName) throws SQLException{
+		st = conn.createStatement();
 		String strSQL = "drop table IF EXISTS "+tableName;
 		try {
 			st.executeUpdate(strSQL);
@@ -273,21 +282,24 @@ public class DataBase {
 			// TODO Auto-generated catch block
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public void dropAllTable(){
+	public void dropAllTable() throws SQLException{
 		DatabaseMetaData md = null;
 		try {
 			md = conn.getMetaData();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
+			throw e1;
 		}
 		ResultSet rs = null;
 		try {
 			rs = md.getTables(null, null, "%", null);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		try {
 			while(rs.next()){
@@ -295,15 +307,12 @@ public class DataBase {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public int lastInsertId(){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public int lastInsertId() throws SQLException{
+		st = conn.createStatement();
 		String strSQL = "select last_insert_id()";
 		try {
 			ResultSet rs  = st.executeQuery(strSQL);
@@ -313,6 +322,7 @@ public class DataBase {
 		} catch (SQLException e) {
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return -1;
 	}

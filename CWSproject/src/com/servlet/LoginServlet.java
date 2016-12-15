@@ -28,8 +28,17 @@ public class LoginServlet extends HttpServlet{
 			out.println("</script>");
 			return;
 		}
-		User user = userSQL.userLogin(new User(userName, passWord));
-		userSQL.disconnect();
+		User user = null;
+		try {
+			user = userSQL.userLogin(new User(userName, passWord));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			userSQL.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (user != null){
 			if(user.getType()==UserType.ADMIN){
 				PrintWriter out = response.getWriter();

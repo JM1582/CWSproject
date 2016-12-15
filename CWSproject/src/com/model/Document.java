@@ -71,7 +71,7 @@ public class Document{
 		Date date = new Date();
 		this.date = (String)sdf.format(date);
 	}
-	public boolean laterThan(Document document){
+	public boolean laterThan(Document document) throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		try {
 			Date dateFromThis = sdf.parse(this.getDate());
@@ -81,16 +81,18 @@ public class Document{
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 	}
-	public String getDateOnly(){
+	public String getDateOnly() throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		Date date = null;
 		try {
 			date = sdf.parse(this.date);
 		} catch (ParseException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
 		return (String)sdf.format(date);

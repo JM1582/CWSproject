@@ -6,6 +6,7 @@ import com.model.*;
 
 public class MainMySQL {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException{
+		try{
 		UserSQL userSQL = new UserSQL();
 		userSQL.connect();
 		userSQL.factoryReset();
@@ -88,6 +89,8 @@ public class MainMySQL {
 		document = documentSQL.setDocument(document);
 		document = documentSQL.setDocument(document);
 		
+		patientInfo.addDocument(document);
+		
 		//========================================================
 		
 		ActionPlanSQL actionPlanSQL = new ActionPlanSQL();
@@ -138,7 +141,9 @@ public class MainMySQL {
 		actionPlanSQL.disconnect();
 		
 		//========================================================
-		
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		
 	}
 }

@@ -7,12 +7,8 @@ import com.model.*;
 
 public class ActionPlanSQL extends DataBase {
 
-	public boolean isExist(ActionPlan actionPlan){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExist(ActionPlan actionPlan) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from actionPlan where actionPlanId="+actionPlan.getId()+"";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -22,11 +18,12 @@ public class ActionPlanSQL extends DataBase {
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 	}
 	
-	public ActionPlan setActionPlan(ActionPlan actionPlan){//save user data
+	public ActionPlan setActionPlan(ActionPlan actionPlan) throws Exception{//save user data
 		String strSQL = null;
 		if(this.isExist(actionPlan)){
 			this.updateActionPlan(actionPlan);
@@ -37,7 +34,7 @@ public class ActionPlanSQL extends DataBase {
 		return actionPlan;
 	}
 
-	public void setActionEntryMap(ActionPlan actionPlan) {
+	public void setActionEntryMap(ActionPlan actionPlan) throws Exception {
 		this.clearActionPlanAction(actionPlan);
 		Map<Integer, ActionEntry> actionEntryMap = actionPlan.getActionEntryMap();
 		Iterator<Integer> actionEntryIt = actionEntryMap.keySet().iterator();
@@ -60,13 +57,14 @@ public class ActionPlanSQL extends DataBase {
 				} catch (Exception e){
 					System.out.println("Fail: "+strSQL);
 					e.printStackTrace();
+					throw e;
 				}
 			}
 		}
 		
 	}
 
-	public Action setAction(Action action) {
+	public Action setAction(Action action) throws Exception {
 		if(this.isExistAction(action)){
 			this.updateAction(action);
 		} else {
@@ -75,7 +73,7 @@ public class ActionPlanSQL extends DataBase {
 		return action;
 	}
 
-	public void updateAction(Action action){
+	public void updateAction(Action action) throws Exception{
 		String strSQL = "update action set "
 					+ "actionId="+action.getId()+", "
 					+ "intervention='"+action.getIntervention()+"', "
@@ -87,10 +85,11 @@ public class ActionPlanSQL extends DataBase {
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public Action insertAction(Action action){
+	public Action insertAction(Action action) throws Exception{
 		String strSQL = "insert into action("
 				+ "actionId,"
 				+ "intervention,"
@@ -98,44 +97,30 @@ public class ActionPlanSQL extends DataBase {
 				+ "comment) "
 				+ "values(?,?,?,?)";
 		PreparedStatement st = null;
-		try {
-			st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			st.setInt(1, action.getId());
-			st.setString(2, action.getIntervention());
-			st.setInt(3, action.getCareProvider().getId());
-			st.setString(4, action.getComment());
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		
+		st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
+		st.setInt(1, action.getId());
+		st.setString(2, action.getIntervention());
+		st.setInt(3, action.getCareProvider().getId());
+		st.setString(4, action.getComment());
+			
 		try{
 			st.executeUpdate();
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
-		try {
-			ResultSet rs = st.getGeneratedKeys();
-			if(rs.next()){
-				action.setId(rs.getInt(1));
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		
+		ResultSet rs = st.getGeneratedKeys();
+		if(rs.next()){
+			action.setId(rs.getInt(1));
 		}
+		rs.close();
 		return action;
 	}
 
-	public boolean isExistAction(Action action) {
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExistAction(Action action) throws Exception {
+		st = conn.createStatement();
 		String strSQL = "select * from action where actionId="+action.getId()+"";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -145,11 +130,12 @@ public class ActionPlanSQL extends DataBase {
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 	}
 
-	public ActionEntry setActionEntry(ActionEntry actionEntry) {
+	public ActionEntry setActionEntry(ActionEntry actionEntry) throws Exception {
 		if(this.isExistActionEntry(actionEntry)){
 			this.updateActionEntry(actionEntry);
 		} else {
@@ -158,7 +144,7 @@ public class ActionPlanSQL extends DataBase {
 		return actionEntry;
 	}
 	
-	public void updateActionEntry(ActionEntry actionEntry){
+	public void updateActionEntry(ActionEntry actionEntry) throws Exception{
 		String strSQL = "update actionEntry set "
 					+ "actionEntryId="+actionEntry.getId()+", "
 					+ "domainId='"+actionEntry.getDomain().getId()+"', "
@@ -170,10 +156,11 @@ public class ActionPlanSQL extends DataBase {
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public ActionEntry insertActionEntry(ActionEntry actionEntry){
+	public ActionEntry insertActionEntry(ActionEntry actionEntry) throws Exception{
 		String strSQL = "insert into actionEntry("
 				+ "actionEntryId,"
 				+ "domainId,"
@@ -181,44 +168,29 @@ public class ActionPlanSQL extends DataBase {
 				+ "fScore) "
 				+ "values(?,?,?,?)";
 		PreparedStatement st = null;
-		try {
-			st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			st.setInt(1, actionEntry.getId());
-			st.setString(2, actionEntry.getDomain().getId());
-			st.setString(3, actionEntry.getCscore());
-			st.setString(4, actionEntry.getFscore());
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
+		st.setInt(1, actionEntry.getId());
+		st.setString(2, actionEntry.getDomain().getId());
+		st.setString(3, actionEntry.getCscore());
+		st.setString(4, actionEntry.getFscore());
 		
 		try{
 			st.executeUpdate();
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
-		try {
-			ResultSet rs = st.getGeneratedKeys();
-			if(rs.next()){
-				actionEntry.setId(rs.getInt(1));
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		ResultSet rs = st.getGeneratedKeys();
+		if(rs.next()){
+			actionEntry.setId(rs.getInt(1));
 		}
+		rs.close();
 		return actionEntry;
 	}
 
-	public boolean isExistActionEntry(ActionEntry actionEntry) {
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public boolean isExistActionEntry(ActionEntry actionEntry) throws Exception {
+		st = conn.createStatement();
 		String strSQL = "select * from actionEntry where actionEntryId="+actionEntry.getId()+"";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -228,11 +200,12 @@ public class ActionPlanSQL extends DataBase {
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 	}
 
-	public ActionPlan insertActionPlan(ActionPlan actionPlan) {
+	public ActionPlan insertActionPlan(ActionPlan actionPlan) throws Exception {
 		String strSQL = "insert into actionPlan("
 				+ "CWSNumber,"
 				+ "authorId,"
@@ -240,44 +213,30 @@ public class ActionPlanSQL extends DataBase {
 				+ "sign) "
 				+ "values(?,?,?,?)";
 		PreparedStatement st = null;
-		try {
-			st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			st.setString(1, actionPlan.getCWSNumber());
-			st.setInt(2, actionPlan.getAuthor().getId());
-			st.setString(3, actionPlan.getDate());
-			st.setBoolean(4, actionPlan.getSign());
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
+		
+		st.setString(1, actionPlan.getCWSNumber());
+		st.setInt(2, actionPlan.getAuthor().getId());
+		st.setString(3, actionPlan.getDate());
+		st.setBoolean(4, actionPlan.getSign());
 		
 		try{
 			st.executeUpdate();
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
-		try {
-			ResultSet rs = st.getGeneratedKeys();
-			if(rs.next()){
-				actionPlan.setId(rs.getInt(1));
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		ResultSet rs = st.getGeneratedKeys();
+		if(rs.next()){
+			actionPlan.setId(rs.getInt(1));
 		}
+		rs.close();
 		return actionPlan;
 	}
 
-	public void updateActionPlan(ActionPlan actionPlan) {
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public void updateActionPlan(ActionPlan actionPlan) throws Exception {
+		st = conn.createStatement();
 		String strSQL = "update actionPlan set "
 					+ "actionPlanId="+Integer.toString(actionPlan.getId())+","
 					+ "CWSNumber='"+actionPlan.getCWSNumber()+"',"
@@ -290,16 +249,13 @@ public class ActionPlanSQL extends DataBase {
 		} catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public Map getActionPlanByCWSNumber(String CWSNumber){
+	public Map getActionPlanByCWSNumber(String CWSNumber) throws Exception{
 		Map<Integer, ActionPlan> actionPlanMap = new HashMap<Integer, ActionPlan>();
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		st = conn.createStatement();
 		String strSQL = "select * from actionPlan where CWSNumber='"+CWSNumber+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -310,18 +266,13 @@ public class ActionPlanSQL extends DataBase {
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
-			return null;
+			throw e;
 		}
 		return actionPlanMap;
-		
 	}
 	
-	public ActionPlan getAcionPlan(int actionPlanId){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public ActionPlan getAcionPlan(int actionPlanId) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from actionPlan where actionPlanId="+Integer.toString(actionPlanId);
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -343,16 +294,14 @@ public class ActionPlanSQL extends DataBase {
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 
-	public ActionPlan getActionEntryMap(ActionPlan actionPlan) {
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public ActionPlan getActionEntryMap(ActionPlan actionPlan) throws Exception {
+		
+		st = conn.createStatement();
 		String strSQL = "select * from actionPlan_action where actionPlanId="+Integer.toString(actionPlan.getId());
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -363,20 +312,16 @@ public class ActionPlanSQL extends DataBase {
 					actionPlan.addActionEntry(actionEntry);
 				}
 			}
-			return actionPlan;
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
-		return null;
+		return actionPlan;
 	}
 
-	public ActionEntry getActionEntry(int actionEntryId, int actionPlanId) {
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public ActionEntry getActionEntry(int actionEntryId, int actionPlanId) throws Exception {
+		st = conn.createStatement();
 		String strSQL = "select * from actionEntry where actionEntryId="+Integer.toString(actionEntryId);
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -397,16 +342,13 @@ public class ActionPlanSQL extends DataBase {
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 
-	public ActionEntry getActionMap(ActionEntry actionEntry, int actionPlanId) {
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public ActionEntry getActionMap(ActionEntry actionEntry, int actionPlanId) throws Exception {
+		st = conn.createStatement();
 		String strSQL = "select * from actionPlan_action where "
 				+ "actionEntryId="+Integer.toString(actionEntry.getId())+" and "
 				+ "actionPlanId="+Integer.toString(actionPlanId);
@@ -419,20 +361,16 @@ public class ActionPlanSQL extends DataBase {
 					actionEntry.addAction(action);
 				}
 			}
-			return actionEntry;
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
-		return null;
+		return actionEntry;
 	}
 
-	public Action getAction(int actionId) {
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	public Action getAction(int actionId) throws Exception {
+		st = conn.createStatement();
 		String strSQL = "select * from action where actionId="+Integer.toString(actionId);
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -453,22 +391,20 @@ public class ActionPlanSQL extends DataBase {
 		}catch (Exception e){
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}
 
-	public void clearActionPlanAction(ActionPlan actionPlan){
-		try {
-			st = conn.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public void clearActionPlanAction(ActionPlan actionPlan) throws SQLException{
+		st = conn.createStatement();
 		String strSQL = "delete from actionPlan_action where actionPlanId="+actionPlan.getId();
 		try {
 			st.executeUpdate(strSQL);
 		} catch (SQLException e) {
 			System.out.println("Fail: "+strSQL);
 			e.printStackTrace();
+			throw e;
 		}
 	}
 }

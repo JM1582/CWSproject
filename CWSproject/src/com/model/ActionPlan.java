@@ -58,7 +58,7 @@ public class ActionPlan {
 		String dateStr =  (String)sdf.format(date);
 		this.date = dateStr;
 	}
-	public boolean laterThan(ActionPlan actionPlan){
+	public boolean laterThan(ActionPlan actionPlan) throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		try {
 			Date dateFromThis = sdf.parse(this.getDate());
@@ -68,16 +68,18 @@ public class ActionPlan {
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		return false;
 	}
-	public String getDateOnly(){
+	public String getDateOnly() throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.ENGLISH);
 		Date date = null;
 		try {
 			date = sdf.parse(this.date);
 		} catch (ParseException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
 		String dateStr =  (String)sdf.format(date);
