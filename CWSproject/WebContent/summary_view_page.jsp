@@ -17,6 +17,8 @@
 <script type="text/javascript" src="collapse.js" ></script>
 
 </head>
+
+<body class="grayblue">
 <!-- login verification, should always be in beginning -->
 <%CareProvider careProvider = (CareProvider)session.getAttribute("user");
 if(careProvider == null){ %>
@@ -33,7 +35,6 @@ Map actionPlanMap = patientInfo.getActionPlanMap();
 Map summaryMap = (Map)session.getAttribute("summaryMap");
 FormTemplate formTemplate = patientInfo.getFormTemplate(); %>
 
-<body class="grayblue">
 <!-- banner 
 <div class = "green1">
 <h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
@@ -56,7 +57,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate(); %>
  </span>
  </div> -->
  
- <!-- patientInfo: cws number and icon -->
+<!-- patientInfo: cws number and icon -->
 <div id="patient_info" class="header">
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
 	<strong><%=patientInfo.getCWSNumber() %></strong></p>

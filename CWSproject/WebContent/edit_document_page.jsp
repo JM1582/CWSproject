@@ -16,61 +16,19 @@
 <link rel="stylesheet" type="text/css" href="borderformat.css" charset="utf-8" >
 
 <script type="text/javascript" src="collapse.js" ></script>
-<style type="text/css">
-th {
-  border: 1px solid #99acbd;
-  position: relative;
-  padding: 10px;
-}
-
-th span {
-  transform-origin: 0 50%;
-  transform: rotate(-90deg); 
-  white-space: nowrap; 
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-}
-
-.width_for_2{
-	width: 50px;
-	width: 10%;
-}
-
-</style>
 
 </head>
 
 <body class="grayblue" >
-<!-- banner 
-<div class = "backgroundwhite">
-<div class = "green1">
-<h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
-</div>
-<!-- the div to hold 2 buttons: close file and logout
-<div align="right">
-	<button type="button"  onclick="location.href='profile_page.jsp'">Close File</button>
-	<button type="button"  onclick="location.href='logout_servlet'">Logout</button>
-</div></div>
- banner end -->
-<div class="banner2" >
-<div class="hidden_above60" align="right" ><br>
-	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
-	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
-</div>
-</div>
-
-<!-- login verification -->
+<!-- login verification, should always be in beginning -->
 <%CareProvider careProvider = (CareProvider)session.getAttribute("user");
 if(careProvider == null){ %>
 	<script language="javascript" type="text/javascript">
 		window.location.href='logout_servlet';
 	</script>
 	<%return;
-} %>
-
-<%PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
+}
+PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 FormTemplate formTemplate = patientInfo.getFormTemplate();
 Map documentMap = patientInfo.getDocumentMap();
 Map actionPlanMap = patientInfo.getActionPlanMap();
@@ -82,21 +40,21 @@ if (document.getSign()){
 } else if (!careProvider.getUserName().equals(document.getAuthor().getUserName())){
 	editDisabled = true;
 } %>
+ 
+<!-- banner -->
+<div id="banner" class="banner2" align="right" ><br>
+	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
+	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
+</div>
 
-
-<div class="header" >
+<!-- patientInfo: cws number and icon -->
+<div id="patient_info" class="header">
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
 	<strong><%=patientInfo.getCWSNumber() %></strong></p>
 </div>
 
-<!-- the table to hold nav bar in left and document in right -->
-<div class="body_div">
-<table><tr>
-
-<!-- the table cell to hold nav bar -->
-<td valign="top" width="20%" >
 <!-- navigation bar -->
-<div id="nav">
+<div id="nav" class="nav_bar">
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>"><font size=5 style="line-height:60px">SUMMARY VIEW</font></a></li>
   <li><a class="active" id="provider_input" onclick="expand('document_list')"><font size=5 style="line-height:60px">PROVIDER INPUT</font></a>
@@ -139,23 +97,17 @@ if (document.getSign()){
 </ul>
 </div>
 
-</td>
-
-<!-- the table cell to hold the document -->
-<td valign="top" width="85%" >
-<div style="background:#f9faf5;"><!-- the div to hold the document -->
-
-<form name="documentForm" action="save_document_servlet">
-
-<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:0px;margin-bottom:px;box-shadow:2px 5px 10px #6f8788;">
+<!-- document body header -->
+<div class="body_header">
 <span>
 <%if(document.getSign()){ %>
-<p><h3 class="form_signed"> &nbsp;Signed by <%=document.getAuthor().getTitle() %> 
-<font class="signiture"><%=document.getAuthor().getFirstName() %> 
-<%=document.getAuthor().getLastName() %> </font>
-on <%=document.getDate() %>.</h3></p>
+	<p><h3 class="form_signed"> &nbsp;Signed by <%=document.getAuthor().getTitle() %> 
+	<font class="signiture"><%=document.getAuthor().getFirstName() %> 
+	<%=document.getAuthor().getLastName() %> </font>
+	on <%=document.getDate() %>.</h3></p>
 <%}else { %>
-<p><h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2></p><%}%>
+	<p><h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2></p>
+<%}%>
 </span>
 <span>
 &emsp;
@@ -164,17 +116,11 @@ on <%=document.getDate() %>.</h3></p>
 </span>
 </div>
 
-<br><br><br><br><br><br>
+<!-- document form -->
+<div id="document_body" class="body_div" style="background:#f9faf5;">
+<form name="documentForm" action="save_document_servlet">
 
-<!-- 
-<div align="right">
-<!-- <button type="button" onclick="location.href='sign_document_servlet'" >Sign</button>
-<input type="submit" name="sign" value="Sign" class="button1">
-<input type="submit" value="Save" class="button1">
-<!--<button type="button" onclick="location.href='create_document_servlet'" >New</button>  
-</div>-->
-
-<div id="document" style="display:block;">
+<div id="document" style="display:table;">
 <% TreeMap partMap = new TreeMap(formTemplate.getPartsMap());
 if (partMap != null) {
 	Iterator partIt = partMap.keySet().iterator();
@@ -191,16 +137,16 @@ if (partMap != null) {
 <table  class="disabled_border" id="part_<%=part.getId()%>" cellspacing="0" cellpadding="0"><!-- change table format -->
 	
 	<!-- the table to hold 1 part title -->
-	<tr><td><table class="thin_border" id="partTitle_<%=part.getId()%>">
-		<tr ><!-- The first row to show the part name and scalarName -->
-			<th>
+	<tr><td><table class="thin_border" id="partTitle_<%=part.getId()%>" style="table-layout:fixed;">
+		<tr><!-- The first row to show the part name and scalarName -->
+			<td>
 				<img id="collapse_icon" align="left" onclick="collapse('partContent_<%=part.getId()%>')" src="collapse.png" width="15" height="15" border="0">
 				<font align="left" class="input_part">&emsp;<%=part.getName()%></font><br><br><font class="input_partDs"><%=part.getDescription()%></font>
-			</th>
+			</td>
 			<%
 				for(int i=0;i<scalarName.length;i++){
 			%>
-			<th class="scalar_colume" height="150"><span><small><%=scalarName[i]%></small></span></th>
+			<td class="scalar_colume" height="150"><div class="rotate"><small><%=scalarName[i]%></small></div></td>
 			<%
 				}
 			%>
@@ -329,10 +275,7 @@ if (partMap != null) {
 </div><!-- document -->
 </form>
 </div>
-</td>
-<td></td>
-</tr></table>
-</div>
+
 
 </body>
 </html>

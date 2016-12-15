@@ -16,52 +16,32 @@
 <link rel="stylesheet" type="text/css" href="score_sheet_format.css" charset="utf-8" >
 <script type="text/javascript" src="collapse.js" ></script>
 
-<script type="text/javascript">
-function add_domain(){
-	var action_plan_tables = document.getElementById('action_plan');
-	action_plan_tables.createElement("table");
-}
-</script>
-
-
 </head>
 
 <body class="grayblue">
-
-<!-- banner 
-<div class = "backgroundwhite">
-<div class = "green1">
-<h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
-</div>
-<div align="right">
-	<button type="button"  onclick="location.href='profile_page.jsp'">Close File</button>
-	<button type="button"  onclick="location.href='logout_servlet'">Logout</button>
-</div></div>
-<!-- banner end -->
-<div align="right" class="banner2" >
-<div class="hidden_above60" ><br>
-	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
-	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
-</div></div>
-
-
-<!-- login verification -->
-<%
-CareProvider careProvider = (CareProvider)session.getAttribute("user");
+<!-- login verification, should always be in beginning -->
+<%CareProvider careProvider = (CareProvider)session.getAttribute("user");
 if(careProvider == null){ %>
 	<script language="javascript" type="text/javascript">
 		window.location.href='logout_servlet';
 	</script>
 <%return;
-} %>
-
-<%PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
+}
+PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 if (patientInfo == null) {
 }
 Map documentMap = patientInfo.getDocumentMap();
 Map actionPlanMap = patientInfo.getActionPlanMap();
 ActionPlan actionPlan = (ActionPlan) session.getAttribute("actionPlan");
 TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); %>
+
+
+<div align="right" class="banner2" >
+<div class="hidden_above60" ><br>
+	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
+	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
+</div></div>
+
 
  <!-- cws number and icon -->
 <div>
