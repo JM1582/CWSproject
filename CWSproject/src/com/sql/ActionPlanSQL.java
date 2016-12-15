@@ -380,7 +380,10 @@ public class ActionPlanSQL extends DataBase {
 				
 				UserSQL userSQL = new UserSQL();
 				userSQL.connect();
-				CareProvider careProvider = userSQL.getUser(rs.getInt("careProviderId")).toCareProvider();
+				CareProvider careProvider = null;
+				if(userSQL.getUser(rs.getInt("careProviderId"))!=null){
+					careProvider = userSQL.getUser(rs.getInt("careProviderId")).toCareProvider();
+				}
 				userSQL.disconnect();
 				
 				action.setCareProvider(careProvider);
