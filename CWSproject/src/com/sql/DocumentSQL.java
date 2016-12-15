@@ -127,11 +127,20 @@ public class DocumentSQL extends DataBase{
 		while(domainValueIt.hasNext()){
 			String domainId = (String) domainValueIt.next();
 			String[] domainValue = domainValueMap.get(domainId);
-			String strSQL = "insert into domainValue values("
-					+ Integer.toString(document.getId())+", "
-					+ domainId+", "
-					+ domainValue[0]+", "
-					+ domainValue[1]+")";
+			String strSQL;
+			if(domainValue.length==1){
+				strSQL = "insert into domainValue values("
+						+ "'"+Integer.toString(document.getId())+"', "
+						+ "'"+domainId+"', "
+						+ domainValue[0]+", "
+						+ "null )";
+			} else {
+				strSQL = "insert into domainValue values("
+						+ "'"+Integer.toString(document.getId())+"', "
+						+ "'"+domainId+"', "
+						+ domainValue[0]+", "
+						+ domainValue[1]+")";
+			}
 			st = conn.createStatement();
 			try {
 				st.executeUpdate(strSQL);
@@ -151,16 +160,18 @@ public class DocumentSQL extends DataBase{
 			if(rs.next()){
 				FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
 				formTemplateSQL.connect();
-				FormTemplate formTemplate = formTemplateSQL.getFormTemplate(rs.getInt("forTemplateId"));
+				FormTemplate formTemplate = formTemplateSQL.getFormTemplate(rs.getInt("formTemplateId"));
 				formTemplateSQL.disconnect();
 				
 				UserSQL userSQL = new UserSQL();
+				userSQL.connect();
 				CareProvider careProvider = userSQL.getUser(rs.getInt("authorId")).toCareProvider();
 				userSQL.disconnect();
 					
 				Document document = new Document(formTemplate, careProvider, rs.getString("CWSNumber"));
+				document.setId(documentId);
 				document.setSerialNumber(rs.getInt("serialNumber"));
-				document.setName(rs.getString("documentNamte"));
+				document.setName(rs.getString("documentName"));
 				document.setVersion(rs.getInt("version"));
 				document.setDate(rs.getString("date"));
 				document.setSign(rs.getBoolean("sign"));
@@ -185,8 +196,8 @@ public class DocumentSQL extends DataBase{
 			while(rs.next()){
 				String domainId = rs.getString("domainId");
 				String domainValue[] = new String[2];
-				domainValue[0] = rs.getString("domainValue0");
-				domainValue[1] = rs.getString("domainValue1");
+				domainValue[0] = rs.getString("value1");
+				domainValue[1] = rs.getString("value2");
 				document.addDomainValue(domainId, domainValue);
 			}
 		}catch (Exception e){
@@ -194,7 +205,7 @@ public class DocumentSQL extends DataBase{
 			e.printStackTrace();
 			throw e;
 		}
-		return null;
+		return document;
 	}
 
 	public Map getDocumentByCWSNumber(String CWSNumber) throws Exception{
@@ -204,7 +215,8 @@ public class DocumentSQL extends DataBase{
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			while(rs.next()){
-				Document document = this.getDocument(rs.getInt("documentId"));
+				int documentId = rs.getInt("documentId");
+				Document document = this.getDocument(documentId);
 				documentMap.put(document.getId(), document);
 			}
 		}catch (Exception e){

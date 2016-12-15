@@ -63,12 +63,14 @@ public class AddActionEntryServlet extends HttpServlet {
 			out.println("alert('You can not edit, because you are not the author of this action plan.');");
 			out.println("location='action_plan_page.jsp';");
 			out.println("</script>");
+			return;
 		} else if(actionPlan.getSign()){
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('Action plan already signed, can not be edit.');");
 			out.println("location='action_plan_page.jsp';");
 			out.println("</script>");
+			return;
 		} else{
 			Map<Integer, ActionEntry> actionEntryMap = actionPlan.getActionEntryMap();
 			int actionEntryId = -1;
@@ -82,11 +84,10 @@ public class AddActionEntryServlet extends HttpServlet {
 				Iterator<String> careProviderIt = careProviderMap.keySet().iterator();
 				while(careProviderIt.hasNext()){
 					String userName = (String) careProviderIt.next();
-					int actionId;
-					do{
-						DocumentSQL documentSQL = new DocumentSQL();
-						actionId = documentSQL.fakeGetNewDocumentId();
-					}while(actionMap.containsKey(actionId));
+					int actionId=-1;
+					while(actionMap.containsKey(actionId)){
+						actionId+=-1;
+					}
 					Action action = new Action(actionId);
 					actionEntry.addAction(action);
 				}

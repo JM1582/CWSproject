@@ -41,17 +41,17 @@ public class ActionPlanSQL extends DataBase {
 		while(actionEntryIt.hasNext()){
 			int actionEntryId = actionEntryIt.next();
 			ActionEntry actionEntry = (ActionEntry) actionEntryMap.get(actionEntryId);
-			this.setActionEntry(actionEntry);
+			actionEntry = this.setActionEntry(actionEntry);
 			Map<Integer, Action> actionMap = actionEntry.getActionMap();
 			Iterator<Integer> actionIt = actionMap.keySet().iterator();
 			while(actionIt.hasNext()){
 				int actionId = actionIt.next();
 				Action action = actionMap.get(actionId);
-				this.setAction(action);
+				action = this.setAction(action);
 				String strSQL = "insert into actionPlan_action values("
 						+ Integer.valueOf(actionPlan.getId())+","
-						+ Integer.valueOf(actionEntryId)+","
-						+ Integer.valueOf(actionId)+")";
+						+ Integer.valueOf(actionEntry.getId())+","
+						+ Integer.valueOf(action.getId())+")";
 				try{
 					st.executeUpdate(strSQL);
 				} catch (Exception e){
@@ -91,17 +91,19 @@ public class ActionPlanSQL extends DataBase {
 	
 	public Action insertAction(Action action) throws Exception{
 		String strSQL = "insert into action("
-				+ "actionId,"
 				+ "intervention,"
 				+ "careProviderId,"
 				+ "comment) "
-				+ "values(?,?,?,?)";
+				+ "values(?,?,?)";
 		PreparedStatement st = null;
 		st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
-		st.setInt(1, action.getId());
-		st.setString(2, action.getIntervention());
-		st.setInt(3, action.getCareProvider().getId());
-		st.setString(4, action.getComment());
+		st.setString(1, action.getIntervention());
+		if(action.getCareProvider()!=null){
+			st.setInt(2, action.getCareProvider().getId());
+		} else {
+			st.setInt(2, -1);
+		}
+		st.setString(3, action.getComment());
 			
 		try{
 			st.executeUpdate();
@@ -162,17 +164,15 @@ public class ActionPlanSQL extends DataBase {
 	
 	public ActionEntry insertActionEntry(ActionEntry actionEntry) throws Exception{
 		String strSQL = "insert into actionEntry("
-				+ "actionEntryId,"
 				+ "domainId,"
 				+ "cScore,"
 				+ "fScore) "
-				+ "values(?,?,?,?)";
+				+ "values(?,?,?)";
 		PreparedStatement st = null;
 		st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
-		st.setInt(1, actionEntry.getId());
-		st.setString(2, actionEntry.getDomain().getId());
-		st.setString(3, actionEntry.getCscore());
-		st.setString(4, actionEntry.getFscore());
+		st.setString(1, actionEntry.getDomain().getId());
+		st.setString(2, actionEntry.getCscore());
+		st.setString(3, actionEntry.getFscore());
 		
 		try{
 			st.executeUpdate();

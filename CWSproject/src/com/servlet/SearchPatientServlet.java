@@ -33,7 +33,7 @@ public class SearchPatientServlet extends HttpServlet{
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('Database connection failed, please retry.');");
-			out.println("location='login_page.jsp';");
+			out.println("location='profile_page.jsp';");
 			out.println("</script>");
 			return;
 		}

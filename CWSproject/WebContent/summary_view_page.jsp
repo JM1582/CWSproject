@@ -166,7 +166,9 @@ if(partMap != null){
 		Document document = (Document) summaryMap.get(userName);
 		Map domainValueMap = document.getDomainValueMap();
 		if(domainValueMap != null){
-			String domainValue[] = (String[]) domainValueMap.get(domainId); %>
+			String domainValue[] = (String[]) domainValueMap.get(domainId);
+			if(domainValue!=null){
+			%>
 	<!-- Title, Name, Domain Value -->
 	<tr>
 		<td height="50px" width="20%" align="center" class="summaryEntry"><%=document.getAuthor().getTitle() %></td>
@@ -179,7 +181,8 @@ if(partMap != null){
 <%			}
 		} %>
 	</tr>
-<%		}
+<%			}
+		}
 	} %>
 	<%} %>
 <%								}

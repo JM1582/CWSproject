@@ -306,19 +306,25 @@ public class FormTemplateSQL extends DataBase{
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
 			int size = 0;
+			int valueAmount = 1;
 			if (rs.last()) {
+				String tmp = rs.getString("scalarValue2");
+				if(rs.getString("scalarValue2")!=null){
+					valueAmount = 2;
+				}
 				size = rs.getRow();
 				rs.beforeFirst();
 			}
 			
 			String scalarName[] = new String[size];
-			String scalarValue[][] = new String[2][size];
+			String scalarValue[][] = new String[valueAmount][size];
 			int count = 0;
 			
 			while(rs.next()){
 				scalarName[count]=rs.getString("scalarName");
-				scalarValue[0][count]=rs.getString("scalarValue1");
-				scalarValue[1][count]=rs.getString("scalarValue1");
+				for(int i=0;i<valueAmount;i++){
+					scalarValue[i][count]=rs.getString("scalarValue"+Integer.toString(i+1));
+				}
 				count++;
 			}
 			part.setScalarName(scalarName);

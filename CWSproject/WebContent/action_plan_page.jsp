@@ -150,13 +150,13 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	if(actionEntryMap!=null){
 		Iterator actionEntryIt = actionEntryMap.keySet().iterator();
 		while(actionEntryIt.hasNext()){
-			String actionEntryId = (String) actionEntryIt.next();
+			int actionEntryId = (Integer) actionEntryIt.next();
 			ActionEntry actionEntry = (ActionEntry) actionEntryMap.get(actionEntryId);
 			Map actionMap = actionEntry.getActionMap();
 			Iterator actionIt = actionMap.keySet().iterator();
 			boolean firstLine = true;
 			while(actionIt.hasNext()){
-				String actionId = (String) actionIt.next();
+				int actionId = (Integer) actionIt.next();
 				Action action = (Action) actionMap.get(actionId); %>
 
 	<tr><!--  -->

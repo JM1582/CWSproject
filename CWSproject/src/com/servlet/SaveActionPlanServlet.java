@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.*;
@@ -62,7 +63,7 @@ public class SaveActionPlanServlet extends HttpServlet {
 			if(actionEntryMap!=null){
 				Iterator actionEntryIt = actionEntryMap.keySet().iterator();
 				while(actionEntryIt.hasNext()){
-					String actionEntryId = (String) actionEntryIt.next(); 
+					int actionEntryId = (Integer) actionEntryIt.next(); 
 					ActionEntry actionEntry = (ActionEntry) actionEntryMap.get(actionEntryId);
 					String domainId = request.getParameter("domain_"+actionEntryId);
 					actionEntry.setDomain((Domain) allDomainMap.get(domainId));
@@ -72,14 +73,21 @@ public class SaveActionPlanServlet extends HttpServlet {
 					if(actionMap!=null){
 						Iterator actionIt = actionMap.keySet().iterator();
 						while(actionIt.hasNext()){
-							String actionId = (String) actionIt.next();
+							int actionId = (Integer) actionIt.next();
 							Action action = (Action) actionMap.get(actionId);
 							action.setIntervention(request.getParameter("intervention_"+actionEntry.getId()+"_"+action.getId()));
 							String userName = request.getParameter("responsibility_"+actionEntry.getId()+"_"+action.getId());
+							
 							if(userName!=null && !userName.equals("")){
-								FakeSQL fakeSQL = new FakeSQL();
-								CareProvider tmpCareProvidre = fakeSQL.getUser(userName).toCareProvider();
-								action.setCareProvider(tmpCareProvidre); 
+								UserSQL userSQL = new UserSQL();
+								try {
+									userSQL.connect();
+									CareProvider tmpCareProvidre = userSQL.getUserByUserName(userName).toCareProvider();
+									action.setCareProvider(tmpCareProvidre);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								
 							}
 						}
 					}
