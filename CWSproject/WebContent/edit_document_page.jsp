@@ -99,7 +99,6 @@ if (document.getSign()){
 
 <!-- document body header -->
 <div class="body_header">
-<span>
 <%if(document.getSign()){ %>
 	<p><h3 class="form_signed"> &nbsp;Signed by <%=document.getAuthor().getTitle() %> 
 	<font class="signiture"><%=document.getAuthor().getFirstName() %> 
@@ -108,16 +107,13 @@ if (document.getSign()){
 <%}else { %>
 	<p><h2 class="form_instruction"> &nbsp;Please fill out the form base on your knowledge about the patient.</h2></p>
 <%}%>
-</span>
-<span>
 &emsp;
 <input type="submit" name="sign" value="Sign" class="button1">
 <input type="submit" value="Save" class="button1">
-</span>
 </div>
 
 <!-- document form -->
-<div id="document_body" class="body_div" style="background:#f9faf5;">
+<div id="document_body" class="body_div">
 <form name="documentForm" action="save_document_servlet">
 
 <div id="document" style="display:table;">
@@ -134,7 +130,7 @@ if (partMap != null) {
 %>
 
 <!-- the table to hold 1 part -->
-<table  class="disabled_border" id="part_<%=part.getId()%>" cellspacing="0" cellpadding="0"><!-- change table format -->
+<table class="disabled_border" id="part_<%=part.getId()%>" cellspacing="0" cellpadding="0"><!-- change table format -->
 	
 	<!-- the table to hold 1 part title -->
 	<tr><td><table class="thin_border" id="partTitle_<%=part.getId()%>" style="table-layout:fixed;">

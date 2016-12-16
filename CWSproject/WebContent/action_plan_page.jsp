@@ -13,8 +13,15 @@
 <link rel="stylesheet" type="text/css" href="buttons.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="font_styles.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="formcell_format.css" charset="utf-8" >
-<link rel="stylesheet" type="text/css" href="score_sheet_format.css" charset="utf-8" >
+
 <script type="text/javascript" src="collapse.js" ></script>
+
+<style type="text/css">
+select{
+	width: 100%;
+	white-space: pre-wrap;
+}
+</style>
 
 </head>
 
@@ -35,30 +42,21 @@ Map actionPlanMap = patientInfo.getActionPlanMap();
 ActionPlan actionPlan = (ActionPlan) session.getAttribute("actionPlan");
 TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); %>
 
-
-<div align="right" class="banner2" >
-<div class="hidden_above60" ><br>
+<!-- banner -->
+<div id="banner" align="right" class="banner2" ><br>
 	<button class="button_logout" type="button"  onclick="location.href='profile_page.jsp'" >Close File</button>
 	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
-</div></div>
+</div>
 
 
- <!-- cws number and icon -->
-<div>
-<div class="header">
+<!-- patientInfo: cws number and icon -->
+<div id="patient_info" class="header">
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
 	<strong><%=patientInfo.getCWSNumber() %></strong></p>
 </div>
-<br><br><br><br><br><br><br>
-</div>
-
-<table><tr>
-
-<td valign="top" width="20%" >
 
 <!-- navigation bar -->
-<div id="nav">
-<br><br><br>
+<div id="nav" class="nav_bar">
 <ul>
   <li><a href="view_patient_summary_servlet?CWSNumber=<%=patientInfo.getCWSNumber() %>"><font size=5 style="line-height:60px">SUMMARY VIEW</font></a></li>
   <li><a 
@@ -102,22 +100,22 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 </ul>
 </div>
 
-</td>
-
-<td valign="top" width="85%" >
-<div id="action_plan">
-<form name="actionPlanForm" action="save_action_plan_servlet">
-<div style="position:fixed; background:#e5e8d4; width:100%; margin-top:20px;box-shadow:2px 2px 10px #909090;">
-<p><h2 class="table_header"> &nbsp; Action Plan</h2><p>
-<div class="no_margin"><span>
+<!-- document body header -->
+<div  class="body_header">
+<p><h2 class="form_instruction"> &nbsp; Action Plan</h2><p>
+<div class="no_margin">
 &emsp;
 <input type="submit" name="sign" value="Sign" class="button1">
-<input type="submit" value="Save" class="button1"></span></div>
-</div><br><br><br><br><br><br><br>
+<input type="submit" value="Save" class="button1"></div>
+</div>
 
 
-<div style="background:white; ">
-<table border="1" width="100%">
+<!-- action plan form -->
+<div id="action_plan_body" class="body_div">
+<form name="actionPlanForm" action="save_action_plan_servlet">
+
+<div id="action_plan">
+<table border="1">
 	<tr >
 		<td class="tr1_td2"><font><strong>Domain</strong></font></td>
 		<td class="tr1_td3"><font><strong>Current Score</strong></font></td>
@@ -142,7 +140,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	<tr><!--  -->
 	<%if(firstLine){ %>
 		<!-- selecting domain name -->
-		<td height="60px"><select style="height:50px;width:auto;" name="domain_<%=actionEntry.getId()%>">
+		<td height="60px"><select style="height:50px;" name="domain_<%=actionEntry.getId()%>">
 		<%
 			if(actionEntry.getDomain()==null){
 		%>
@@ -221,12 +219,12 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 }
 %>
 </table>
+</div>
 <input type="button" onclick="location.href='add_action_entry_servlet'" value="+">
-</form></div>
+</form>
+</div>
 
-</td>
-<td></td>
-</tr></table>
+
 
 </body>
 </html>

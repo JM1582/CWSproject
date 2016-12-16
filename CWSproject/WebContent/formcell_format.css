@@ -6,7 +6,7 @@
 	margin-top:0px;
 	margin-bottom:0;
 	align:center;
-	width:50px;
+	/*width:50px;*/
 }
 .tr1_td2{
 	font-family:Arial; 
@@ -14,7 +14,7 @@
 	margin-top:0px;
 	margin-bottom:0;
 	align:center;
-	width:40px;
+	/*width:30%;*/
 }
 .tr1_td3{
 	font-family:Arial; 
@@ -22,7 +22,7 @@
 	margin-top:0px;
 	margin-bottom:0;
 	align:center;
-	width:40px;
+	/*width:10%;*/
 }
 .tr1_td4{
 	font-family:Arial; 
@@ -30,7 +30,7 @@
 	margin-top:0px;
 	margin-bottom:0;
 	align:center;
-	width:40px;
+	/*width:25%;*/
 }
 .tr1_td5{
 	font-family:Arial; 
@@ -38,5 +38,5 @@
 	margin-top:0px;
 	margin-bottom:0;
 	align:center;
-	width:40px;
+	width:25%;
 }
