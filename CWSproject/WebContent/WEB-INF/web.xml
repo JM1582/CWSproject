@@ -96,6 +96,47 @@
     <servlet-name>addActionEntryServlet</servlet-name>
     <url-pattern>/add_action_entry_servlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>accountManagementServlet</servlet-name>
+    <servlet-class>com.servlet.AccountManagementServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>accountManagementServlet</servlet-name>
+    <url-pattern>/account_management_servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>patientManagementServlet</servlet-name>
+    <servlet-class>com.servlet.PatientManagementServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>patientManagementServlet</servlet-name>
+    <url-pattern>/patient_management_servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>templateManagementServlet</servlet-name>
+    <servlet-class>com.servlet.TemplateManagementServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>templateManagementServlet</servlet-name>
+    <url-pattern>/template_management_servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>documentManagementServlet</servlet-name>
+    <servlet-class>com.servlet.DocumentManagementServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>documentManagementServlet</servlet-name>
+    <url-pattern>/document_management_servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>actionPlanManagementServlet</servlet-name>
+    <servlet-class>com.servlet.ActionPlanManagementServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>actionPlanManagementServlet</servlet-name>
+    <url-pattern>/action_plan_management_servlet</url-pattern>
+  </servlet-mapping>
+  
   <welcome-file-list>
     <welcome-file>login_page.jsp</welcome-file>
   </welcome-file-list>

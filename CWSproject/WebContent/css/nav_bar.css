@@ -4,27 +4,31 @@ ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	width: 180px;
-	background-color: #f1f1f1;
+	width: 270px;
+	background-color: #73ada7;
+	margin-top: 0;
 }@CHARSET "UTF-8";
-
-ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	width: 180px;
-	background-color: #f1f1f1;
-}
 
 li a {
 	display: block;
-	color: #000;
+	height: 70px;
+	background-color:#73ada7;
+	color: white;
 	padding: 8px 16px;
 	text-decoration: none;
+	width:300px;
+	border:#559baa 1px solid;
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=3);
+	-moz-box-shadow: 0px 5px 10px #4e6f7e;
+	-webkit-box-shadow: 0px 5px 10px #4e6f7e;
+	box-shadow:0px 5px 10px #4e6f7e;
+	text-align:center;
+	
+	<!--#909090-->
 }
 
 li a.active {
-	background-color: #9ca0a0;
+	background-color: #559baa;
 	color: white;
 }
 

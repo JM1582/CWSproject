@@ -23,7 +23,7 @@
     background: -ms-linear-gradient(top, #6abac3, #23bccc);
 }
 .button_logout {
-    width: 100px;
+    width: 130px;
     height: 30px;
     font-size: 18px;
     font-family: Arial;
@@ -33,7 +33,7 @@
     background: -moz-linear-gradient(top, #6ebac2, #639297);
     background: linear-gradient(top, #6ebac2, #639297);
     background: -ms-linear-gradient(top, #6ebac2, #639297);
-    border: 1px solid 595758;
+    border: 1px solid #595758;
     box-shadow: 0 1px 2px #B8DCF1 inset, 0 -1px 0 #316F96 inset;
     color: #fff;
     text-shadow: 1px 1px 1px black;

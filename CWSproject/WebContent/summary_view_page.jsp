@@ -6,12 +6,12 @@
 <head >
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Patient Info</title>
-<link rel="stylesheet" type="text/css" href="nav_bar.css" charset="utf-8" >
-<link rel="stylesheet" type="text/css" href="div_formats.css" charset="utf-8" >
-<link rel="stylesheet" type="text/css" href="background.css" charset="utf-8" >
-<link rel="stylesheet" type="text/css" href="div_left_right.css" charset="utf-8" >
-<link rel="stylesheet" type="text/css" href="buttons.css" charset="utf-8" >
-<link rel="stylesheet" type="text/css" href="font_styles.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="css/nav_bar.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="css/div_formats.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="css/background.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="css/div_left_right.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="css/buttons.css" charset="utf-8" >
+<link rel="stylesheet" type="text/css" href="css/font_styles.css" charset="utf-8" >
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script type="text/javascript" src="collapse.js" ></script>
