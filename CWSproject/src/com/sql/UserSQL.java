@@ -147,7 +147,7 @@ public class UserSQL extends DataBase{
 		}
 	}
 	
-	public Map getAllUser() throws Exception{
+	public Map<Integer, User> getAllUser() throws Exception{
 		Map<Integer, User> userMap = new HashMap<Integer, User>();
 		st = conn.createStatement();
 		String strSQL = "select * from user";

@@ -1,7 +1,6 @@
 package com.servlet;
 
 import java.io.*;
-import java.sql.*;
 import java.util.*;
 
 import javax.servlet.*;
@@ -11,16 +10,17 @@ import com.model.*;
 import com.sql.*;
 
 /**
- * Servlet implementation class AccountManagementServlet
+ * Servlet implementation class PatientManagementServlet
  */
-public class AccountManagementServlet extends HttpServlet {
+public class PatientManagementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AccountManagementServlet() {
+    public PatientManagementServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -36,21 +36,20 @@ public class AccountManagementServlet extends HttpServlet {
 			return;
 		}
 		
-		Map<Integer, User> userMap = new HashMap<Integer, User>();
+		Map<Integer, PatientInfo> patientInfoMap = new HashMap<Integer, PatientInfo>();
 		
-		UserSQL userSQL = new UserSQL();
+		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
 		try {
-			userSQL.connect();
-			userMap = userSQL.getAllUser();
-			userSQL.disconnect();
+			patientInfoSQL.connect();
+			patientInfoMap = patientInfoSQL.getAllPatientInfo();
+			patientInfoSQL.disconnect();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		session.setAttribute("userMap", userMap);
+		session.setAttribute("patientInfoMap", patientInfoMap);
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("account_management_page.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("patient_management_page.jsp");
 		requestDispatcher.forward(request, response);
 	}
 

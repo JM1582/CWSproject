@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Account Management Page</title>
 <link rel="stylesheet" type="text/css" href="css/buttons.css" charset="utf-8" >
 </head>
 <body>
@@ -36,7 +36,7 @@ if(admin == null || admin.getType()!=UserType.ADMIN){ %>
 		<td></td>
 	</tr>
 <%Map<Integer, User> userMap = (Map<Integer, User>) session.getAttribute("userMap");
-Iterator userIt = userMap.keySet().iterator();
+Iterator<Integer> userIt = userMap.keySet().iterator();
 while (userIt.hasNext()){
 	int userId = (Integer) userIt.next();
 	User user = userMap.get(userId);

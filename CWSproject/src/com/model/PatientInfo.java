@@ -36,10 +36,10 @@ public class PatientInfo {
 		this.icon = newIcon;
 	}
 	//patientInfoId;
-	public int getPatientId(){
+	public int getId(){
 		return patientInfoId;
 	}
-	public void setPatientId(int newPaitentId){
+	public void setId(int newPaitentId){
 		this.patientInfoId = newPaitentId;
 	}	
 	//MRP
