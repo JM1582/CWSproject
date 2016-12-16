@@ -2,7 +2,7 @@ package com.servlet;
 
 import javax.servlet.http.HttpSession;
 
-import com.model.User;
+import com.model.*;
 
 public class UserVerification {
 	
@@ -11,6 +11,14 @@ public class UserVerification {
 		if(user!=null){
 			return true;
 		}
+		return false;
+	}
+
+	public boolean isAdmin(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user!=null && user.getType()==UserType.ADMIN){
+			return true;
+		} 
 		return false;
 	}
 	

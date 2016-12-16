@@ -41,11 +41,10 @@ public class LoginServlet extends HttpServlet{
 		}
 		if (user != null){
 			if(user.getType()==UserType.ADMIN){
-				PrintWriter out = response.getWriter();
-				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Admin page not ready.');");
-				out.println("location='login_page.jsp';");
-				out.println("</script>");
+				Admin admin = user.toAdmin();
+				session.setAttribute("user", admin);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("admin_page.jsp");
+				requestDispatcher.forward(request, response);
 				return;
 			} else if(user.getType()==UserType.CAREPROVIDER) {
 				CareProvider careProvider = user.toCareProvider();

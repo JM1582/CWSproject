@@ -147,6 +147,26 @@ public class UserSQL extends DataBase{
 		}
 	}
 	
+	public Map getAllUser() throws Exception{
+		Map<Integer, User> userMap = new HashMap<Integer, User>();
+		st = conn.createStatement();
+		String strSQL = "select * from user";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			while(rs.next()){
+				int userId = rs.getInt("userId");
+				User user = this.getUser(userId);
+				
+				userMap.put(userId, user);
+			}
+		}catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+			throw e;
+		}
+		return userMap;
+	}
+	
 	// need to be removed
 	public User getUserSQL(User user) throws Exception{
 		try {

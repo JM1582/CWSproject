@@ -17,8 +17,12 @@ if(admin == null || admin.getType()!=UserType.ADMIN){ %>
 <%return;
 } %>
 
+<div id=Content-Left3 align="right" >
+<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>
+</div>
+
 <div>
-<button type="button"  onclick="location.href='account_management_servlet">Account Management</button>
+<button type="button"  onclick="location.href='account_management_servlet'">Account Management</button>
 <button type="button"  onclick="location.href='patient_management_servlet'">Patient Management</button>
 <button type="button"  onclick="location.href='template_management_servlet'">Template Management</button>
 <button type="button"  onclick="location.href='document_management_servlet'">Document Management</button>

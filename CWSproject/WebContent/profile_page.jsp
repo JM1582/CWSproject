@@ -18,7 +18,8 @@
 <div class="hidden_above3"></div>
 <div class="hidden_above2">
 <div id=Content-Left3 align="right" >
-<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button></div>
+<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>
+</div>
 
 
 </div>
