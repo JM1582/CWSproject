@@ -97,6 +97,9 @@ if (document.getSign()){
 </ul>
 </div>
 
+
+<form name="documentForm" action="save_document_servlet">
+
 <!-- document body header -->
 <div class="body_header">
 <%if(document.getSign()){ %>
@@ -114,7 +117,6 @@ if (document.getSign()){
 
 <!-- document form -->
 <div id="document_body" class="body_div">
-<form name="documentForm" action="save_document_servlet">
 
 <div id="document" style="display:table;">
 <% TreeMap partMap = new TreeMap(formTemplate.getPartsMap());
@@ -269,9 +271,10 @@ if (partMap != null) {
 	}
 } %>
 </div><!-- document -->
-</form>
 </div>
 
+
+</form>
 
 </body>
 </html>

@@ -100,6 +100,9 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 </ul>
 </div>
 
+
+<form name="actionPlanForm" action="save_action_plan_servlet">
+
 <!-- document body header -->
 <div  class="body_header">
 <p><h2 class="form_instruction"> &nbsp; Action Plan</h2><p>
@@ -112,7 +115,6 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 
 <!-- action plan form -->
 <div id="action_plan_body" class="body_div">
-<form name="actionPlanForm" action="save_action_plan_servlet">
 
 <div id="action_plan">
 <table border="1">
@@ -221,9 +223,9 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 </table>
 </div>
 <input type="button" onclick="location.href='add_action_entry_servlet'" value="+">
-</form>
 </div>
 
+</form>
 
 
 </body>
