@@ -29,8 +29,8 @@ public class DataBase {
 		String strSQL = "create table IF NOT EXISTS user("//+Á¬½Óstring
 				+ "userId int not null auto_increment,"
 				+ "userName varchar(20) not null,"
-				+ "passWord varchar(20) not null,"
-				+ "type int not null,"
+				+ "passWord varchar(20),"
+				+ "type int,"
 				+ "title varchar(20),"
 				+ "firstName varchar(20),"
 				+ "lastName varchar(20),"
@@ -48,7 +48,7 @@ public class DataBase {
 		strSQL = "create table IF NOT EXISTS patientInfo("
 				+ "patientInfoId int not null auto_increment,"
 				+ "CWSNumber varchar(20) not null,"
-				+ "icon int not null,"
+				+ "icon int,"
 				//+ "MRP int,"
 				+ "formTemplateId int,"
 				+ "primary key (patientInfoId),"
@@ -108,15 +108,15 @@ public class DataBase {
 		}
 		strSQL = "create table IF NOT EXISTS document("
 				+ "documentId int not null auto_increment,"
-				+ "serialNumber int not null,"
-				+ "formTemplateId int not null,"
+				+ "serialNumber int,"
+				+ "formTemplateId int,"
 				+ "documentName varchar(100),"
-				+ "version int not null,"
+				+ "version int,"
 				+ "description varchar(100),"
-				+ "date varchar(20) not null,"
+				+ "date varchar(20),"
 				+ "authorId int not null,"
-				+ "CWSNumber varchar(20) not null,"
-				+ "sign int not null,"
+				+ "CWSNumber varchar(20),"
+				+ "sign int,"
 				+ "primary key (documentId) )";
 		try {
 			st.executeUpdate(strSQL);
@@ -126,7 +126,7 @@ public class DataBase {
 		}
 		strSQL = "create table IF NOT EXISTS domainValue("
 				+ "documentId int not null, "
-				+ "domainId varchar(20) not null, "
+				+ "domainId varchar(20), "
 				+ "value1 varchar(5), "
 				+ "value2 varchar(5))";
 		try {
@@ -137,10 +137,10 @@ public class DataBase {
 		}
 		strSQL = "create table IF NOT EXISTS actionPlan("
 				+ "actionPlanId int not null auto_increment, "
-				+ "CWSNumber varchar(20) not null, "
-				+ "authorId int not null, "
-				+ "date varchar(20) not null, "
-				+ "sign int not null, "
+				+ "CWSNumber varchar(20), "
+				+ "authorId int, "
+				+ "date varchar(20), "
+				+ "sign int, "
 				+ "primary key (actionPlanId) )";
 		try {
 			st.executeUpdate(strSQL);
@@ -151,7 +151,7 @@ public class DataBase {
 		}
 		strSQL = "create table IF NOT EXISTS actionEntry("
 				+ "actionEntryId int not null auto_increment,"
-				+ "domainId varchar(20) not null,"
+				+ "domainId varchar(20),"
 				+ "cScore varchar(5),"
 				+ "fScore varchar(5),"
 				+ "primary key (actionEntryId) )";
@@ -163,7 +163,7 @@ public class DataBase {
 		}
 		strSQL = "create table IF NOT EXISTS action("
 				+ "actionId int not null auto_increment,"
-				+ "intervention varchar(20) not null,"
+				+ "intervention varchar(20),"
 				+ "careProviderId int,"
 				+ "comment varchar(40),"
 				+ "primary key (actionId) )";
@@ -176,7 +176,7 @@ public class DataBase {
 		}
 		strSQL = "create table IF NOT EXISTS partScalar("
 				+ "partId varchar(20) not null,"
-				+ "scalarName varchar(40) not null,"
+				+ "scalarName varchar(40),"
 				+ "scalarValue1 varchar(5),"
 				+ "scalarValue2 varchar(5) )";
 		try {
@@ -188,7 +188,7 @@ public class DataBase {
 		}
 		strSQL = "create table IF NOT EXISTS domainValue("
 				+ "documentId int not null,"
-				+ "domainId varchar(20) not null,"
+				+ "domainId varchar(20),"
 				+ "domainValue0 varchar(5),"
 				+ "domainValue1 varchar(5) )";
 		try {
