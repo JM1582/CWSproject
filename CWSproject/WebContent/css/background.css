@@ -59,7 +59,7 @@
 }
 
 .banner2{
-	height:60px;
+	height:10%;
     width:100%;
 	padding:0px;
 	margin:0px;
@@ -74,12 +74,12 @@
 	margin:0;
 	margin-bottom:20px;
 	width:100%;
-    height:100px;
+    height:10%;
     background:#649195;
     padding:0px;
     margin:0px;
     position:fixed;	
-    top:60px; 
+    top:10%; 
 }
 
 .summary_banner{
@@ -96,17 +96,17 @@
 	float:left;
 	overflow-y: scroll;
     height: 80%;
-	width: 334px;
-	top: 160px;
+	width: 20%;
+	top: 20%;
 } 
 
 .body_header{
 	position:fixed;
 	background:#e5e8d4;
-	width:100%;
-	height: 100px;
-	left:334px;
-	top: 160px;
+	width:80%;
+	height: 10%;
+	left: 20%;
+	top: 20%;
 	box-shadow:2px 5px 10px #6f8788;
 } 
 
@@ -114,8 +114,8 @@
 	padding:0;
 	margin:0;
 	/*width:100%;*/
-    margin-top: 260px;
-    margin-left: 335px;
+    margin-top: 30%;
+    margin-left: 20%;
     background: white;
     /*background:#f9faf5;*/
 }
