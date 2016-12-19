@@ -34,10 +34,13 @@
 				style="width:120px;  font:Brandon; font-size:18px; color:#314a51; 
 						background:#99d3e1 "/>		
 						<br><br><br><br>	 
-		</form> 	
+		</form>
+		<button style="font:Brandon; font-size:18px; color:#314a51;background:#99d3e1;"
+		type="button"  onclick="location.href='forget_password_page.jsp'" >Forget Password</button>
 
 		<!--Footer --->
 </div>
+
 
 <!-- 
 <div style="position:absolute; bottom:0; position:fixed;"><p style: color = blue; align="right";>On this webpage, image's copyright is TBD</p></body></div>-->
