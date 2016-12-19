@@ -59,7 +59,7 @@
 }
 
 .banner2{
-	height:10%;
+	height:100px;
     width:100%;
 	padding:0px;
 	margin:0px;
@@ -74,12 +74,12 @@
 	margin:0;
 	margin-bottom:20px;
 	width:100%;
-    height:10%;
+    height:100px;
     background:#649195;
     padding:0px;
     margin:0px;
     position:fixed;	
-    top:10%; 
+    top:100px; 
 }
 
 .summary_banner{
@@ -94,19 +94,19 @@
 .nav_bar{
 	position:fixed;
 	float:left;
-	overflow-y: scroll;
-    height: 80%;
+	overflow-y: auto;
 	width: 20%;
-	top: 20%;
+	top: 200px;
+	bottom: 0;
 } 
 
 .body_header{
 	position:fixed;
 	background:#e5e8d4;
 	width:80%;
-	height: 10%;
+	height: 100px;
 	left: 20%;
-	top: 20%;
+	top: 200px;
 	box-shadow:2px 5px 10px #6f8788;
 } 
 
@@ -114,7 +114,7 @@
 	padding:0;
 	margin:0;
 	/*width:100%;*/
-    margin-top: 30%;
+    margin-top: 300px;
     margin-left: 20%;
     background: white;
     /*background:#f9faf5;*/
