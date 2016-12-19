@@ -94,7 +94,7 @@ public class User {
 		careProvider.setLastName(this.lastName);
 		careProvider.setFacility(this.facility);
 		careProvider.setEmail(this.email);
-		careProvider.setPatientInfoMap(new HashMap());
+		careProvider.setPatientInfoMap(new HashMap<String, PatientInfo>());
 		//!!!!!!!!!!!!
 		return careProvider;
 	}

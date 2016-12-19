@@ -1,7 +1,6 @@
 package com.servlet;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.*;
@@ -40,7 +39,7 @@ public class SaveActionPlanServlet extends HttpServlet {
 		CareProvider careProvider = (CareProvider) session.getAttribute("user");
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 		FormTemplate formTemplate = patientInfo.getFormTemplate();
-		Map allDomainMap = formTemplate.getAllDomainMap();
+		Map<String, Domain> allDomainMap = formTemplate.getAllDomainMap();
 		
 		ActionPlan actionPlan = (ActionPlan) session.getAttribute("actionPlan");
 		
@@ -59,9 +58,9 @@ public class SaveActionPlanServlet extends HttpServlet {
 			out.println("</script>");
 			return;
 		} else{
-			Map actionEntryMap = actionPlan.getActionEntryMap();
+			Map<Integer, ActionEntry> actionEntryMap = actionPlan.getActionEntryMap();
 			if(actionEntryMap!=null){
-				Iterator actionEntryIt = actionEntryMap.keySet().iterator();
+				Iterator<Integer> actionEntryIt = actionEntryMap.keySet().iterator();
 				while(actionEntryIt.hasNext()){
 					int actionEntryId = (Integer) actionEntryIt.next(); 
 					ActionEntry actionEntry = (ActionEntry) actionEntryMap.get(actionEntryId);
@@ -69,9 +68,9 @@ public class SaveActionPlanServlet extends HttpServlet {
 					actionEntry.setDomain((Domain) allDomainMap.get(domainId));
 					actionEntry.setCscore(request.getParameter("cScore_"+actionEntryId));
 					actionEntry.setFscore(request.getParameter("fScore_"+actionEntryId));
-					Map actionMap = actionEntry.getActionMap();
+					Map<Integer, Action> actionMap = actionEntry.getActionMap();
 					if(actionMap!=null){
-						Iterator actionIt = actionMap.keySet().iterator();
+						Iterator<Integer> actionIt = actionMap.keySet().iterator();
 						while(actionIt.hasNext()){
 							int actionId = (Integer) actionIt.next();
 							Action action = (Action) actionMap.get(actionId);

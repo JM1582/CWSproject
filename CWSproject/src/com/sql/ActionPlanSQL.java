@@ -283,7 +283,7 @@ public class ActionPlanSQL extends DataBase {
 		}
 	}
 	
-	public Map getActionPlanByCWSNumber(String CWSNumber) throws Exception{
+	public Map<Integer, ActionPlan> getActionPlanByCWSNumber(String CWSNumber) throws Exception{
 		Map<Integer, ActionPlan> actionPlanMap = new HashMap<Integer, ActionPlan>();
 		st = conn.createStatement();
 		String strSQL = "select * from actionPlan where CWSNumber='"+CWSNumber+"'";

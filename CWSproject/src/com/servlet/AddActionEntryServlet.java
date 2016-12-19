@@ -1,27 +1,12 @@
 package com.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
-import com.model.Action;
-import com.model.ActionEntry;
-import com.model.ActionPlan;
-import com.model.CareProvider;
-import com.model.Domain;
-import com.model.FormTemplate;
-import com.model.PatientInfo;
-import com.sql.DocumentSQL;
-import com.sql.FakeSQL;
+import com.model.*;
 
 /**
  * Servlet implementation class AddDomainServlet
@@ -53,7 +38,7 @@ public class AddActionEntryServlet extends HttpServlet {
 		CareProvider careProvider = (CareProvider) session.getAttribute("user");
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 		FormTemplate formTemplate = patientInfo.getFormTemplate();
-		Map allDomainMap = formTemplate.getAllDomainMap();
+		Map<String, Domain> allDomainMap = formTemplate.getAllDomainMap();
 		
 		ActionPlan actionPlan = (ActionPlan) session.getAttribute("actionPlan");
 		
@@ -79,19 +64,12 @@ public class AddActionEntryServlet extends HttpServlet {
 			}
 			ActionEntry actionEntry = new ActionEntry(actionEntryId);
 			Map<Integer, Action> actionMap = actionEntry.getActionMap();
-			Map<String, CareProvider> careProviderMap = patientInfo.getCareProviderMap();
-			if(careProviderMap!=null){
-				Iterator<String> careProviderIt = careProviderMap.keySet().iterator();
-				while(careProviderIt.hasNext()){
-					String userName = (String) careProviderIt.next();
-					int actionId=-1;
-					while(actionMap.containsKey(actionId)){
-						actionId+=-1;
-					}
-					Action action = new Action(actionId);
-					actionEntry.addAction(action);
-				}
+			int actionId=-1;
+			while(actionMap.containsKey(actionId)){
+				actionId+=-1;
 			}
+			Action action = new Action(actionId);
+			actionEntry.addAction(action);
 			actionEntry.setActionMap(actionMap);
 			actionPlan.addActionEntry(actionEntry);
 			/* add action entry would not save action plan

@@ -6,7 +6,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import com.model.*;
-import com.sql.DocumentSQL;
 
 /**
  * Servlet implementation class CreateDocumentServlet

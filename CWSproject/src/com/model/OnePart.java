@@ -78,7 +78,7 @@ public class OnePart {
 		}
 		return false;
 	}
-	public boolean hasDomainValue(Map domainValueMap){
+	public boolean hasDomainValue(Map<String, String[]> domainValueMap){
 		Iterator<String> subSetIt = this.subSetMap.keySet().iterator();
 		while(subSetIt.hasNext()){
 			String subSetId = (String) subSetIt.next();

@@ -2,8 +2,6 @@ package com.sql;
 
 import java.sql.*;
 import java.util.*;
-import java.util.concurrent.*;
-
 import com.model.*;
 
 public class DocumentSQL extends DataBase{
@@ -208,7 +206,7 @@ public class DocumentSQL extends DataBase{
 		return document;
 	}
 
-	public Map getDocumentByCWSNumber(String CWSNumber) throws Exception{
+	public Map<Integer, Document> getDocumentByCWSNumber(String CWSNumber) throws Exception{
 		Map<Integer, Document> documentMap = new HashMap<Integer, Document>();
 		st = conn.createStatement();
 		String strSQL = "select * from document where CWSNumber='"+CWSNumber+"'";

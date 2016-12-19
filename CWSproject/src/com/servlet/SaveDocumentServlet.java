@@ -1,7 +1,6 @@
 package com.servlet;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.*;
@@ -51,19 +50,19 @@ public class SaveDocumentServlet extends HttpServlet {
 				document.setDateToday();
 				document.setAuthor(careProvider);
 				document.setCWSNumber(patientInfo.getCWSNumber());
-				Map partMap = document.getFormTemplate().getPartsMap();
-				Iterator partIt = partMap.keySet().iterator();
+				Map<String, OnePart> partMap = document.getFormTemplate().getPartsMap();
+				Iterator<String> partIt = partMap.keySet().iterator();
 				while(partIt.hasNext()){
 					String partId = (String)partIt.next();
 					OnePart part = (OnePart)partMap.get(partId);
 					String scalarValue[][] = part.getScalarValue();
-					Map subSetMap = part.getSubSetMap();
-					Iterator subSetIt = subSetMap.keySet().iterator();
+					Map<String, SubSet> subSetMap = part.getSubSetMap();
+					Iterator<String> subSetIt = subSetMap.keySet().iterator();
 					while(subSetIt.hasNext()){
 						String subSetId = (String)subSetIt.next();
 						SubSet subSet = (SubSet)subSetMap.get(subSetId);
-						Map domainMap = subSet.getDomainMap();
-						Iterator domainIt = domainMap.keySet().iterator();
+						Map<String, Domain> domainMap = subSet.getDomainMap();
+						Iterator<String> domainIt = domainMap.keySet().iterator();
 						while(domainIt.hasNext()){
 							String domainId = (String)domainIt.next();
 							String[] domainValue = new String[scalarValue.length];

@@ -1,5 +1,4 @@
 package com.model;
-import java.util.*;
 
 public class Part2 extends OnePart{
 	

@@ -48,13 +48,13 @@ public class FormTemplate {
 		while(partIt.hasNext()){
 			String partId = partIt.next();
 			OnePart part = partsMap.get(partId);
-			Map subSetMap = part.getSubSetMap();
-			Iterator subSetIt = subSetMap.keySet().iterator();
+			Map<String, SubSet> subSetMap = part.getSubSetMap();
+			Iterator<String> subSetIt = subSetMap.keySet().iterator();
 			while(subSetIt.hasNext()){
 				String subSetId = (String) subSetIt.next();
 				SubSet subSet = (SubSet) subSetMap.get(subSetId);
-				Map domainMap = subSet.getDomainMap();
-				Iterator domainIt = domainMap.keySet().iterator();
+				Map<String, Domain> domainMap = subSet.getDomainMap();
+				Iterator<String> domainIt = domainMap.keySet().iterator();
 				while(domainIt.hasNext()){
 					String domainId = (String) domainIt.next();
 					Domain domain = (Domain) domainMap.get(domainId);

@@ -1,8 +1,6 @@
 package com.servlet;
 
 import java.io.*;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.*;
 
 import javax.servlet.*;

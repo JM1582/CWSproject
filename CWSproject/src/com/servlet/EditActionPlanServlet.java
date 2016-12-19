@@ -30,11 +30,11 @@ public class EditActionPlanServlet extends HttpServlet {
 		String actionPlanIdStr = (String) request.getParameter("actionPlanId");
 		int actionPlanId = Integer.valueOf(actionPlanIdStr);
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
-		Map actionPlanMap = patientInfo.getActionPlanMap();
+		Map<Integer, ActionPlan> actionPlanMap = patientInfo.getActionPlanMap();
 		ActionPlan actionPlan = (ActionPlan) actionPlanMap.get(actionPlanId);
 		
 		FormTemplate formTemplate = patientInfo.getFormTemplate();
-		Map allDomainMap = formTemplate.getAllDomainMap();
+		Map<String, Domain> allDomainMap = formTemplate.getAllDomainMap();
 		
 		session.setAttribute("actionPlan", actionPlan);
 		session.setAttribute("allDomainMap", allDomainMap);

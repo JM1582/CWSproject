@@ -1,8 +1,6 @@
 package com.servlet;
 
 import java.io.*;
-import java.sql.SQLException;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -10,6 +8,11 @@ import com.model.*;
 import com.sql.*;
 
 public class SearchPatientServlet extends HttpServlet{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String CWSNumber = request.getParameter("CWSNumber");
 		

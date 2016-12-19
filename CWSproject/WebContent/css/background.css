@@ -94,7 +94,9 @@
 .nav_bar{
 	position:fixed;
 	float:left;
-	width: 270px;
+	overflow-y: scroll;
+    height: 80%;
+	width: 334px;
 	top: 160px;
 } 
 

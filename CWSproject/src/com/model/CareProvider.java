@@ -1,8 +1,6 @@
 package com.model;
 import java.util.*;
 
-import com.sql.*;
-
 
 public class CareProvider extends User{
 	private Map<String, PatientInfo> patientInfoMap;

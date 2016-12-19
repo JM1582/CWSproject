@@ -2,7 +2,6 @@ package com.sql;
 
 import java.sql.*;
 
-import com.model.*;
 
 public class DataBase {
 	Connection conn = null;

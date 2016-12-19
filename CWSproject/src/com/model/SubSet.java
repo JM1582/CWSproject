@@ -5,12 +5,12 @@ import java.util.*;
 public class SubSet {
 	private String subSetId;
 	private String subSetName;
-	private Map domainMap;
+	private Map<String, Domain> domainMap;
 	
 	public SubSet(String subSetId, String subSetName){
 		this.subSetId = subSetId;
 		this.subSetName = subSetName;
-		this.domainMap = new HashMap();
+		this.domainMap = new HashMap<String, Domain>();
 	}
 	//sebSetId
 	public String getId(){
@@ -28,10 +28,10 @@ public class SubSet {
 		this.subSetName = newSubSetName;
 	}
 	
-	public Map getDomainMap(){
+	public Map<String, Domain> getDomainMap(){
 		return this.domainMap;
 	}
-	public void setDomainMap(Map domainMap){
+	public void setDomainMap(Map<String, Domain> domainMap){
 		this.domainMap = domainMap;
 	}
 	public void addDomain(Domain domain){
@@ -47,7 +47,7 @@ public class SubSet {
 		}
 		return false;
 	}
-	public boolean hasDomainValue(Map domainValueMap){
+	public boolean hasDomainValue(Map<String, String[]> domainValueMap){
 		Map<String, Domain> domainMap = this.domainMap;
 		Iterator<String> domainIt = domainMap.keySet().iterator();
 		while(domainIt.hasNext()){

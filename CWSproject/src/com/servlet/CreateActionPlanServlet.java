@@ -1,9 +1,7 @@
 package com.servlet;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -45,7 +43,7 @@ public class CreateActionPlanServlet extends HttpServlet {
 		session.setAttribute("actionPlan", actionPlan);
 		
 		FormTemplate formTemplate = patientInfo.getFormTemplate();
-		Map allDomainMap = formTemplate.getAllDomainMap();
+		Map<String, Domain> allDomainMap = formTemplate.getAllDomainMap();
 		session.setAttribute("allDomainMap", allDomainMap);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("action_plan_page.jsp");
