@@ -30,16 +30,11 @@ if(careProvider == null){ %>
 PatientInfo patientInfo = (PatientInfo)session.getAttribute("patientInfo");
 if (patientInfo == null) {
 }
-Map documentMap = patientInfo.getDocumentMap();
+Map<Integer, Document> documentMap = patientInfo.getDocumentMap();
 Map actionPlanMap = patientInfo.getActionPlanMap();
-Map summaryMap = (Map)session.getAttribute("summaryMap");
+Map<Integer, Document> summaryMap = (Map<Integer, Document>)session.getAttribute("summaryMap");
 FormTemplate formTemplate = patientInfo.getFormTemplate(); %>
 
-<!-- banner 
-<div class = "green1">
-<h1 ><font face = Brandon size = "11" color = "white" ><p align="center">Collaborative Workflow Solutions</p></font></h1>
-</div>
-<!-- banner end -->
 
 <!-- banner -->
 <div id="banner" align="right" class="banner2" >
@@ -48,15 +43,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate(); %>
 	<button class="button_logout" type="button"  onclick="location.href='logout_servlet'">Logout</button>&emsp;&emsp;
 </div>
 
- <!-- 
- <div class="header">
- <span>
- <img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
- </span><span class="engrave60">
- <font >&nbsp;<strong><%=patientInfo.getCWSNumber() %></strong></font>
- </span>
- </div> -->
- 
+
 <!-- patientInfo: cws number and icon -->
 <div id="patient_info" class="header">
 	<p class="engrave60">&nbsp;<img src="cws_icon<%=(Integer)patientInfo.getIcon() %>.png" width="80" height="80">
@@ -117,7 +104,7 @@ FormTemplate formTemplate = patientInfo.getFormTemplate(); %>
 <div id="summary_body" class="body_div">
 <%if (summaryMap.size()==0){ %>
 <p style="font-family:Arial; font-size:30px"> &emsp; Patient record empty, please to go "Provider Input" to create a new document!</p>
-<%	} else {
+<%} else {
 TreeMap partMap = new TreeMap(formTemplate.getPartsMap());
 if(partMap != null){
 	Iterator partIt = partMap.keySet().iterator();
@@ -125,38 +112,36 @@ if(partMap != null){
 		String partId = (String) partIt.next();
 		OnePart part = (OnePart) partMap.get(partId);
 		if(part != null){
-			int scalarValueNum = part.getScalarValue().length;
-			%>
-<table  width="100%" border="1px" cellspacing="0px"  >
+			if(part.hasDomainValueWithSummaryMap(summaryMap)){
+				int scalarValueAmount = part.getScalarValue().length; %>
+<table id="part_<%=part.getId() %>" width="100%" border="1px" cellspacing="0px"  >
 	<!-- parts -->
-	<%if(part.hasDomainValueWithSummaryMap(summaryMap)){ %>
-	<tr><td colspan="<%=scalarValueNum+2 %>" ><h3><font class="input_part"><%=part.getName()%></font></h3></td></tr>
-	<%} %>
-<%			TreeMap subSetMap = new TreeMap(part.getSubSetMap());
-			if(subSetMap != null){
-				Iterator subSetIt = subSetMap.keySet().iterator();
-				while(subSetIt.hasNext()){
-					String subSetId = (String) subSetIt.next();
-					SubSet subSet = (SubSet) subSetMap.get(subSetId);			
-					if(subSet != null){ %>
+	<tr><td colspan="<%=scalarValueAmount+2 %>" ><h3><font class="input_part"><%=part.getName()%></font></h3></td></tr>
+<%				TreeMap subSetMap = new TreeMap(part.getSubSetMap());
+				if(subSetMap != null){
+					Iterator subSetIt = subSetMap.keySet().iterator();
+					while(subSetIt.hasNext()){
+						String subSetId = (String) subSetIt.next();
+						SubSet subSet = (SubSet) subSetMap.get(subSetId);			
+						if(subSet != null){
+							if(subSet.hasDomainValueWithSummaryMap(summaryMap)){ %>
+						
 	<!-- subsets -->
-	<%if(subSet.hasDomainValueWithSummaryMap(summaryMap)){ %>
-	<tr><td colspan="<%=scalarValueNum+2 %>" ><h4><font class="input_subpart">&emsp;<%=subSet.getName()%></font></h4></td></tr>
-	<%} %>
+	<tr><td colspan="<%=scalarValueAmount+2 %>" ><h4><font class="input_subpart">&emsp;<%=subSet.getName()%></font></h4></td></tr>
 <%						TreeMap domainMap = new TreeMap(subSet.getDomainMap());
 						if(domainMap != null){
 							Iterator domainIt = domainMap.keySet().iterator();
 							while(domainIt.hasNext()){
 								String domainId = (String) domainIt.next();
 								Domain domain = (Domain) domainMap.get(domainId);
-								if(domain != null){ %>
+								if(domain != null){
+									if(domain.hasDomainValueWithSummaryMap(summaryMap)){ %>
 	<!-- domain -->
-	<%if(domain.hasDomainValueWithSummaryMap(summaryMap)){ %>
-	<tr><td colspan="<%=scalarValueNum+2 %>"><font class="input_domain"><strong>&emsp;&emsp;<%=domain.getName()%></strong></font></td></tr>
+	<tr><td colspan="<%=scalarValueAmount+2 %>"><font class="input_domain"><strong>&emsp;&emsp;<%=domain.getName()%></strong></font></td></tr>
 	<%Iterator summaryIt = summaryMap.keySet().iterator(); 
 	while(summaryIt.hasNext()){
-		String userName = (String) summaryIt.next();
-		Document document = (Document) summaryMap.get(userName);
+		int documentId = (Integer) summaryIt.next();
+		Document document = (Document) summaryMap.get(documentId);
 		Map domainValueMap = document.getDomainValueMap();
 		if(domainValueMap != null){
 			String domainValue[] = (String[]) domainValueMap.get(domainId);
@@ -166,7 +151,7 @@ if(partMap != null){
 	<tr>
 		<td height="50px" width="20%" align="center" class="summaryEntry"><%=document.getAuthor().getTitle() %></td>
 		<td height="50px" align="center" class="summaryEntry"><%=document.getAuthor().getFirstName() %> <%=document.getAuthor().getLastName() %></td>
-		<%for(int i=0;i<domainValue.length;i++){
+		<%for(int i=0;i<scalarValueAmount;i++){
 			if(domainValue[i]!=null){ %>
 		<td height="50px" width="20%" align="center" class="summaryEntry"<%if(domainValue[i].equals("4")||domainValue[i].equals("-4")){ %>bgcolor=#eb6878;<%} %>><%=domainValue[i] %></td>
 		<%	}else{ %>
@@ -177,15 +162,17 @@ if(partMap != null){
 <%			}
 		}
 	} %>
-	<%} %>
-<%								}
+<%										}
+									}
+								}
 							}
 						}
 					}
 				}
 			} %>
 </table>		
-<%		}
+<%			}
+		}
 	}
 }
 } %>

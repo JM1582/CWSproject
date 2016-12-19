@@ -45,7 +45,7 @@ public class Domain {
 		this.comment = newComment;
 	}
 	
-	public boolean hasDomainValue(Map domainValueMap){
+	public boolean hasDomainValue(Map<String, String[]> domainValueMap){
 		if(domainValueMap.containsKey(this.domainId)){
 			String domainValue[] = (String[]) domainValueMap.get(this.domainId);
 			for(int i=0;i<domainValue.length;i++){
@@ -57,22 +57,13 @@ public class Domain {
 		return false;
 	}
 	
-	public boolean hasDomainValueWithSummaryMap(Map<String, Document> summaryMap){
-		Iterator<String> summaryIt = summaryMap.keySet().iterator();
+	public boolean hasDomainValueWithSummaryMap(Map<Integer, Document> summaryMap){
+		Iterator<Integer> summaryIt = summaryMap.keySet().iterator();
 		while(summaryIt.hasNext()){
-			String userName = (String) summaryIt.next();
-			Document document = (Document) summaryMap.get(userName);
-			String domainValue[] = (String[]) document.getDomainValueMap().get(domainId);
-			if(domainValue!=null){
-				boolean atLeastOne = false;
-				for(int i=0;i<domainValue.length;i++){
-					if(domainValue[i]!=null){
-						atLeastOne = true;
-					}
-				}
-				if(atLeastOne){
-					return true;
-				}
+			int documentId = (Integer) summaryIt.next();
+			Document document = (Document) summaryMap.get(documentId);
+			if(this.hasDomainValue(document.getDomainValueMap())){
+				return true;
 			}
 		}
 		return false;

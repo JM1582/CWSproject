@@ -12,6 +12,21 @@ import com.model.*;
 import com.sql.*;
 
 public class ViewPatientSummaryServlet extends HttpServlet{
+	private static final long serialVersionUID = 1L;
+	
+	public Map<Integer, Document> getSummaryMap(Map<Integer, Document> documentMap){
+		Map<Integer, Document> summaryMap = new HashMap<Integer, Document>();
+		Iterator<Integer> documentIt = documentMap.keySet().iterator();
+		while(documentIt.hasNext()){
+			int documentId = (Integer) documentIt.next();
+			Document document = documentMap.get(documentId);
+			if(document.getSign()){
+				summaryMap.put(document.getId(), document);
+			}
+		}
+		return summaryMap;
+	}
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String CWSNumber = request.getParameter("CWSNumber");
 
@@ -45,26 +60,8 @@ public class ViewPatientSummaryServlet extends HttpServlet{
 		
 		if (patientInfo != null) {
 			session.setAttribute("patientInfo", patientInfo);
-			Map summaryMap = new HashMap();
-			Map documentMap = patientInfo.getDocumentMap();
-			Iterator it = documentMap.keySet().iterator();
-			while(it.hasNext()){
-				int documentId = (Integer) it.next();
-				Document documentFromPatientInfo = (Document) documentMap.get(documentId);
-				String userName = documentFromPatientInfo.getAuthor().getUserName();
-				Document documentFromSummary = (Document) summaryMap.get(userName);
-				if(documentFromSummary == null){
-					summaryMap.put(userName, documentFromPatientInfo);
-				} else {
-					try {
-						if(documentFromPatientInfo.laterThan(documentFromSummary)){
-							summaryMap.put(userName, documentFromPatientInfo);
-						}
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-				}
-			}
+			Map<Integer, Document> documentMap = patientInfo.getDocumentMap();
+			Map<Integer, Document> summaryMap = this.getSummaryMap(documentMap);
 			session.setAttribute("summaryMap", summaryMap);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("summary_view_page.jsp");
 			requestDispatcher.forward(request, response);

@@ -89,12 +89,12 @@ public class OnePart {
 		}
 		return false;
 	}
-	public boolean hasDomainValueWithSummaryMap(Map summaryMap){
-		Iterator<String> subSetIt = this.subSetMap.keySet().iterator();
-		while(subSetIt.hasNext()){
-			String subSetId = (String) subSetIt.next();
-			SubSet subSet = (SubSet) this.subSetMap.get(subSetId);
-			if(subSet.hasDomainValueWithSummaryMap(summaryMap)){
+	public boolean hasDomainValueWithSummaryMap(Map<Integer, Document> summaryMap){
+		Iterator<Integer> summaryIt = summaryMap.keySet().iterator();
+		if(summaryIt.hasNext()){
+			int documentId = (Integer) summaryIt.next();
+			Document document = (Document) summaryMap.get(documentId);
+			if(this.hasDomainValue(document.getDomainValueMap())){
 				return true;
 			}
 		}
