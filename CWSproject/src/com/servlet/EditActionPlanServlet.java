@@ -36,11 +36,19 @@ public class EditActionPlanServlet extends HttpServlet {
 		FormTemplate formTemplate = patientInfo.getFormTemplate();
 		Map<String, Domain> allDomainMap = formTemplate.getAllDomainMap();
 		
-		session.setAttribute("actionPlan", actionPlan);
 		session.setAttribute("allDomainMap", allDomainMap);
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("action_plan_page.jsp");
-		requestDispatcher.forward(request, response);
+		if ( actionPlan != null) {
+			session.setAttribute("actionPlan", actionPlan);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("action_plan_page.jsp");
+			requestDispatcher.forward(request, response);
+		} else {
+			PrintWriter out = response.getWriter();
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Action plan do not exist.');");
+			out.println("location='action_plan_page.jsp';");
+			out.println("</script>");
+		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -87,6 +87,7 @@ public class SaveDocumentServlet extends HttpServlet {
 				try {
 					documentSQL.connect();
 					documentSQL.setDocument(document);
+					documentSQL.disconnect();
 				} catch (Exception e) {
 					e.printStackTrace();
 					PrintWriter out = response.getWriter();
