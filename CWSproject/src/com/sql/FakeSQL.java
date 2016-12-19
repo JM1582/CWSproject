@@ -71,13 +71,13 @@ public class FakeSQL {
 		
 		Action action = new Action(0);
 		action.setCareProvider(this.getUser("Tom").toCareProvider());
-		action.setIntervention("Measurement");
+		action.setIntervention(Intervention.MEASUREMENT);
 		actionEntry.addAction(action);
 		
 		patientInfo.addCareProvider(this.getUser("John").toCareProvider());
 		action = new Action(1);
 		action.setCareProvider(this.getUser("John").toCareProvider());
-		action.setIntervention("Test");
+		action.setIntervention(Intervention.TEST);
 		actionEntry.addAction(action);
 		
 		actionPlan.addActionEntry(actionEntry);

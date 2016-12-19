@@ -162,7 +162,7 @@ public class DataBase {
 		}
 		strSQL = "create table IF NOT EXISTS action("
 				+ "actionId int not null auto_increment,"
-				+ "intervention varchar(20),"
+				+ "intervention int,"
 				+ "careProviderId int,"
 				+ "comment varchar(40),"
 				+ "primary key (actionId) )";

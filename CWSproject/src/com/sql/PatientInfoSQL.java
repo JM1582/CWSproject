@@ -263,7 +263,7 @@ public class PatientInfoSQL extends DataBase{
 		actionEntry.setFscore("1");
 		Action action = new Action(0);
 		action.setCareProvider(userSQL.getUserByUserName("Tom").toCareProvider());
-		action.setIntervention("Measurement");
+		action.setIntervention(Intervention.MEASUREMENT);
 		actionEntry.addAction(action);
 
 		careProvider = userSQL.getUserByUserName("Tom").toCareProvider();
@@ -271,7 +271,7 @@ public class PatientInfoSQL extends DataBase{
 		
 		action = new Action(1);
 		action.setCareProvider(careProvider);
-		action.setIntervention("Test");
+		action.setIntervention(Intervention.TEST);
 		actionEntry.addAction(action);
 		
 		actionPlan.addActionEntry(actionEntry);

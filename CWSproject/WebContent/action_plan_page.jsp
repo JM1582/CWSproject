@@ -182,18 +182,11 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		firstLine = false;
 	%>
 		<td><select style="height:50px;"name="intervention_<%=actionEntry.getId()%>_<%=action.getId()%>">
-			<!-- need to add intervention list -->
-			<%
-				if(action.getIntervention()==null){
-			%>
-			<option selected></option>
-			<%
-				} else {
-			%>
-			<option value="<%=action.getIntervention()%>"><%=action.getIntervention()%></option>
-			<%
-				}
-			%>
+			<%for(int i=0;i<Intervention.values().length;i++){
+				String interventionStr = Intervention.values()[i].toString(); %>
+				<option value="<%=Intervention.values()[i].ordinal() %>" 
+				<%if(action.getIntervention()==Intervention.values()[i]){ %>selected<%} %>><%=interventionStr %></option>
+			<%} %>
 		</select></td>
 		<%
 			Map careProviderMap = patientInfo.getCareProviderMap();

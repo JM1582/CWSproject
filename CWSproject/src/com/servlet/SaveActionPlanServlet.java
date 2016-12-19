@@ -74,7 +74,8 @@ public class SaveActionPlanServlet extends HttpServlet {
 						while(actionIt.hasNext()){
 							int actionId = (Integer) actionIt.next();
 							Action action = (Action) actionMap.get(actionId);
-							action.setIntervention(request.getParameter("intervention_"+actionEntry.getId()+"_"+action.getId()));
+							Intervention intervention = Intervention.values()[Integer.valueOf(request.getParameter("intervention_"+actionEntry.getId()+"_"+action.getId()))];
+							action.setIntervention(intervention);
 							String userName = request.getParameter("responsibility_"+actionEntry.getId()+"_"+action.getId());
 							
 							if(userName!=null && !userName.equals("")){

@@ -106,7 +106,7 @@ public class MainMySQL {
 		Action action = new Action(0);
 		careProvider = userSQL.getUserByUserName("Tom").toCareProvider();
 		action.setCareProvider(careProvider);
-		action.setIntervention("Measurement");
+		action.setIntervention(Intervention.MEASUREMENT);
 		action = actionPlanSQL.setAction(action);
 		action = actionPlanSQL.setAction(action);
 		
@@ -115,7 +115,7 @@ public class MainMySQL {
 		action = new Action(0);
 		careProvider = userSQL.getUserByUserName("John").toCareProvider();
 		action.setCareProvider(careProvider);
-		action.setIntervention("Test");
+		action.setIntervention(Intervention.TEST);
 		action = actionPlanSQL.setAction(action);
 		action = actionPlanSQL.setAction(action);
 		

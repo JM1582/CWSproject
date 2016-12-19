@@ -2,14 +2,13 @@ package com.model;
 
 public class Action {
 	private int actionId;
-	private String intervention;
+	private Intervention intervention;
 	private CareProvider careProvider;
 	private String comment;
 
 	public Action(int actionId){
 	//----------------------------------???创建时？constructor，必须属性？
 		this.actionId = actionId;
-		this.intervention = new String();
 		this.comment = new String();
 	}
 	
@@ -22,11 +21,11 @@ public class Action {
 		this.actionId = actionId;
 	}
 	//intervention
-	public String getIntervention(){
+	public Intervention getIntervention(){
 		return this.intervention;
 	}
-	public void setIntervention(String newIntervention){
-		this.intervention = newIntervention;
+	public void setIntervention(Intervention intervention){
+		this.intervention = intervention;
 	}
 	//careProvider
 	public CareProvider getCareProvider(){

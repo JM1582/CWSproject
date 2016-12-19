@@ -99,7 +99,7 @@ public class ActionPlanSQL extends DataBase {
 		}
 		String strSQL = "update action set "
 					+ "actionId="+action.getId()+", "
-					+ "intervention='"+action.getIntervention()+"', "
+					+ "intervention="+action.getIntervention().ordinal()+", "
 					+ "careProviderId="+careProviderId+", "
 					+ "comment='"+action.getComment()+"' "
 					+ "where actionId='"+action.getId()+"'";
@@ -120,7 +120,7 @@ public class ActionPlanSQL extends DataBase {
 				+ "values(?,?,?)";
 		PreparedStatement st = null;
 		st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
-		st.setString(1, action.getIntervention());
+		st.setInt(1, action.getIntervention().ordinal());
 		if(action.getCareProvider()!=null){
 			st.setInt(2, action.getCareProvider().getId());
 		} else {
@@ -406,7 +406,7 @@ public class ActionPlanSQL extends DataBase {
 			ResultSet rs = st.executeQuery(strSQL);
 			if(rs.next()){
 				Action action = new Action(actionId);
-				action.setIntervention(rs.getString("intervention"));
+				action.setIntervention(Intervention.values()[rs.getInt("intervention")]);
 				
 				UserSQL userSQL = new UserSQL();
 				userSQL.connect();
