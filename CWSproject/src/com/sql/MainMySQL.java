@@ -144,6 +144,6 @@ public class MainMySQL {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-		
+		System.out.println("Datebase reset completed.");
 	}
 }

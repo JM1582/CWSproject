@@ -126,10 +126,11 @@ if (partMap != null) {
 		String partId = (String)partIt.next();
 		OnePart part = (OnePart)partMap.get(partId);
 		if(part != null){
-			String scalarName[] = part.getScalarName();
-			String scalarValue[][] = part.getScalarValue();
-			int scalarValueAmount = scalarValue.length;
-%>
+			if(!document.getSign() || part.hasDomainValue(domainValueMap)){
+				// if document signed, only show part which has value
+				String scalarName[] = part.getScalarName();
+				String scalarValue[][] = part.getScalarValue();
+				int scalarValueAmount = scalarValue.length; %>
 
 <!-- the table to hold 1 part -->
 <table class="disabled_border" id="part_<%=part.getId()%>" cellspacing="0" cellpadding="0"><!-- change table format -->
@@ -175,7 +176,8 @@ if (partMap != null) {
 		while(subSetIt.hasNext()){
 			String subSetId = (String)subSetIt.next();
 			SubSet subSet = (SubSet)subSetMap.get(subSetId);
-			if(subSet != null){%>
+			if(subSet != null){ 
+				if(!document.getSign() || subSet.hasDomainValue(domainValueMap)){ %>
 		
 		<!-- the table to hold 1 subset -->
 		<tr><td><table class="disabled_border" id="subSet_<%=subSet.getId()%>" cellspacing="0" cellpadding="0">
@@ -197,7 +199,8 @@ if (partMap != null) {
 				while(domainIt.hasNext()){
 					String domainId = (String)domainIt.next();
 					Domain domain = (Domain)domainMap.get(domainId); 
-					if(domain != null){ %>
+					if(domain != null){
+						if(!document.getSign() || domain.hasDomainValue(domainValueMap)){ %>
 				
 				<!-- the table to hold domain -->
 				<tr><td><table class="thin_border" id="domain_<%=domain.getId()%>">
@@ -255,19 +258,22 @@ if (partMap != null) {
 					</tr>
 				</table></td></tr>
 				
-					<%}
+<%						}
+					}
 				}
 			} %>
 			</table></td></tr>
 			
 		</table></td></tr>
-			<%}
+<%				}
+			}
 		}
 	} %>
 	</table></td></tr>
 </table>
 <br>
-<%		}
+<%			}
+		}
 	}
 } %>
 </div><!-- document -->

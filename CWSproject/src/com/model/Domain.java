@@ -44,6 +44,19 @@ public class Domain {
 	public void setComment(String newComment){
 		this.comment = newComment;
 	}
+	
+	public boolean hasDomainValue(Map domainValueMap){
+		if(domainValueMap.containsKey(this.domainId)){
+			String domainValue[] = (String[]) domainValueMap.get(this.domainId);
+			for(int i=0;i<domainValue.length;i++){
+				if(domainValue[i]!=null){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public boolean hasDomainValueWithSummaryMap(Map<String, Document> summaryMap){
 		Iterator<String> summaryIt = summaryMap.keySet().iterator();
 		while(summaryIt.hasNext()){

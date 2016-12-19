@@ -24,30 +24,33 @@ public class ActionPlanSQL extends DataBase {
 	}
 	
 	public ActionPlan setActionPlan(ActionPlan actionPlan) throws Exception{//save user data
-		String strSQL = null;
 		if(this.isExist(actionPlan)){
 			this.updateActionPlan(actionPlan);
 		} else {
 			actionPlan = this.insertActionPlan(actionPlan);
 		}
-		this.setActionEntryMap(actionPlan);
+		actionPlan = this.setActionEntryMap(actionPlan);
 		return actionPlan;
 	}
 
-	public void setActionEntryMap(ActionPlan actionPlan) throws Exception {
+	public ActionPlan setActionEntryMap(ActionPlan actionPlan) throws Exception {
 		this.clearActionPlanAction(actionPlan);
 		Map<Integer, ActionEntry> actionEntryMap = actionPlan.getActionEntryMap();
+		Map<Integer, ActionEntry> newActionEntryMap = new HashMap<Integer, ActionEntry>();
 		Iterator<Integer> actionEntryIt = actionEntryMap.keySet().iterator();
 		while(actionEntryIt.hasNext()){
 			int actionEntryId = actionEntryIt.next();
 			ActionEntry actionEntry = (ActionEntry) actionEntryMap.get(actionEntryId);
-			actionEntry = this.setActionEntry(actionEntry);
+			actionEntry = this.setActionEntry(actionEntry); // not set actionMap yet
+			actionEntry = this.setActionMap(actionEntry);
+			newActionEntryMap.put(actionEntry.getId(), actionEntry);
+			
+			// insert the actionPlan, actionEntry and action relactionship
 			Map<Integer, Action> actionMap = actionEntry.getActionMap();
 			Iterator<Integer> actionIt = actionMap.keySet().iterator();
 			while(actionIt.hasNext()){
 				int actionId = actionIt.next();
 				Action action = actionMap.get(actionId);
-				action = this.setAction(action);
 				String strSQL = "insert into actionPlan_action values("
 						+ Integer.valueOf(actionPlan.getId())+","
 						+ Integer.valueOf(actionEntry.getId())+","
@@ -61,7 +64,23 @@ public class ActionPlanSQL extends DataBase {
 				}
 			}
 		}
+		actionPlan.setActionEntryMap(newActionEntryMap);
+		return actionPlan;
 		
+	}
+
+	private ActionEntry setActionMap(ActionEntry actionEntry) throws Exception {
+		Map<Integer, Action> actionMap = actionEntry.getActionMap();
+		Map<Integer, Action> newActionMap = new HashMap<Integer, Action>();
+		Iterator<Integer> actionIt = actionMap.keySet().iterator();
+		while(actionIt.hasNext()){
+			int actionId = actionIt.next();
+			Action action = actionMap.get(actionId);
+			action = this.setAction(action);
+			newActionMap.put(action.getId(), action);
+		}
+		actionEntry.setActionMap(newActionMap);
+		return actionEntry;
 	}
 
 	public Action setAction(Action action) throws Exception {
@@ -74,10 +93,14 @@ public class ActionPlanSQL extends DataBase {
 	}
 
 	public void updateAction(Action action) throws Exception{
+		int careProviderId = -1;
+		if(action.getCareProvider()!=null){
+			careProviderId = action.getCareProvider().getId();
+		}
 		String strSQL = "update action set "
 					+ "actionId="+action.getId()+", "
 					+ "intervention='"+action.getIntervention()+"', "
-					+ "careProviderId="+action.getCareProvider().getId()+", "
+					+ "careProviderId="+careProviderId+", "
 					+ "comment='"+action.getComment()+"' "
 					+ "where actionId='"+action.getId()+"'";
 		try{
@@ -147,12 +170,15 @@ public class ActionPlanSQL extends DataBase {
 	}
 	
 	public void updateActionEntry(ActionEntry actionEntry) throws Exception{
+		String domainId = null;
+		if(actionEntry.getDomain()!=null){
+			domainId = actionEntry.getDomain().getId();
+		}
 		String strSQL = "update actionEntry set "
-					+ "actionEntryId="+actionEntry.getId()+", "
-					+ "domainId='"+actionEntry.getDomain().getId()+"', "
-					+ "cScore="+actionEntry.getCscore()+", "
-					+ "fScore="+actionEntry.getFscore()+" "
-					+ "where actionEntryId='"+actionEntry.getId()+"'";
+					+ "domainId='"+domainId+"', "
+					+ "cScore='"+actionEntry.getCscore()+"', "
+					+ "fScore='"+actionEntry.getFscore()+"' "
+					+ "where actionEntryId="+actionEntry.getId()+"";
 		try{
 			st.executeUpdate(strSQL);
 		} catch (Exception e){
@@ -170,7 +196,11 @@ public class ActionPlanSQL extends DataBase {
 				+ "values(?,?,?)";
 		PreparedStatement st = null;
 		st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
-		st.setString(1, actionEntry.getDomain().getId());
+		if(actionEntry.getDomain()!=null){
+			st.setString(1, actionEntry.getDomain().getId());
+		} else {
+			st.setString(1, null);
+		}
 		st.setString(2, actionEntry.getCscore());
 		st.setString(3, actionEntry.getFscore());
 		

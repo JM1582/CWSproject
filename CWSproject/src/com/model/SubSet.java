@@ -48,22 +48,14 @@ public class SubSet {
 		return false;
 	}
 	public boolean hasDomainValue(Map domainValueMap){
-		Iterator domainValueIt = domainValueMap.keySet().iterator();
-		while(domainValueIt.hasNext()){
-			String domainId = (String) domainValueIt.next();
-			if(this.isContainDomain(domainId)){
-				String domainValue[] = (String[]) domainValueMap.get(domainId);
-				if(domainValue!=null){
-					boolean atLeastOne = false;
-					for(int i=0;i<domainValue.length;i++){
-						if(domainValue[i]!=null){
-							atLeastOne = true;
-						}
-					}
-					if(atLeastOne){
-						return true;
-					}
-				}
+		Map<String, Domain> domainMap = this.domainMap;
+		Iterator<String> domainIt = domainMap.keySet().iterator();
+		while(domainIt.hasNext()){
+			String domainId = (String) domainIt.next();
+			Domain domain = (Domain) domainMap.get(domainId);
+			
+			if(domain.hasDomainValue(domainValueMap)){
+				return true;
 			}
 		}
 		return false;
