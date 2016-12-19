@@ -11,13 +11,13 @@ import com.sql.*;
 /**
  * Servlet implementation class EditUserServlet
  */
-public class EditUserServlet extends HttpServlet {
+public class EditAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditUserServlet() {
+    public EditAccountServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

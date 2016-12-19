@@ -37,6 +37,15 @@ public class SaveAccountServlet extends HttpServlet {
 		
 		User account = (User) session.getAttribute("account");
 		
+		if(request.getParameter("userName")==null || request.getParameter("passWord")==null){
+			PrintWriter out = response.getWriter();
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Username and password cannot be empty.');");
+			out.println("location='account_page.jsp';");
+			out.println("</script>");
+			return;
+		}
+		
 		account.setType(UserType.valueOf(request.getParameter("userType")));
 		account.setUserName(request.getParameter("userName"));
 		account.setPassWord(request.getParameter("passWord"));

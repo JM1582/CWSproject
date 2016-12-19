@@ -137,12 +137,12 @@
     <url-pattern>/action_plan_management_servlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>editUserServlet</servlet-name>
-    <servlet-class>com.servlet.EditUserServlet</servlet-class>
+    <servlet-name>editAccountServlet</servlet-name>
+    <servlet-class>com.servlet.EditAccountServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>editUserServlet</servlet-name>
-    <url-pattern>/edit_user_servlet</url-pattern>
+    <servlet-name>editAccountServlet</servlet-name>
+    <url-pattern>/edit_account_servlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>saveAccountServlet</servlet-name>
@@ -151,6 +151,14 @@
   <servlet-mapping>
     <servlet-name>saveAccountServlet</servlet-name>
     <url-pattern>/save_account_servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>createAccountServlet</servlet-name>
+    <servlet-class>com.servlet.CreateAccountServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>createAccountServlet</servlet-name>
+    <url-pattern>/create_account_servlet</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>login_page.jsp</welcome-file>

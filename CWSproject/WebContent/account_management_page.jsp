@@ -58,10 +58,10 @@ while (userIt.hasNext()){
 		<td><%=user.getLastName() %></td>
 		<td><%=user.getEmail() %></td>
 		<td><%=user.getFacility() %></td>
-		<td><button type="button"  onclick="location.href='edit_user_servlet?userId=<%=user.getId() %>'">Edit</button></td>
+		<td><button type="button"  onclick="location.href='/edit_account_servlet?userId=<%=user.getId() %>'">Edit</button></td>
 	</tr>
 <%} %>
 </table>
-
+<button type="button"  onclick="location.href='create_account_servlet'">+</button>
 </body>
 </html>
