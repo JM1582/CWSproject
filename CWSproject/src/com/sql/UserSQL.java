@@ -1,6 +1,8 @@
 package com.sql;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 import com.model.*;
@@ -28,6 +30,22 @@ public class UserSQL extends DataBase{
 	
 	public boolean isExist(User user) throws Exception{
 		st = conn.createStatement();
+		String strSQL = "select * from user where userId="+user.getId()+"";
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			if(rs.next()){
+				return true;
+			}
+		} catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+			throw e;
+		}
+		return false;
+	}
+	
+	public boolean isExistUserName(User user) throws Exception{
+		st = conn.createStatement();
 		String strSQL = "select * from user where userName='"+user.getUserName()+"'";
 		try{
 			ResultSet rs = st.executeQuery(strSQL);
@@ -43,11 +61,64 @@ public class UserSQL extends DataBase{
 	}
 	
 	public User setUser(User user) throws Exception{//save user data
-		st = conn.createStatement();
-		String strSQL = null;
 		if(this.isExist(user)){
-			user.setId(this.getUserIdByUserName(user.getUserName()));
-			strSQL = "update user set "
+			this.updateUser(user);
+		} else {
+			user = this.insertUser(user);
+		}
+		return user;
+	}
+	
+	private User insertUser(User user) throws Exception {
+		if(this.isExistUserName(user)){
+			System.out.println("Username was already taken: "+user.getUserName());
+			throw new SQLException();
+		}
+		String strSQL = "insert into user("
+				+ "userName,"
+				+ "passWord,"
+				+ "type,"
+				+ "title,"
+				+ "firstName,"
+				+ "lastName,"
+				+ "facility,"
+				+ "email) "
+				+ "values(?,?,?,?,?,?,?,?)";
+		PreparedStatement st = null;
+		st = this.conn.prepareStatement(strSQL,Statement.RETURN_GENERATED_KEYS);
+		
+		st.setString(1, user.getUserName());
+		st.setString(2, user.getPassWord());
+		st.setInt(3, (Integer)user.getType().ordinal());
+		st.setString(4, user.getTitle());
+		st.setString(5, user.getFirstName());
+		st.setString(6, user.getLastName());
+		st.setString(7, user.getFacility());
+		st.setString(8, user.getEmail());
+		
+		try{
+			st.executeUpdate();
+		} catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+			throw e;
+		}
+		try {
+			ResultSet rs = st.getGeneratedKeys();
+			if(rs.next()){
+				user.setId(rs.getInt(1));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return user;
+	}
+
+	private void updateUser(User user) throws Exception {
+		st = conn.createStatement();
+		String strSQL = "update user set "
 					+ "userName='"+user.getUserName()+"',  "
 					+ "passWord='"+user.getPassWord()+"', "
 					+ "type="+Integer.toString((Integer) user.getType().ordinal())+", "
@@ -57,18 +128,7 @@ public class UserSQL extends DataBase{
 					+ "facility='"+user.getFacility()+"', "
 					+ "email='"+user.getEmail()+"' "
 					+ "where userId="+Integer.toString(user.getId());
-		} else {
-			strSQL = "insert into user values("
-					+ "null,"
-					+ "'"+user.getUserName()+"',"
-					+ "'"+user.getPassWord()+"',"
-					+ Integer.toString((Integer) user.getType().ordinal())+","
-					+ "'"+user.getTitle()+"',"
-					+ "'"+user.getFirstName()+"',"
-					+ "'"+user.getLastName()+"',"
-					+ "'"+user.getFacility()+"',"
-					+ "'"+user.getEmail()+"' )";
-		}
+
 		try{
 			st.executeUpdate(strSQL);
 		} catch (Exception e){
@@ -76,10 +136,8 @@ public class UserSQL extends DataBase{
 			e.printStackTrace();
 			throw e;
 		}
-		user.setId(this.getUserIdByUserName(user.getUserName()));
-		return user;
 	}
-	
+
 	public User getUser(int userId) throws Exception{
 		st = conn.createStatement();
 		String strSQL = "select * from user where userId='"+userId+"'";
