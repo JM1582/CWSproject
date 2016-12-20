@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.*;
+import java.sql.SQLException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -9,15 +10,15 @@ import com.model.*;
 import com.sql.*;
 
 /**
- * Servlet implementation class SaveAccountServlet
+ * Servlet implementation class SavePatientInfoServlet
  */
-public class SaveAccountServlet extends HttpServlet {
+public class SavePatientInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SaveAccountServlet() {
+    public SavePatientInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,49 +36,60 @@ public class SaveAccountServlet extends HttpServlet {
 			return;
 		}
 		
-		User account = (User) session.getAttribute("account");
+		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 		
-		String userName = request.getParameter("userName");
-		String passWord = request.getParameter("passWord");
-		if(userName==null || passWord==null || userName.equals("") || passWord.equals("")){
+		if(request.getParameter("CWSNumber")==null ){
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Username and password cannot be empty.');");
+			out.println("alert('CWSNumber cannot be empty.');");
 			out.println("location='account_page.jsp';");
 			out.println("</script>");
 			return;
 		}
 		
-		account.setType(UserType.valueOf(request.getParameter("userType")));
-		account.setUserName(passWord);
-		account.setPassWord(passWord);
-		account.setTitle(request.getParameter("title"));
-		account.setFirstName(request.getParameter("firstName"));
-		account.setLastName(request.getParameter("lastName"));
-		account.setEmail(request.getParameter("email"));
-		account.setFacility(request.getParameter("facility"));
+		patientInfo.setCWSNumber(request.getParameter("CWSNumber"));
+		patientInfo.setIcon(Integer.valueOf(request.getParameter("icon")));
 		
-		UserSQL userSQL = new UserSQL();
+		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
+		FormTemplate formTemplate = null;
 		try {
-			userSQL.connect();
-			account = userSQL.setUser(account);
-			userSQL.disconnect();
+			formTemplateSQL.connect();
+			int formTemplateId = Integer.valueOf(request.getParameter("formTemplateId"));
+			formTemplate= formTemplateSQL.getFormTemplate(formTemplateId);
+			formTemplateSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Account saving failed!');");
-			out.println("location='account_page.jsp';");
+			out.println("alert('Database connection failed!');");
+			out.println("location='patient_info_page.jsp';");
 			out.println("</script>");
 			return;
-		};
+		}
 		
-		session.setAttribute("account", account);
+		patientInfo.setFormTemplate(formTemplate);
+		
+		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
+		try {
+			patientInfoSQL.connect();
+			patientInfoSQL.setCareProviderMap(patientInfo);
+			patientInfoSQL.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
+			PrintWriter out = response.getWriter();
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Patient saving failed!');");
+			out.println("location='patient_info_page.jsp';");
+			out.println("</script>");
+			return;
+		}
+		
+		session.setAttribute("patientInfo", patientInfo);
 
 		PrintWriter out = response.getWriter();
 		out.println("<script type=\"text/javascript\">");
-		out.println("alert('Account Saved.');");
-		out.println("location='account_page.jsp';");
+		out.println("alert('Patient Saved.');");
+		out.println("location='patient_info_page.jsp';");
 		out.println("</script>");
 	}
 

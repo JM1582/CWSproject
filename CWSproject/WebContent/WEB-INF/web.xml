@@ -160,6 +160,22 @@
     <servlet-name>createAccountServlet</servlet-name>
     <url-pattern>/create_account_servlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>editPatientServlet</servlet-name>
+    <servlet-class>com.servlet.EditPatientServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>editPatientServlet</servlet-name>
+    <url-pattern>/edit_patient_servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>savePatientInfoServlet</servlet-name>
+    <servlet-class>com.servlet.SavePatientInfoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>savePatientInfoServlet</servlet-name>
+    <url-pattern>/save_patientInfo_servlet</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>login_page.jsp</welcome-file>
   </welcome-file-list>

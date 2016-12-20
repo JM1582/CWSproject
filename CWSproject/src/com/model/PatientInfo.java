@@ -5,7 +5,7 @@ import java.util.*;
 public class PatientInfo {
 	private int patientInfoId;
 	private String CWSNumber;
-	private int icon;
+	private int icon=-1;
 	private CareProvider MRP;
 	private FormTemplate formTemplate;
 	private Map<String, CareProvider> careProviderMap;

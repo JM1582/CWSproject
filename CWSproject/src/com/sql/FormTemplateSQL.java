@@ -526,4 +526,30 @@ public class FormTemplateSQL extends DataBase{
 	public void removeFormTemplate(FormTemplate formTemplate){
 		
 	}
+
+	public Map<Integer, FormTemplate> getAllFormTemplate() throws Exception {
+		Map<Integer, FormTemplate> formTemplateMap = new HashMap();
+		st = conn.createStatement();
+		String strSQL = "select * from formTemplate";
+		ResultSet rs = null;
+		try{
+			rs = st.executeQuery(strSQL);
+		}catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+			throw e;
+		}
+		try {
+			while(rs.next()){ 
+				int formTemplateId = rs.getInt("formTemplateId");
+				FormTemplate formTemplate = this.getFormTemplate(formTemplateId);
+				formTemplateMap.put(formTemplate.getId(), formTemplate);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return formTemplateMap;
+	}
 }

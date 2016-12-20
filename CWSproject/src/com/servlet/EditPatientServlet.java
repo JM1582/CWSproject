@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.*;
+import java.util.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -9,15 +10,15 @@ import com.model.*;
 import com.sql.*;
 
 /**
- * Servlet implementation class EditUserServlet
+ * Servlet implementation class EditPatientServlet
  */
-public class EditAccountServlet extends HttpServlet {
+public class EditPatientServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditAccountServlet() {
+    public EditPatientServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,26 +36,37 @@ public class EditAccountServlet extends HttpServlet {
 			return;
 		}
 		
-		int userId = Integer.valueOf(request.getParameter("userId"));
+		int patientInfoId = Integer.valueOf(request.getParameter("patientInfoId"));
 
-		UserSQL userSQL = new UserSQL();
-		User account = null;
+		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
+		PatientInfo patientInfo = null;
 		try {
-			userSQL.connect();
-			account = userSQL.getUser(userId);
-			userSQL.disconnect();
+			patientInfoSQL.connect();
+			patientInfo = patientInfoSQL.getPatientInfo(patientInfoId);
+			patientInfoSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		if(account!=null){
-			session.setAttribute("account", account);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("account_page.jsp");
+		Map<Integer, FormTemplate> formTemplateMap = new HashMap<Integer, FormTemplate>();
+		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
+		try {
+			formTemplateSQL.connect();
+			formTemplateMap = formTemplateSQL.getAllFormTemplate();
+			formTemplateSQL.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(patientInfo!=null){
+			session.setAttribute("formTemplateMap", formTemplateMap);
+			session.setAttribute("patientInfo", patientInfo);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("patient_info_page.jsp");
 			requestDispatcher.forward(request, response);
 		}else{
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Account do not exist.');");
+			out.println("alert('PatientInfo do not exist.');");
 			out.println("location='account_management_servlet';");
 			out.println("</script>");
 			

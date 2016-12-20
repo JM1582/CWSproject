@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Login Page</title>
+<title>Logout Page</title>
 <link rel="stylesheet" type="text/css" href="css/nav_bar.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="css/div_formats.css" charset="utf-8" >
 <link rel="stylesheet" type="text/css" href="css/background.css" charset="utf-8" >
