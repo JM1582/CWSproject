@@ -263,8 +263,12 @@ public class DataBase {
 	
 	public void disconnect() throws Exception{
 		try{
-			st.close();
-			conn.close();
+			if(st!=null){
+				st.close();
+			}
+			if(conn!=null){
+				conn.close();
+			}
 		} catch (Exception e) {
 			System.out.println("Database closing fail.");
 			e.printStackTrace();

@@ -176,6 +176,14 @@
     <servlet-name>savePatientInfoServlet</servlet-name>
     <url-pattern>/save_patientInfo_servlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>createPatientServlet</servlet-name>
+    <servlet-class>com.servlet.CreatePatientServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>createPatientServlet</servlet-name>
+    <url-pattern>/create_patient_servlet</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>login_page.jsp</welcome-file>
   </welcome-file-list>

@@ -44,8 +44,8 @@ while(patientInfoIt.hasNext()){
 		<td><button type="button"  onclick="location.href='edit_patient_servlet?patientInfoId=<%=patientInfo.getId() %>'">Edit</button></td>
 	</tr>
 <%} %>
-
 </table>
+<button type="button"  onclick="location.href='create_patient_servlet'">+</button>
 
 </body>
 </html>

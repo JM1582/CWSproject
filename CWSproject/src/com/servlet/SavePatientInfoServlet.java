@@ -38,17 +38,22 @@ public class SavePatientInfoServlet extends HttpServlet {
 		
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 		
-		if(request.getParameter("CWSNumber")==null ){
+		String CWSNumber = request.getParameter("CWSNumber");
+		if(CWSNumber==null || CWSNumber.equals("")){
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('CWSNumber cannot be empty.');");
-			out.println("location='account_page.jsp';");
+			out.println("location='patient_info_page.jsp';");
 			out.println("</script>");
 			return;
 		}
 		
-		patientInfo.setCWSNumber(request.getParameter("CWSNumber"));
-		patientInfo.setIcon(Integer.valueOf(request.getParameter("icon")));
+		patientInfo.setCWSNumber(CWSNumber);
+		int icon = -1;
+		if(request.getAttribute("icon")!=null && !request.getAttribute("icon").equals("")){
+			icon = Integer.valueOf((String) request.getAttribute("icon"));
+		}
+		patientInfo.setIcon(icon);
 		
 		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
 		FormTemplate formTemplate = null;
@@ -72,7 +77,7 @@ public class SavePatientInfoServlet extends HttpServlet {
 		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
 		try {
 			patientInfoSQL.connect();
-			patientInfoSQL.setCareProviderMap(patientInfo);
+			patientInfo = patientInfoSQL.setPatientInfo(patientInfo);
 			patientInfoSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();

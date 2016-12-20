@@ -18,7 +18,7 @@ if(admin == null || admin.getType()!=UserType.ADMIN){ %>
 	</script>
 <%	return;
 }
-User account = (User) session.getAttribute("account");
+PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 Map<Integer, FormTemplate> formTemplateMap = (Map<Integer, FormTemplate>) session.getAttribute("formTemplateMap");
 %>
 
@@ -38,11 +38,6 @@ Map<Integer, FormTemplate> formTemplateMap = (Map<Integer, FormTemplate>) sessio
 		<td>Template</td>
 		<td></td>
 	</tr>
-<%Map<Integer,PatientInfo> patientInfoMap = (Map<Integer, PatientInfo>) session.getAttribute("patientInfoMap");
-Iterator<Integer> patientInfoIt = patientInfoMap.keySet().iterator();
-while(patientInfoIt.hasNext()){
-	int patientInfoId = (Integer) patientInfoIt.next();
-	PatientInfo patientInfo = patientInfoMap.get(patientInfoId); %>
 	<tr>
 		<td><%=patientInfo.getId()%></td>
 		<td><input type="text" name="CWSNumber" 
@@ -57,14 +52,13 @@ while(patientInfoIt.hasNext()){
 			while(formTemplateIt.hasNext()){
 				int formTemplateId = formTemplateIt.next();
 				FormTemplate formTemplate = formTemplateMap.get(formTemplateId); %>
-			<option value="<%=formTemplate.getId() %>" <%if(patientInfo.getFormTemplate().getId()==formTemplate.getId()){ %>selected<%} %>>
+			<option value="<%=formTemplate.getId() %>" 
+				<%if(patientInfo.getFormTemplate()!=null){ if(patientInfo.getFormTemplate().getId()==formTemplate.getId()){ %>selected<%} } %>>
 				<%=formTemplate.getName() %>
 			</option>
 			<%} %>
 		</select></td>
 	</tr>
-<%} %>
-
 </table>
 </form>
 
