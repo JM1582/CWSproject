@@ -62,6 +62,7 @@ public class PatientInfoSQL extends DataBase{
 		} else {
 			patientInfo = this.insertPatientInfo(patientInfo);
 		}
+		patientInfo = this.setCareProviderMap(patientInfo);
 		return patientInfo;
 	}
 	
@@ -123,7 +124,7 @@ public class PatientInfoSQL extends DataBase{
 		}		
 	}
 
-	public void setCareProviderMap(PatientInfo patientInfo) throws Exception{
+	public PatientInfo setCareProviderMap(PatientInfo patientInfo) throws Exception{
 		this.clearCareProviderForPatientInfo(patientInfo);
 		Map<String, CareProvider> careProviderMap = patientInfo.getCareProviderMap();
 		Iterator<String> careProviderIt = careProviderMap.keySet().iterator();
@@ -143,6 +144,7 @@ public class PatientInfoSQL extends DataBase{
 				throw e;
 			}
 		}
+		return patientInfo;
 	}
 	
 	public PatientInfo getCareProviderMap(PatientInfo patientInfo) throws Exception {

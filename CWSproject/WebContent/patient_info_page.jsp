@@ -20,6 +20,7 @@ if(admin == null || admin.getType()!=UserType.ADMIN){ %>
 }
 PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 Map<Integer, FormTemplate> formTemplateMap = (Map<Integer, FormTemplate>) session.getAttribute("formTemplateMap");
+Map<Integer, CareProvider> allCareProviderMap = (Map<Integer, CareProvider>) session.getAttribute("allCareProviderMap");
 %>
 
 <div id=Content-Left3 align="right" >
@@ -61,6 +62,37 @@ Map<Integer, FormTemplate> formTemplateMap = (Map<Integer, FormTemplate>) sessio
 	</tr>
 </table>
 </form>
+
+<table>
+	<tr><td colspan="2">Care Provider List:</td></tr>
+<%if(patientInfo.getCareProviderMap()!=null){
+	Iterator<String> careProviderIt = patientInfo.getCareProviderMap().keySet().iterator();
+	while(careProviderIt.hasNext()){
+		String userName = (String) careProviderIt.next();
+		CareProvider careProvider = (CareProvider) patientInfo.getCareProviderMap().get(userName); %>
+	<tr>
+		<td><%=careProvider.getTitle() %> <%=careProvider.getFirstName() %> <%=careProvider.getLastName() %></td>
+		<td><button type="button"  onclick="location.href='remove_care_provider_servlet?removedUserName=<%=userName %>'">Remove</button></td>
+	</tr>
+<%	}
+} %>
+	<form id="careProviderForm" action="add_care_provider_servlet" >
+	<tr>
+		<td><select name="addedCareProviderId">
+			<option selected></option>
+			<%Iterator<Integer> allCareProviderIt = allCareProviderMap.keySet().iterator();
+			while(allCareProviderIt.hasNext()){
+				int allCareProviderId = (Integer) allCareProviderIt.next();
+				CareProvider tmpCareProvider = allCareProviderMap.get(allCareProviderId); %>
+			<option value="<%=tmpCareProvider.getId() %>"><%=tmpCareProvider.getTitle() %> <%=tmpCareProvider.getFirstName() %> <%=tmpCareProvider.getLastName() %></option>
+			<%} %>
+		</select></td>
+		<td>
+			<input type="submit" value="Add">
+		</td>
+	</tr>
+	
+</table>
 
 </body>
 </html>

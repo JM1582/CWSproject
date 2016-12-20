@@ -184,6 +184,22 @@
     <servlet-name>createPatientServlet</servlet-name>
     <url-pattern>/create_patient_servlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>removeCareProviderServlet</servlet-name>
+    <servlet-class>com.servlet.RemoveCareProviderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>removeCareProviderServlet</servlet-name>
+    <url-pattern>/remove_care_provider_servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>addCareProviderServlet</servlet-name>
+    <servlet-class>com.servlet.AddCareProviderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addCareProviderServlet</servlet-name>
+    <url-pattern>/add_care_provider_servlet</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>login_page.jsp</welcome-file>
   </welcome-file-list>

@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.*;
@@ -46,6 +47,8 @@ public class EditPatientServlet extends HttpServlet {
 			patientInfoSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
+			ErrorMsg.DataBaseConnectionError(response);
+			return;
 		}
 		
 		Map<Integer, FormTemplate> formTemplateMap = new HashMap<Integer, FormTemplate>();
@@ -56,9 +59,24 @@ public class EditPatientServlet extends HttpServlet {
 			formTemplateSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
+			ErrorMsg.DataBaseConnectionError(response);
+			return;
+		}
+		
+		Map<Integer, CareProvider> allCareProviderMap = new HashMap<Integer, CareProvider>();
+		UserSQL userSQL = new UserSQL();
+		try {
+			userSQL.connect();
+			allCareProviderMap = userSQL.getAllCareProvider();
+			userSQL.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
+			ErrorMsg.DataBaseConnectionError(response);
+			return;
 		}
 		
 		if(patientInfo!=null){
+			session.setAttribute("allCareProviderMap", allCareProviderMap); 
 			session.setAttribute("formTemplateMap", formTemplateMap);
 			session.setAttribute("patientInfo", patientInfo);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("patient_info_page.jsp");
@@ -69,7 +87,6 @@ public class EditPatientServlet extends HttpServlet {
 			out.println("alert('PatientInfo do not exist.');");
 			out.println("location='account_management_servlet';");
 			out.println("</script>");
-			
 		}
 		
 	}

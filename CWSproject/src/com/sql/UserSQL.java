@@ -224,6 +224,26 @@ public class UserSQL extends DataBase{
 		}
 		return userMap;
 	}
+
+	public Map<Integer, CareProvider> getAllCareProvider() throws Exception {
+		Map<Integer, CareProvider> careProviderMap = new HashMap<Integer, CareProvider>();
+		st = conn.createStatement();
+		String strSQL = "select * from user where type="+Integer.toString(UserType.CAREPROVIDER.ordinal());
+		try{
+			ResultSet rs = st.executeQuery(strSQL);
+			while(rs.next()){
+				int userId = rs.getInt("userId");
+				CareProvider careProvider = this.getUser(userId).toCareProvider();
+				
+				careProviderMap.put(userId, careProvider);
+			}
+		}catch (Exception e){
+			System.out.println("Fail: "+strSQL);
+			e.printStackTrace();
+			throw e;
+		}
+		return careProviderMap;
+	}
 	
 	// need to be removed
 	public User getUserSQL(User user) throws Exception{
