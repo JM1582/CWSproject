@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.*;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -24,7 +25,9 @@ public class SearchPatientServlet extends HttpServlet{
 			requestDispatcher.forward(request, response);
 			return;
 		}
-
+		
+		CareProvider careProvider = (CareProvider) session.getAttribute("user");
+		
 		PatientInfo patientInfo = null;
 		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
 		try {
@@ -41,6 +44,10 @@ public class SearchPatientServlet extends HttpServlet{
 			return;
 		}
 		if (patientInfo != null){
+			if(!patientInfo.getCareProviderMap().containsKey(careProvider.getUserName())){
+				ErrorMsg.PatientAccessError(response, "profile_page.jsp");
+				return;
+			}
 			session.setAttribute("patientInfo", patientInfo);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("view_patient_summary_servlet?CWSNumber="+patientInfo.getCWSNumber());
 			requestDispatcher.forward(request, response);
