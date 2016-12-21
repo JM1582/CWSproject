@@ -37,7 +37,9 @@ public class SaveAccountServlet extends HttpServlet {
 		
 		User account = (User) session.getAttribute("account");
 		
-		if(request.getParameter("userName")==null || request.getParameter("passWord")==null){
+		String userName = request.getParameter("userName");
+		String passWord = request.getParameter("passWord");
+		if(userName==null || passWord==null || userName.equals("") || passWord.equals("")){
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('Username and password cannot be empty.');");
@@ -47,8 +49,8 @@ public class SaveAccountServlet extends HttpServlet {
 		}
 		
 		account.setType(UserType.valueOf(request.getParameter("userType")));
-		account.setUserName(request.getParameter("userName"));
-		account.setPassWord(request.getParameter("passWord"));
+		account.setUserName(passWord);
+		account.setPassWord(passWord);
 		account.setTitle(request.getParameter("title"));
 		account.setFirstName(request.getParameter("firstName"));
 		account.setLastName(request.getParameter("lastName"));
@@ -62,6 +64,12 @@ public class SaveAccountServlet extends HttpServlet {
 			userSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
+			PrintWriter out = response.getWriter();
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Account saving failed!');");
+			out.println("location='account_page.jsp';");
+			out.println("</script>");
+			return;
 		};
 		
 		session.setAttribute("account", account);

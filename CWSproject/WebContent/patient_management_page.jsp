@@ -41,11 +41,11 @@ while(patientInfoIt.hasNext()){
 		<td><%=patientInfo.getCWSNumber() %></td>
 		<td><%=patientInfo.getIcon() %></td>
 		<td><%=patientInfo.getFormTemplate().getName() %></td>
-		<td><button type="button"  onclick="location.href='edit_patient_info_servlet?patientId=<%=patientInfo.getId() %>'">Edit</button></td>
+		<td><button type="button"  onclick="location.href='edit_patient_servlet?patientInfoId=<%=patientInfo.getId() %>'">Edit</button></td>
 	</tr>
 <%} %>
-
 </table>
+<button type="button"  onclick="location.href='create_patient_servlet'">+</button>
 
 </body>
 </html>

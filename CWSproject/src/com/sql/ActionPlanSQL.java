@@ -140,7 +140,6 @@ public class ActionPlanSQL extends DataBase {
 		if(rs.next()){
 			action.setId(rs.getInt(1));
 		}
-		rs.close();
 		return action;
 	}
 
@@ -215,7 +214,6 @@ public class ActionPlanSQL extends DataBase {
 		if(rs.next()){
 			actionEntry.setId(rs.getInt(1));
 		}
-		rs.close();
 		return actionEntry;
 	}
 
@@ -261,7 +259,6 @@ public class ActionPlanSQL extends DataBase {
 		if(rs.next()){
 			actionPlan.setId(rs.getInt(1));
 		}
-		rs.close();
 		return actionPlan;
 	}
 

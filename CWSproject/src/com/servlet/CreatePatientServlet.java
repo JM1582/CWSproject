@@ -1,23 +1,25 @@
 package com.servlet;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 import com.model.*;
-import com.sql.*;
+import com.sql.FormTemplateSQL;
 
 /**
- * Servlet implementation class EditUserServlet
+ * Servlet implementation class CreatePatientServlet
  */
-public class EditAccountServlet extends HttpServlet {
+public class CreatePatientServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditAccountServlet() {
+    public CreatePatientServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,32 +37,24 @@ public class EditAccountServlet extends HttpServlet {
 			return;
 		}
 		
-		int userId = Integer.valueOf(request.getParameter("userId"));
+		PatientInfo patientInfo = new PatientInfo(null, -1);
 
-		UserSQL userSQL = new UserSQL();
-		User account = null;
+		session.setAttribute("patientInfo", patientInfo);
+		
+		Map<Integer, FormTemplate> formTemplateMap = new HashMap<Integer, FormTemplate>();
+		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
 		try {
-			userSQL.connect();
-			account = userSQL.getUser(userId);
-			userSQL.disconnect();
+			formTemplateSQL.connect();
+			formTemplateMap = formTemplateSQL.getAllFormTemplate();
+			formTemplateSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		if(account!=null){
-			session.setAttribute("account", account);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("account_page.jsp");
-			requestDispatcher.forward(request, response);
-		}else{
-			PrintWriter out = response.getWriter();
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Account do not exist.');");
-			out.println("location='account_management_servlet';");
-			out.println("</script>");
-			
-		}
+		session.setAttribute("formTemplateMap", formTemplateMap);
 		
-	}
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("patient_info_page.jsp");
+		requestDispatcher.forward(request, response);	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
