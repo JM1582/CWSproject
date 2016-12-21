@@ -143,7 +143,9 @@ public class FormTemplateSQL extends DataBase{
 			throw e;
 		}
 		
-		formTemplate.setPartsMap(this.getPartMap(formTemplateId));
+		if(formTemplate!=null){
+			formTemplate.setPartsMap(this.getPartMap(formTemplateId));
+		}
 		return formTemplate;
 	}
 

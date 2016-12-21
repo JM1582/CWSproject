@@ -57,19 +57,18 @@ public class SavePatientInfoServlet extends HttpServlet {
 		
 		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
 		FormTemplate formTemplate = null;
-		try {
-			formTemplateSQL.connect();
-			int formTemplateId = Integer.valueOf(request.getParameter("formTemplateId"));
-			formTemplate= formTemplateSQL.getFormTemplate(formTemplateId);
-			formTemplateSQL.disconnect();
-		} catch (Exception e) {
-			e.printStackTrace();
-			PrintWriter out = response.getWriter();
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Database connection failed!');");
-			out.println("location='patient_info_page.jsp';");
-			out.println("</script>");
-			return;
+		String formTemplateIdStr = request.getParameter("formTemplateId");
+		if(formTemplateIdStr!=null && !formTemplateIdStr.equals("")){
+			int formTemplateId = Integer.valueOf(formTemplateIdStr);
+			try {
+				formTemplateSQL.connect();
+				formTemplate= formTemplateSQL.getFormTemplate(formTemplateId);
+				formTemplateSQL.disconnect();
+			} catch (Exception e) {
+				e.printStackTrace();
+				ErrorMsg.DataBaseConnectionError(response, "patient_info_page.jsp");
+				return;
+			}
 		}
 
 		patientInfo.setCWSNumber(CWSNumber);
@@ -95,6 +94,11 @@ public class SavePatientInfoServlet extends HttpServlet {
 			PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
 			try {
 				patientInfoSQL.connect();
+				int existPatientInfoId = patientInfoSQL.getPatientIdByCWSNumber(patientInfo.getCWSNumber());
+				if(existPatientInfoId!=patientInfo.getId()){
+					ErrorMsg.CWSNumberAlreadyTakenError(response, "patient_info_page.jsp");
+					return;
+				}
 				patientInfo = patientInfoSQL.setPatientInfo(patientInfo);
 				patientInfoSQL.disconnect();
 			} catch (Exception e) {

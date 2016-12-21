@@ -40,7 +40,11 @@ while(patientInfoIt.hasNext()){
 		<td><%=patientInfo.getId()%></td>
 		<td><%=patientInfo.getCWSNumber() %></td>
 		<td><%=patientInfo.getIcon() %></td>
+		<%if(patientInfo.getFormTemplate()!=null){ %>
 		<td><%=patientInfo.getFormTemplate().getName() %></td>
+		<%}else{ %>
+		<td>not set</td>
+		<%} %>
 		<td><button type="button"  onclick="location.href='edit_patient_servlet?patientInfoId=<%=patientInfo.getId() %>'">Edit</button></td>
 	</tr>
 <%} %>

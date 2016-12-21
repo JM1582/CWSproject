@@ -28,4 +28,12 @@ public class ErrorMsg {
 		out.println("location='"+location+"';");
 		out.println("</script>");
 	}
+	
+	public static void CWSNumberAlreadyTakenError(HttpServletResponse response, String location) throws IOException{
+		PrintWriter out = response.getWriter();
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('CWS number already been taken.');");
+		out.println("location='"+location+"';");
+		out.println("</script>");
+	}
 }

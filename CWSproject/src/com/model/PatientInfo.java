@@ -3,7 +3,7 @@ import java.util.*;
 
 
 public class PatientInfo {
-	private int patientInfoId;
+	private int patientInfoId = -1;
 	private String CWSNumber;
 	private int icon=-1;
 	private CareProvider MRP;
