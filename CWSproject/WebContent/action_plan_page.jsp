@@ -40,7 +40,13 @@ if (patientInfo == null) {
 Map documentMap = patientInfo.getDocumentMap();
 Map actionPlanMap = patientInfo.getActionPlanMap();
 ActionPlan actionPlan = (ActionPlan) session.getAttribute("actionPlan");
-TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); %>
+TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap"));
+boolean editDisabled = false;
+if (actionPlan.getSign()){
+	editDisabled = true;
+} else if (!careProvider.getUserName().equals(actionPlan.getAuthor().getUserName())){
+	editDisabled = true;
+} %>
 
 <!-- banner -->
 <div id="banner" align="right" class="banner2" ><br>
@@ -142,7 +148,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 	<tr><!--  -->
 	<%if(firstLine){ %>
 		<!-- selecting domain name -->
-		<td height="60px"><select style="height:50px;" name="domain_<%=actionEntry.getId()%>">
+		<td height="60px"><select style="height:50px;" name="domain_<%=actionEntry.getId()%>" <%if(editDisabled){%>disabled=disabled<%}%>>
 		<%
 			if(actionEntry.getDomain()==null){
 		%>
@@ -164,14 +170,10 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		%>
 		</select></td>
 	<!--current score and future score has default value -->
-		<td><input type="text" name="cScore_<%=actionEntry.getId()%>" 
+		<td><input type="text" name="cScore_<%=actionEntry.getId()%>" <%if(editDisabled){%>disabled=disabled<%}%> 
 		<%if(actionEntry.getCscore()!=null){%>value="<%=actionEntry.getCscore()%>"<%}%>style="height:50px;" ></td>
-		<td><input type="text" name="fScore_<%=actionEntry.getId()%>" 
+		<td><input type="text" name="fScore_<%=actionEntry.getId()%>" <%if(editDisabled){%>disabled=disabled<%}%> 
 		<%if(actionEntry.getFscore()!=null){%>value="<%=actionEntry.getFscore()%>"<%}%> style="height:50px;"></td>
-	<!-- 
-		<td><input type="text" name="cScore_<%=actionEntry.getId()%>" value=  ""></td>
-		<td><input type="text" name="fScore_<%=actionEntry.getId()%>" value= "" ></td>
-	-->
 	<%
 		} else{
 	%>
@@ -181,7 +183,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 		} 
 		firstLine = false;
 	%>
-		<td><select style="height:50px;"name="intervention_<%=actionEntry.getId()%>_<%=action.getId()%>">
+		<td><select style="height:50px;"name="intervention_<%=actionEntry.getId()%>_<%=action.getId()%>" <%if(editDisabled){%>disabled=disabled<%}%>>
 			<%for(int i=0;i<Intervention.values().length;i++){
 				String interventionStr = Intervention.values()[i].toString(); %>
 				<option value="<%=Intervention.values()[i].ordinal() %>" 
@@ -192,7 +194,7 @@ TreeMap allDomainMap = new TreeMap((Map) session.getAttribute("allDomainMap")); 
 			Map careProviderMap = patientInfo.getCareProviderMap();
 				if(careProviderMap != null) {
 		%>
-		<td><select style="height:50px;"name="responsibility_<%=actionEntry.getId()%>_<%=action.getId()%>">
+		<td><select style="height:50px;"name="responsibility_<%=actionEntry.getId()%>_<%=action.getId()%>" <%if(editDisabled){%>disabled=disabled<%}%>>
 			<%if(action.getCareProvider()==null){ %>
 				<option selected></option>
 			<%} %>
