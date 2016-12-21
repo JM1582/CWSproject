@@ -2,6 +2,7 @@ package com.servlet;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -74,29 +75,44 @@ public class SavePatientInfoServlet extends HttpServlet {
 		patientInfo.setCWSNumber(CWSNumber);
 		patientInfo.setIcon(icon);
 		patientInfo.setFormTemplate(formTemplate);
+
+		session.setAttribute("patientInfo", patientInfo);
 		
-		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
-		try {
-			patientInfoSQL.connect();
-			patientInfo = patientInfoSQL.setPatientInfo(patientInfo);
-			patientInfoSQL.disconnect();
-		} catch (Exception e) {
-			e.printStackTrace();
-			PrintWriter out = response.getWriter();
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Patient saving failed!');");
-			out.println("location='patient_info_page.jsp';");
-			out.println("</script>");
-			return;
+		Iterator<String> careProviderIt = patientInfo.getCareProviderMap().keySet().iterator();
+		while(careProviderIt.hasNext()){
+			String userName = (String) careProviderIt.next();
+			if(request.getParameter("remove_"+userName) != null){
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("remove_care_provider_servlet?removedUserName="+userName);
+				requestDispatcher.forward(request, response);
+				return;
+			}
 		}
 		
-		session.setAttribute("patientInfo", patientInfo);
-
-		PrintWriter out = response.getWriter();
-		out.println("<script type=\"text/javascript\">");
-		out.println("alert('Patient Saved.');");
-		out.println("location='patient_info_page.jsp';");
-		out.println("</script>");
+		if(request.getParameter("add") != null){
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("add_care_provider_servlet");
+			requestDispatcher.forward(request, response);
+		}else{
+			PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
+			try {
+				patientInfoSQL.connect();
+				patientInfo = patientInfoSQL.setPatientInfo(patientInfo);
+				patientInfoSQL.disconnect();
+			} catch (Exception e) {
+				e.printStackTrace();
+				PrintWriter out = response.getWriter();
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Patient saving failed!');");
+				out.println("location='patient_info_page.jsp';");
+				out.println("</script>");
+				return;
+			}
+			PrintWriter out = response.getWriter();
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Patient Saved.');");
+			out.println("location='patient_info_page.jsp';");
+			out.println("</script>");
+		}
+		
 	}
 
 	/**

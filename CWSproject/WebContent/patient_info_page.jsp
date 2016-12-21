@@ -61,7 +61,6 @@ Map<Integer, CareProvider> allCareProviderMap = (Map<Integer, CareProvider>) ses
 		</select></td>
 	</tr>
 </table>
-</form>
 
 <table>
 	<tr><td colspan="2">Care Provider List:</td></tr>
@@ -72,11 +71,13 @@ Map<Integer, CareProvider> allCareProviderMap = (Map<Integer, CareProvider>) ses
 		CareProvider careProvider = (CareProvider) patientInfo.getCareProviderMap().get(userName); %>
 	<tr>
 		<td><%=careProvider.getTitle() %> <%=careProvider.getFirstName() %> <%=careProvider.getLastName() %></td>
-		<td><button type="button"  onclick="location.href='remove_care_provider_servlet?removedUserName=<%=userName %>'">Remove</button></td>
+		<td>
+			<input type="submit" name="remove_<%=userName %>" value="Remove">
+		</td>
 	</tr>
 <%	}
 } %>
-	<form id="careProviderForm" action="add_care_provider_servlet" >
+	<!-- form id="careProviderForm" action="add_care_provider_servlet" -->
 	<tr>
 		<td><select name="addedCareProviderId">
 			<option selected></option>
@@ -88,11 +89,12 @@ Map<Integer, CareProvider> allCareProviderMap = (Map<Integer, CareProvider>) ses
 			<%} %>
 		</select></td>
 		<td>
-			<input type="submit" value="Add">
+			<input type="submit" name="add" value="Add">
+			<!-- input type="submit" value="Add"-->
 		</td>
 	</tr>
-	
 </table>
+</form>
 
 </body>
 </html>

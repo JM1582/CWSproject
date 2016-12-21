@@ -55,6 +55,35 @@ public class RemoveCareProviderServlet extends HttpServlet {
 		CareProvider careProvider = new CareProvider(removedUserName, null);
 		patientInfo.removeCareProvider(careProvider);
 		
+		String CWSNumber = request.getParameter("CWSNumber");
+		
+		int icon = -1;
+		String iconStr = (String) request.getParameter("icon");
+		if(iconStr!=null && !iconStr.equals("")){
+			icon = Integer.valueOf(iconStr);
+		}
+		
+		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
+		FormTemplate formTemplate = null;
+		try {
+			formTemplateSQL.connect();
+			int formTemplateId = Integer.valueOf(request.getParameter("formTemplateId"));
+			formTemplate= formTemplateSQL.getFormTemplate(formTemplateId);
+			formTemplateSQL.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
+			PrintWriter out = response.getWriter();
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Database connection failed!');");
+			out.println("location='patient_info_page.jsp';");
+			out.println("</script>");
+			return;
+		}
+		
+		patientInfo.setCWSNumber(CWSNumber);
+		patientInfo.setIcon(icon);
+		patientInfo.setFormTemplate(formTemplate);
+		
 		session.setAttribute("patientInfo", patientInfo);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("patient_info_page.jsp");
 		requestDispatcher.forward(request, response);

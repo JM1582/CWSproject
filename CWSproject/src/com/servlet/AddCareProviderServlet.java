@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.model.CareProvider;
+import com.model.FormTemplate;
 import com.model.PatientInfo;
+import com.sql.FormTemplateSQL;
 import com.sql.UserSQL;
 
 /**
@@ -43,7 +46,7 @@ public class AddCareProviderServlet extends HttpServlet {
 		}
 		
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
-		
+				
 		String addedCareProviderIdStr = (String)request.getParameter("addedCareProviderId");
 		if(addedCareProviderIdStr==null || addedCareProviderIdStr.equals("")){
 			ErrorMsg.NullCareProviderError(response,"patient_info_page.jsp");
