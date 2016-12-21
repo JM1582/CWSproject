@@ -49,7 +49,7 @@ public class SaveAccountServlet extends HttpServlet {
 		}
 		
 		account.setType(UserType.valueOf(request.getParameter("userType")));
-		account.setUserName(passWord);
+		account.setUserName(userName);
 		account.setPassWord(passWord);
 		account.setTitle(request.getParameter("title"));
 		account.setFirstName(request.getParameter("firstName"));
