@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 
 import com.model.*;
 import com.sql.FormTemplateSQL;
+import com.sql.UserSQL;
 
 /**
  * Servlet implementation class CreatePatientServlet
@@ -52,6 +53,20 @@ public class CreatePatientServlet extends HttpServlet {
 		}
 		
 		session.setAttribute("formTemplateMap", formTemplateMap);
+
+		Map<Integer, CareProvider> allCareProviderMap = new HashMap<Integer, CareProvider>();
+		UserSQL userSQL = new UserSQL();
+		try {
+			userSQL.connect();
+			allCareProviderMap = userSQL.getAllCareProvider();
+			userSQL.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
+			ErrorMsg.DataBaseConnectionError(response,"patient_info_page.jsp");
+			return;
+		}
+		
+		session.setAttribute("allCareProviderMap", allCareProviderMap); 
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("patient_info_page.jsp");
 		requestDispatcher.forward(request, response);	}
