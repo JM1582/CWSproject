@@ -48,12 +48,11 @@ public class SavePatientInfoServlet extends HttpServlet {
 			return;
 		}
 		
-		patientInfo.setCWSNumber(CWSNumber);
 		int icon = -1;
-		if(request.getAttribute("icon")!=null && !request.getAttribute("icon").equals("")){
-			icon = Integer.valueOf((String) request.getAttribute("icon"));
+		String iconStr = (String) request.getParameter("icon");
+		if(iconStr!=null && !iconStr.equals("")){
+			icon = Integer.valueOf(iconStr);
 		}
-		patientInfo.setIcon(icon);
 		
 		FormTemplateSQL formTemplateSQL = new FormTemplateSQL();
 		FormTemplate formTemplate = null;
@@ -71,7 +70,9 @@ public class SavePatientInfoServlet extends HttpServlet {
 			out.println("</script>");
 			return;
 		}
-		
+
+		patientInfo.setCWSNumber(CWSNumber);
+		patientInfo.setIcon(icon);
 		patientInfo.setFormTemplate(formTemplate);
 		
 		PatientInfoSQL patientInfoSQL = new PatientInfoSQL();
