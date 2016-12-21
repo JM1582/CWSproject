@@ -47,7 +47,7 @@ public class EditPatientServlet extends HttpServlet {
 			patientInfoSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
-			ErrorMsg.DataBaseConnectionError(response);
+			ErrorMsg.DataBaseConnectionError(response,"patient_info_page.jsp");
 			return;
 		}
 		
@@ -59,7 +59,7 @@ public class EditPatientServlet extends HttpServlet {
 			formTemplateSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
-			ErrorMsg.DataBaseConnectionError(response);
+			ErrorMsg.DataBaseConnectionError(response,"patient_info_page.jsp");
 			return;
 		}
 		
@@ -71,7 +71,7 @@ public class EditPatientServlet extends HttpServlet {
 			userSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
-			ErrorMsg.DataBaseConnectionError(response);
+			ErrorMsg.DataBaseConnectionError(response,"patient_info_page.jsp");
 			return;
 		}
 		

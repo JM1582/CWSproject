@@ -44,7 +44,12 @@ public class AddCareProviderServlet extends HttpServlet {
 		
 		PatientInfo patientInfo = (PatientInfo) session.getAttribute("patientInfo");
 		
-		int addedCareProviderId = Integer.valueOf((String)request.getParameter("addedCareProviderId"));
+		String addedCareProviderIdStr = (String)request.getParameter("addedCareProviderId");
+		if(addedCareProviderIdStr==null || addedCareProviderIdStr.equals("")){
+			ErrorMsg.NullCareProviderError(response,"patient_info_page.jsp");
+			return;
+		}
+		int addedCareProviderId = Integer.valueOf(addedCareProviderIdStr);
 		
 		CareProvider addedCareProvider = null;
 		UserSQL userSQL = new UserSQL();
@@ -54,7 +59,7 @@ public class AddCareProviderServlet extends HttpServlet {
 			userSQL.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
-			ErrorMsg.DataBaseConnectionError(response);
+			ErrorMsg.DataBaseConnectionError(response,"patient_info_page.jsp");
 			return;
 		}
 		patientInfo.addCareProvider(addedCareProvider);
