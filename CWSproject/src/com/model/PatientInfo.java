@@ -136,11 +136,7 @@ public class PatientInfo {
 				for(int i=0;i<srcDomainValue.length;i++){
 					if(srcDomainValue[i]!=null && !srcDomainValue[i].equals("")){
 						if(tarDomainValue[i]==null || tarDomainValue[i].equals("")){
-							System.out.println(this.documentMap.get(3).getDomainValueMap().get("b110")[0]);
-							System.out.println(this.documentMap.get(3).getDomainValueMap().get("b114")[0]);
 							tarDomainValue[i]=srcDomainValue[i];
-							System.out.println(this.documentMap.get(3).getDomainValueMap().get("b110")[0]);
-							System.out.println(this.documentMap.get(3).getDomainValueMap().get("b114")[0]);
 						}
 					}
 				}
@@ -169,17 +165,7 @@ public class PatientInfo {
 		}
 		return rsDocument;
 	}
-
-	private Document updateDomainValue(Document document) {
-		Document newerDocument = this.getNewerDocument(document);
-		if(newerDocument!=null){
-			newerDocument.getUnsetDomainValueFrom(document);
-			document = newerDocument;
-			document = this.updateDomainValue(document);
-		}
-		return document;
-	}
-
+	
 	private Document getNewerDocument(Document document) {
 		Document rsDocument = null;
 		Iterator<Integer> documentIt = this.documentMap.keySet().iterator();

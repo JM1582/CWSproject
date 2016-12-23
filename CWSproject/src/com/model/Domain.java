@@ -49,7 +49,7 @@ public class Domain {
 		if(domainValueMap.containsKey(this.domainId)){
 			String domainValue[] = (String[]) domainValueMap.get(this.domainId);
 			for(int i=0;i<domainValue.length;i++){
-				if(domainValue[i]!=null){
+				if(domainValue[i]!=null && !domainValue[i].equals("9")){
 					return true;
 				}
 			}

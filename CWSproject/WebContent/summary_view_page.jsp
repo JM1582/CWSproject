@@ -148,7 +148,7 @@ if(partMap != null){
 				CareProvider author = patientInfo.getCareProviderMap().get(authorUserName);
 				boolean allNull = true;
 				for(int i=0;i<domainValue.length;i++){
-					if(domainValue[i]!=null && !domainValue.equals("")){
+					if(domainValue[i]!=null && !domainValue[i].equals("") && !domainValue[i].equals("9")){
 						allNull = false;
 						break;
 					}
@@ -160,7 +160,7 @@ if(partMap != null){
 		<td height="50px" width="20%" align="center" class="summaryEntry"><%=author.getTitle() %></td>
 		<td height="50px" align="center" class="summaryEntry"><%=author.getFirstName() %> <%=author.getLastName() %></td>
 		<%for(int i=0;i<scalarValueAmount;i++){
-			if(domainValue[i]!=null){ %>
+			if(domainValue[i]!=null && !domainValue[i].equals("9")){ %>
 		<td height="50px" width="20%" align="center" class="summaryEntry"<%if(domainValue[i].equals("4")||domainValue[i].equals("-4")){ %>bgcolor=#eb6878;<%} %>><%=domainValue[i] %></td>
 		<%	}else{ %>
 		<td height="50px" width="20%" align="center" class="summaryEntry">no data</td>
