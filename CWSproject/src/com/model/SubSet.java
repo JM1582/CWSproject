@@ -61,12 +61,12 @@ public class SubSet {
 		return false;
 	}
 	
-	public boolean hasDomainValueWithSummaryMap(Map<Integer, Document> summaryMap){
-		Iterator<Integer> summaryIt = summaryMap.keySet().iterator();
-		if(summaryIt.hasNext()){
-			int documentId = (Integer) summaryIt.next();
-			Document document = (Document) summaryMap.get(documentId);
-			if(this.hasDomainValue(document.getDomainValueMap())){
+	public boolean hasDomainValueWithSummaryMap(Map<String, Map<String, String[]>> summaryMap){
+		Iterator<String> summaryIt = summaryMap.keySet().iterator();
+		while(summaryIt.hasNext()){
+			String userName = (String) summaryIt.next();
+			Map<String, String[]> domainValueMap = summaryMap.get(userName);
+			if(this.hasDomainValue(domainValueMap)){
 				return true;
 			}
 		}

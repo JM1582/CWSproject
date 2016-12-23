@@ -32,7 +32,7 @@ if (patientInfo == null) {
 }
 Map<Integer, Document> documentMap = patientInfo.getDocumentMap();
 Map actionPlanMap = patientInfo.getActionPlanMap();
-Map<Integer, Document> summaryMap = (Map<Integer, Document>)session.getAttribute("summaryMap");
+Map<String, Map<String, String[]>> summaryMap = (Map<String, Map<String, String[]>>)session.getAttribute("summaryMap");
 FormTemplate formTemplate = patientInfo.getFormTemplate(); %>
 
 
@@ -137,20 +137,28 @@ if(partMap != null){
 								if(domain != null){
 									if(domain.hasDomainValueWithSummaryMap(summaryMap)){ %>
 	<!-- domain -->
-	<tr><td colspan="<%=scalarValueAmount+2 %>"><font class="input_domain"><strong>&emsp;&emsp;<%=domain.getName()%></strong></font></td></tr>
-	<%Iterator summaryIt = summaryMap.keySet().iterator(); 
+	<tr><td colspan="<%=scalarValueAmount+2 %>"><font class="input_domain"><strong>&emsp;&emsp;<%=domain.getId()%>. <%=domain.getName()%></strong></font></td></tr>
+	<%Iterator<String> summaryIt = summaryMap.keySet().iterator(); 
 	while(summaryIt.hasNext()){
-		int documentId = (Integer) summaryIt.next();
-		Document document = (Document) summaryMap.get(documentId);
-		Map domainValueMap = document.getDomainValueMap();
+		String authorUserName = (String) summaryIt.next();
+		Map<String,String[]> domainValueMap = summaryMap.get(authorUserName);
 		if(domainValueMap != null){
 			String domainValue[] = (String[]) domainValueMap.get(domainId);
 			if(domainValue!=null){
+				CareProvider author = patientInfo.getCareProviderMap().get(authorUserName);
+				boolean allNull = true;
+				for(int i=0;i<domainValue.length;i++){
+					if(domainValue[i]!=null && !domainValue.equals("")){
+						allNull = false;
+						break;
+					}
+				}
+				if(!allNull){
 			%>
 	<!-- Title, Name, Domain Value -->
 	<tr>
-		<td height="50px" width="20%" align="center" class="summaryEntry"><%=document.getAuthor().getTitle() %></td>
-		<td height="50px" align="center" class="summaryEntry"><%=document.getAuthor().getFirstName() %> <%=document.getAuthor().getLastName() %></td>
+		<td height="50px" width="20%" align="center" class="summaryEntry"><%=author.getTitle() %></td>
+		<td height="50px" align="center" class="summaryEntry"><%=author.getFirstName() %> <%=author.getLastName() %></td>
 		<%for(int i=0;i<scalarValueAmount;i++){
 			if(domainValue[i]!=null){ %>
 		<td height="50px" width="20%" align="center" class="summaryEntry"<%if(domainValue[i].equals("4")||domainValue[i].equals("-4")){ %>bgcolor=#eb6878;<%} %>><%=domainValue[i] %></td>
@@ -159,7 +167,8 @@ if(partMap != null){
 <%			}
 		} %>
 	</tr>
-<%			}
+<%				}
+			}
 		}
 	} %>
 <%										}

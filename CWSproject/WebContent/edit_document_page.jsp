@@ -217,7 +217,7 @@ if (partMap != null) {
 							if(i==0){
 						%>
 							<!-- <td rowspan="<%=scalarValue.length%>" width="5%"><%=domain.getId()%></td> -->
-							<td rowspan="<%=scalarValue.length%>" ><font class="input_domain">&emsp;&emsp;&emsp;<%=domain.getName()%></font></td>
+							<td rowspan="<%=scalarValue.length%>" ><font class="input_domain">&emsp;&emsp;&emsp;<%=domain.getId()%>. <%=domain.getName()%></font></td>
 						<%
 							}
 						%>

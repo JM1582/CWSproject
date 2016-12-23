@@ -137,4 +137,26 @@ public class Document{
 	public void setDescription(String description){
 		this.description = description;
 	}
+
+	public void getUnsetDomainValueFrom(Document document) {
+		Iterator<String> domainValueIt = document.domainValueMap.keySet().iterator();
+		while(domainValueIt.hasNext()){
+			String domainId = (String) domainValueIt.next();
+			String domainValue[] = document.getDomainValueMap().get(domainId);
+			if(!this.domainValueMap.containsKey(domainId)){
+				this.addDomainValue(domainId, domainValue);
+			} else {
+				String thisDomainValue[] = this.domainValueMap.get(domainId);
+				for(int i=0;i<thisDomainValue.length;i++){
+					if(domainValue[i]!=null && !domainValue[i].equals("")){
+						if(thisDomainValue[i]==null || thisDomainValue[i].equals("")){
+							thisDomainValue[i] = domainValue[i];
+						}
+					}
+				}
+				this.addDomainValue(domainId, thisDomainValue);
+			}
+		}
+		
+	}
 }
